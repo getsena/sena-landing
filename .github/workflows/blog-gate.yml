@@ -1,0 +1,35 @@
+# Puerta de publicación del blog.
+#
+# Es la única capa que un merge respeta. Los hooks de husky corren en la máquina
+# de quien pushea: `--no-verify` los salta, y un squash merge hecho desde la web
+# de GitHub no los ejecuta nunca. Por eso el gate corre acá además de en local.
+#
+# Los checks leen el fuente, no el build: no necesitan servidor, secretos ni red.
+name: Blog gate
+
+on:
+  pull_request:
+    branches: [dev, staging, main]
+
+jobs:
+  blog-gate:
+    runs-on: ubuntu-latest
+    steps:
+      # Historia completa: el gate compara la rama contra su base para saber qué
+      # posts toca y qué commits trae. Con la profundidad 1 por defecto no hay
+      # merge-base que calcular y los checks de "lo tocado" no opinarían.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Sin `npm ci`: el gate es node plano sobre el fuente y no importa nada del
+      # árbol de dependencias. Instalar acá solo agregaría minutos y una forma
+      # más de fallar por algo que no es el contenido del post.
+      - name: Correr la puerta
+        env:
+          GATE_BASE: origin/${{ github.event.pull_request.base.ref }}
+        run: node scripts/blog-gate.mjs
