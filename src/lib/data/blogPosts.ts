@@ -1455,6 +1455,7 @@ export const blogPosts: BlogPost[] = [
   },
   {
     id: 20,
+    bloqueos: ['PRUEBA: la imagen no corresponde al post. Este PR se cierra sin mergear.'],
     slug: 'como-saber-si-tu-cliente-te-va-a-pagar',
     title: 'Cómo saber si tu cliente te va a pagar antes de venderle a crédito',
     intro:
