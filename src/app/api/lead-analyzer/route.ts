@@ -1,7 +1,7 @@
 import { createHash } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { mapOrigen } from '@/lib/lead/attribution'
+import { classifyLead } from '@/lib/lead/classify'
 import {
   OWNER_FRANCISCO,
   PRODUCT_LIST_ID,
@@ -22,7 +22,11 @@ type AnalyzerLeadPayload = {
   facturacion_mensual_rango: string
   industria: string
   utmSource?: string
+  utmMedium?: string
+  utmCampaign?: string
   gclid?: string
+  gbraid?: string
+  wbraid?: string
   fbclid?: string
   landingPage?: string
 }
@@ -38,8 +42,15 @@ function fmtCLP(n: number): string {
 }
 
 function buildContactProperties(body: AnalyzerLeadPayload): Record<string, string> {
-  const origen = mapOrigen(body.utmSource, body.gclid, body.fbclid)
-  const fuente = body.gclid ? 'Google Ads' : body.fbclid ? 'Meta Ads' : body.utmSource ? 'Ads' : 'Orgánico'
+  const clasificacion = classifyLead({
+    utmSource: body.utmSource,
+    utmMedium: body.utmMedium,
+    utmCampaign: body.utmCampaign,
+    gclid: body.gclid,
+    gbraid: body.gbraid,
+    wbraid: body.wbraid,
+    fbclid: body.fbclid,
+  })
   const bucketLabel = BUCKET_LABELS[body.cartera_bucket_critico] ?? 'desconocido'
 
   const properties: Record<string, string> = {
@@ -50,8 +61,8 @@ function buildContactProperties(body: AnalyzerLeadPayload): Record<string, strin
     interes_del_producto: INTERES_DEL_PRODUCTO,
     tipo_de_origen: 'Analizador de Cartera',
     etapa_del_lead: 'Interesado',
-    origen,
-    fuente_del_lead: fuente,
+    fuente_del_lead: clasificacion.fuente,
+    origen_detalle: clasificacion.origenDetalle,
     sena_prioridad: 'B',
     sena_intencion: 'Media',
     sena_contexto: `Lead Analizador de Cartera. Cartera total: ${fmtCLP(body.cartera_total_riesgo_clp)}. Recuperable: ${fmtCLP(body.cartera_recuperable_clp)}. Bucket crítico: ${bucketLabel}. Facturación: ${body.facturacion_mensual_rango}. Industria: ${body.industria}.`,
@@ -62,6 +73,8 @@ function buildContactProperties(body: AnalyzerLeadPayload): Record<string, strin
     industria: body.industria,
   }
 
+  // origen queda vacío para pagos de una plataforma desconocida (regla R4): no se envía.
+  if (clasificacion.origen) properties.origen = clasificacion.origen
   if (body.telefono) properties.phone = body.telefono
   if (body.gclid) properties.gclid = body.gclid
   if (body.fbclid) properties.fbclid = body.fbclid
