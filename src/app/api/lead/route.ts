@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { classifyLead } from '@/lib/lead/classify'
+import { isSmokeTest } from '@/lib/lead/smoke'
 import {
   OWNER_FRANCISCO,
   PRODUCT_LIST_ID,
@@ -195,7 +196,7 @@ export async function POST(req: NextRequest) {
       addToList(token, contactId, PRODUCT_LIST_ID[producto]),
     ])
     // Meta solo se entera de leads que el CRM sí guardó (evita conversiones fantasma)
-    await sendMetaCapi(body, body.eventId ?? randomUUID())
+    if (!isSmokeTest(body.email)) await sendMetaCapi(body, body.eventId ?? randomUUID())
     return NextResponse.json({ ok: true })
   } catch (err) {
     console.error('[HubSpot] error:', err instanceof Error ? err.message : 'CRM error')

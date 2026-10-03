@@ -270,3 +270,37 @@ test.describe('rutas de lead: un campo de clasificación rechazado no pierde el 
   }
 })
 
+test.describe('smoke tests: los emails +smoke no se reportan a Meta', () => {
+  test.beforeEach(() => {
+    process.env.META_PIXEL_ID = 'pixel-1'
+    process.env.META_CAPI_TOKEN = 'capi-token'
+  })
+
+  for (const [nombre, run, base] of [
+    ['/api/lead', (p: object) => postLead(req('/api/lead', p)), leadPayload],
+    ['/api/lead-analyzer', (p: object) => postAnalyzer(req('/api/lead-analyzer', p)), analyzerPayload],
+  ] as const) {
+    test(`${nombre}: guarda el lead pero no envía CAPI si el email lleva +smoke`, async () => {
+      const m = mockHubspot()
+      try {
+        const res = await run({ ...base, email: 'smoke+123@somossena.com' })
+        expect(res.status).toBe(200)
+        expect(contactWrites(m.calls)).toHaveLength(1)
+        expect(capiCalls(m.calls)).toHaveLength(0)
+      } finally {
+        m.restore()
+      }
+    })
+
+    test(`${nombre}: un email normal sí se reporta a Meta`, async () => {
+      const m = mockHubspot()
+      try {
+        await run({ ...base, email: 'ana+ventas@acme.cl' })
+        expect(capiCalls(m.calls)).toHaveLength(1)
+      } finally {
+        m.restore()
+      }
+    })
+  }
+})
+
