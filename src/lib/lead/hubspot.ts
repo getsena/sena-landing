@@ -70,6 +70,22 @@ export const CLASSIFICATION_PROPS = [
 
 const RECOVERABLE_ERRORS = /INVALID_OPTION|PROPERTY_DOESNT_EXIST/
 
+// Resume un error de HubSpot sin datos personales: su cuerpo puede traer el valor rechazado
+// (email, teléfono, nombre). Solo se conserva estado, códigos y nombres de propiedad.
+export function describeHubspotError(status: number, err: unknown): string {
+  const text = JSON.stringify(err ?? {})
+  const codes = [...new Set(text.match(/\b[A-Z]{2,}(?:_[A-Z]+)+\b/g) ?? [])].slice(0, 5)
+  const props = new Set<string>()
+  const errors = (err as { errors?: { context?: { propertyName?: unknown } }[] } | null)?.errors
+  for (const e of Array.isArray(errors) ? errors : []) {
+    const names = e?.context?.propertyName
+    for (const n of Array.isArray(names) ? names : [names]) {
+      if (typeof n === 'string' && /^[a-z0-9_]{1,64}$/.test(n)) props.add(n)
+    }
+  }
+  return `status=${status} codes=${codes.join(',') || '-'} props=${[...props].slice(0, 8).join(',') || '-'}`
+}
+
 export async function writeContact(
   token: string,
   method: 'POST' | 'PATCH',
@@ -96,7 +112,7 @@ export async function writeContact(
     Object.entries(properties).filter(([key]) => !CLASSIFICATION_PROPS.includes(key))
   )
   console.error(
-    `[HubSpot] propiedad de clasificación rechazada, reintentando sin ellas: ${JSON.stringify(err)}`
+    `[HubSpot] propiedad de clasificación rechazada, reintentando sin ellas: ${describeHubspotError(res.status, err)}`
   )
   return send(safe)
 }
@@ -117,7 +133,7 @@ export async function upsertContact(
     const res = await writeContact(token, 'PATCH', `/crm/v3/objects/contacts/${existing.id}`, toWrite)
     if (!res.ok) {
       const err = await res.json().catch(() => ({}))
-      throw new Error(`PATCH contact failed: ${JSON.stringify(err)}`)
+      throw new Error(`PATCH contact failed: ${describeHubspotError(res.status, err)}`)
     }
     return { id: existing.id, isNew: false }
   }
@@ -125,7 +141,7 @@ export async function upsertContact(
   const res = await writeContact(token, 'POST', '/crm/v3/objects/contacts', properties)
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
-    throw new Error(`POST contact failed: ${JSON.stringify(err)}`)
+    throw new Error(`POST contact failed: ${describeHubspotError(res.status, err)}`)
   }
   const data = await res.json()
   return { id: data.id, isNew: true }
@@ -184,7 +200,7 @@ export async function createDeal(
   })
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
-    throw new Error(`POST deal failed: ${JSON.stringify(err)}`)
+    throw new Error(`POST deal failed: ${describeHubspotError(res.status, err)}`)
   }
   const created = await res.json()
 
@@ -202,6 +218,6 @@ export async function addToList(token: string, contactId: string, listId: string
   })
   const data = await res.json().catch(() => ({}))
   if (!res.ok || (data as { recordIdsMissing?: string[] }).recordIdsMissing?.length) {
-    throw new Error(`addToList failed for contact ${contactId}: ${JSON.stringify(data)}`)
+    throw new Error(`addToList failed: ${describeHubspotError(res.status, data)}`)
   }
 }

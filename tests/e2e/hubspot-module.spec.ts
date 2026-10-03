@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test'
 
-import { CLASSIFICATION_PROPS, writeContact } from '@/lib/lead/hubspot'
+import { isSmokeTest } from '@/lib/lead/smoke'
+import { CLASSIFICATION_PROPS, describeHubspotError, upsertContact, writeContact } from '@/lib/lead/hubspot'
 
 type Call = { method: string; url: string; body: { properties: Record<string, string> } }
 
@@ -93,3 +94,83 @@ test.describe('writeContact: un campo de clasificación nunca cuesta el lead', (
     expect(CLASSIFICATION_PROPS).toContain('origen_detalle')
   })
 })
+
+test.describe('los errores de HubSpot no exponen datos personales', () => {
+  const PII = { email: 'ana.perez@acme.cl', telefono: '+56911112222', nombre: 'Ana Pérez' }
+  const errorConPII = {
+    status: 'error',
+    category: 'VALIDATION_ERROR',
+    message: `Property values were not valid: [{"error":"INVALID_EMAIL","message":"${PII.email} no es válido","telefono":"${PII.telefono}"}] ${PII.nombre}`,
+    errors: [{ code: 'INVALID_EMAIL', context: { propertyName: ['email', 'phone'] } }],
+  }
+
+  test('describeHubspotError conserva estado, códigos y propiedades, y nada más', () => {
+    const texto = describeHubspotError(400, errorConPII)
+    expect(texto).toContain('status=400')
+    expect(texto).toContain('INVALID_EMAIL')
+    expect(texto).toContain('VALIDATION_ERROR')
+    expect(texto).toContain('email,phone')
+    for (const dato of Object.values(PII)) expect(texto).not.toContain(dato)
+    expect(texto).not.toContain('@')
+  })
+
+  test('tolera cuerpos de error vacíos o raros', () => {
+    expect(describeHubspotError(500, null)).toBe('status=500 codes=- props=-')
+    expect(describeHubspotError(500, 'texto')).toContain('status=500')
+    expect(describeHubspotError(500, { errors: 'no-es-array' })).toContain('props=-')
+  })
+
+  test('la excepción de upsertContact no incluye email, teléfono ni nombre', async () => {
+    const m = mockFetch([
+      { status: 200, json: { total: 0, results: [] } },
+      { status: 400, json: errorConPII },
+    ])
+    try {
+      let mensaje = ''
+      await upsertContact('tok', { email: PII.email, firstname: 'Ana', phone: PII.telefono }).catch(
+        (e: Error) => (mensaje = e.message)
+      )
+      expect(mensaje).toContain('POST contact failed')
+      expect(mensaje).toContain('INVALID_EMAIL')
+      for (const dato of Object.values(PII)) expect(mensaje).not.toContain(dato)
+    } finally {
+      m.restore()
+    }
+  })
+
+  test('el log del reintento tampoco incluye datos personales', async () => {
+    const logs: string[] = []
+    const original = console.error
+    console.error = (...args: unknown[]) => void logs.push(args.join(' '))
+    const m = mockFetch([
+      { status: 400, json: { ...errorConPII, errors: [{ code: 'INVALID_OPTION', context: { propertyName: ['origen'] } }] } },
+      { status: 200, json: { id: '1' } },
+    ])
+    try {
+      await writeContact('tok', 'POST', '/crm/v3/objects/contacts', { email: PII.email, origen: 'Google' })
+      const salida = logs.join(' | ')
+      expect(salida).toContain('INVALID_OPTION')
+      for (const dato of Object.values(PII)) expect(salida).not.toContain(dato)
+    } finally {
+      console.error = original
+      m.restore()
+    }
+  })
+})
+
+test.describe('marcador smoke', () => {
+  test('vale solo para el dominio propio', () => {
+    expect(isSmokeTest('smoke+1730000000@somossena.com')).toBe(true)
+    expect(isSmokeTest('ana+smoke@somossena.com')).toBe(true)
+    expect(isSmokeTest('SMOKE+1@SomosSena.com')).toBe(true)
+  })
+
+  test('un email de otro dominio o sin el marcador es un lead real', () => {
+    expect(isSmokeTest('smoke+1@gmail.com')).toBe(false)
+    expect(isSmokeTest('ana+smoke@acme.cl')).toBe(false)
+    expect(isSmokeTest('ana@somossena.com')).toBe(false)
+    expect(isSmokeTest('smoke+1@somossena.com.evil.cl')).toBe(false)
+    expect(isSmokeTest('ana+ventas@somossena.com')).toBe(false)
+  })
+})
+
