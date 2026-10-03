@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-import { mapFuente } from '@/app/api/lead/route'
+import { mapFuente } from '@/lib/lead/attribution'
 
 // Regresión: un lead con gclid mandaba fuente_del_lead="Google Ads", valor ausente del
 // enum de HubSpot → 400 INVALID_OPTION → se perdía TODO lead pagado (Google y Meta Ads).

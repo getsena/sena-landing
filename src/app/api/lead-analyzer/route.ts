@@ -1,6 +1,8 @@
 import { createHash } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
+import { mapOrigen } from '@/lib/lead/attribution'
+
 type AnalyzerLeadPayload = {
   nombre: string
   empresa: string
@@ -23,16 +25,6 @@ const PRODUCT_LIST_ID = '362'
 const INTERES_DEL_PRODUCTO = 'Cuentas por Cobrar'
 
 const BUCKET_LABELS = ['1–30 días', '31–60 días', '61–90 días', '3–6 meses', '6–12 meses', '1+ año']
-
-function mapOrigen(utmSource?: string, gclid?: string, fbclid?: string): string {
-  if (gclid) return 'Google'
-  if (fbclid) return 'Meta'
-  const src = (utmSource ?? '').toLowerCase()
-  if (src === 'google' || src === 'cpc') return 'Google'
-  if (src === 'facebook' || src === 'meta' || src === 'fb') return 'Meta'
-  if (src === 'linkedin') return 'LinkedIn'
-  return 'Orgánico'
-}
 
 function fmtCLP(n: number): string {
   if (n >= 1e9) return `CLP ${(n / 1e9).toFixed(1)}B`
