@@ -105,4 +105,38 @@ test.describe('/api/lead-analyzer: atribución', () => {
       m.restore()
     }
   })
+
+  test('solo manda propiedades que existen en HubSpot y un tipo_de_origen válido', async () => {
+    const m = mockHubspot()
+    try {
+      await postAnalyzer(req('/api/lead-analyzer', analyzerPayload))
+      const props = (contactWrites(m.calls)[0].body as { properties: Record<string, string> }).properties
+      expect(props.tipo_de_origen).toBe('Form landing')
+      for (const inexistente of [
+        'cartera_total_riesgo_clp',
+        'cartera_recuperable_clp',
+        'cartera_bucket_critico',
+        'facturacion_mensual_rango',
+        'industria',
+      ]) {
+        expect(props).not.toHaveProperty(inexistente)
+      }
+      // los datos de cartera siguen disponibles para ventas dentro del contexto
+      expect(props.sena_contexto).toContain('Retail')
+      expect(props.sena_contexto).toContain('10M-50M')
+    } finally {
+      m.restore()
+    }
+  })
+
+  test('si HubSpot falla responde 502, no un éxito silencioso', async () => {
+    const m = mockHubspot({ contactPost: [{ status: 500, json: { message: 'boom' } }] })
+    try {
+      const res = await postAnalyzer(req('/api/lead-analyzer', analyzerPayload))
+      expect(res.status).toBe(502)
+      expect(await res.json()).toMatchObject({ ok: false })
+    } finally {
+      m.restore()
+    }
+  })
 })

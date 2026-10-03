@@ -59,18 +59,13 @@ function buildContactProperties(body: AnalyzerLeadPayload): Record<string, strin
     company: body.empresa,
     hubspot_owner_id: OWNER_FRANCISCO,
     interes_del_producto: INTERES_DEL_PRODUCTO,
-    tipo_de_origen: 'Analizador de Cartera',
+    tipo_de_origen: 'Form landing',
     etapa_del_lead: 'Interesado',
     fuente_del_lead: clasificacion.fuente,
     origen_detalle: clasificacion.origenDetalle,
     sena_prioridad: 'B',
     sena_intencion: 'Media',
     sena_contexto: `Lead Analizador de Cartera. Cartera total: ${fmtCLP(body.cartera_total_riesgo_clp)}. Recuperable: ${fmtCLP(body.cartera_recuperable_clp)}. Bucket crítico: ${bucketLabel}. Facturación: ${body.facturacion_mensual_rango}. Industria: ${body.industria}.`,
-    cartera_total_riesgo_clp: String(Math.round(body.cartera_total_riesgo_clp)),
-    cartera_recuperable_clp: String(Math.round(body.cartera_recuperable_clp)),
-    cartera_bucket_critico: bucketLabel,
-    facturacion_mensual_rango: body.facturacion_mensual_rango,
-    industria: body.industria,
   }
 
   // origen queda vacío para pagos de una plataforma desconocida (regla R4): no se envía.
@@ -177,6 +172,9 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('[HubSpot] error:', err instanceof Error ? err.message : 'CRM error')
     await capiPromise
-    return NextResponse.json({ ok: true, warning: 'CRM sync pendiente' })
+    return NextResponse.json(
+      { ok: false, error: 'No pudimos registrar tu solicitud. Intenta de nuevo.' },
+      { status: 502 }
+    )
   }
 }
