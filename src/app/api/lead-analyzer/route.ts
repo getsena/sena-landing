@@ -2,6 +2,14 @@ import { createHash } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { mapOrigen } from '@/lib/lead/attribution'
+import {
+  OWNER_FRANCISCO,
+  PRODUCT_LIST_ID,
+  addToList,
+  createDeal,
+  getToken,
+  upsertContact,
+} from '@/lib/lead/hubspot'
 
 type AnalyzerLeadPayload = {
   nombre: string
@@ -19,9 +27,6 @@ type AnalyzerLeadPayload = {
   landingPage?: string
 }
 
-const HS_API = 'https://api.hubapi.com'
-const OWNER_FRANCISCO = '89319447'
-const PRODUCT_LIST_ID = '362'
 const INTERES_DEL_PRODUCTO = 'Cuentas por Cobrar'
 
 const BUCKET_LABELS = ['1–30 días', '31–60 días', '61–90 días', '3–6 meses', '6–12 meses', '1+ año']
@@ -32,28 +37,7 @@ function fmtCLP(n: number): string {
   return `CLP ${Math.round(n).toLocaleString('es-CL')}`
 }
 
-function getToken(): string {
-  const t = process.env.HUBSPOT_ACCESS_TOKEN
-  if (!t) throw new Error('HUBSPOT_ACCESS_TOKEN no configurado')
-  return t
-}
-
-async function findContactByEmail(token: string, email: string): Promise<string | null> {
-  const res = await fetch(`${HS_API}/crm/v3/objects/contacts/search`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({
-      filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
-      properties: ['email'],
-      limit: 1,
-    }),
-  })
-  if (!res.ok) return null
-  const data = await res.json()
-  return data.total > 0 ? data.results[0].id : null
-}
-
-async function upsertContact(token: string, body: AnalyzerLeadPayload): Promise<string> {
+function buildContactProperties(body: AnalyzerLeadPayload): Record<string, string> {
   const origen = mapOrigen(body.utmSource, body.gclid, body.fbclid)
   const fuente = body.gclid ? 'Google Ads' : body.fbclid ? 'Meta Ads' : body.utmSource ? 'Ads' : 'Orgánico'
   const bucketLabel = BUCKET_LABELS[body.cartera_bucket_critico] ?? 'desconocido'
@@ -83,71 +67,7 @@ async function upsertContact(token: string, body: AnalyzerLeadPayload): Promise<
   if (body.fbclid) properties.fbclid = body.fbclid
   if (body.landingPage) properties.landing_page = body.landingPage
 
-  const existingId = await findContactByEmail(token, body.email)
-
-  if (existingId) {
-    const res = await fetch(`${HS_API}/crm/v3/objects/contacts/${existingId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ properties }),
-    })
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}))
-      throw new Error(`PATCH contact failed: ${JSON.stringify(err)}`)
-    }
-    return existingId
-  }
-
-  const res = await fetch(`${HS_API}/crm/v3/objects/contacts`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({ properties }),
-  })
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(`POST contact failed: ${JSON.stringify(err)}`)
-  }
-  const data = await res.json()
-  return data.id
-}
-
-async function createDeal(token: string, contactId: string, body: AnalyzerLeadPayload): Promise<void> {
-  const res = await fetch(`${HS_API}/crm/v3/objects/deals`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({
-      properties: {
-        dealname: `Plataforma — ${body.empresa}`,
-        dealstage: 'appointmentscheduled',
-        pipeline: 'default',
-        hubspot_owner_id: OWNER_FRANCISCO,
-        closedate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        description: `Lead Analizador de Cartera. Total: ${fmtCLP(body.cartera_total_riesgo_clp)}. Recuperable: ${fmtCLP(body.cartera_recuperable_clp)}. Industria: ${body.industria}.`,
-      },
-    }),
-  })
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(`POST deal failed: ${JSON.stringify(err)}`)
-  }
-  const deal = await res.json()
-
-  await fetch(`${HS_API}/crm/v3/objects/deals/${deal.id}/associations/contacts/${contactId}/3`, {
-    method: 'PUT',
-    headers: { Authorization: `Bearer ${token}` },
-  })
-}
-
-async function addToList(token: string, contactId: string): Promise<void> {
-  const res = await fetch(`${HS_API}/crm/v3/lists/${PRODUCT_LIST_ID}/memberships/add`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify([contactId]),
-  })
-  const data = await res.json().catch(() => ({}))
-  if (!res.ok || (data as { recordIdsMissing?: string[] }).recordIdsMissing?.length) {
-    throw new Error(`addToList failed for contact ${contactId}: ${JSON.stringify(data)}`)
-  }
+  return properties
 }
 
 async function sendMetaCapi(body: AnalyzerLeadPayload): Promise<void> {
@@ -231,8 +151,14 @@ export async function POST(req: NextRequest) {
   const capiPromise = sendMetaCapi(body)
 
   try {
-    const contactId = await upsertContact(token, body)
-    await Promise.all([createDeal(token, contactId, body), addToList(token, contactId)])
+    const contactId = await upsertContact(token, buildContactProperties(body))
+    await Promise.all([
+      createDeal(token, contactId, {
+        dealname: `Plataforma — ${body.empresa}`,
+        description: `Lead Analizador de Cartera. Total: ${fmtCLP(body.cartera_total_riesgo_clp)}. Recuperable: ${fmtCLP(body.cartera_recuperable_clp)}. Industria: ${body.industria}.`,
+      }),
+      addToList(token, contactId, PRODUCT_LIST_ID.Plataforma),
+    ])
     await capiPromise
     return NextResponse.json({ ok: true })
   } catch (err) {

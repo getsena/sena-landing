@@ -2,6 +2,15 @@ import { createHash } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { classifyLead } from '@/lib/lead/classify'
+import {
+  OWNER_FRANCISCO,
+  PRODUCT_LIST_ID,
+  addToList,
+  createDeal,
+  getToken,
+  upsertContact,
+  type Producto,
+} from '@/lib/lead/hubspot'
 
 type LeadPayload = {
   nombre: string
@@ -11,7 +20,7 @@ type LeadPayload = {
   telefono: string
   facturas_pendientes: string
   alguien_cobrando: string
-  producto?: 'Plataforma' | 'Recupera' | 'Opera'
+  producto?: Producto
   utmSource?: string
   utmMedium?: string
   utmCampaign?: string
@@ -24,16 +33,7 @@ type LeadPayload = {
   landingPage?: string
 }
 
-const HS_API = 'https://api.hubapi.com'
-const OWNER_FRANCISCO = '89319447'
 const INTERES_DEL_PRODUCTO = 'Cuentas por Cobrar'
-
-// ILS IDs (v3) de las listas "Leads <Producto>" en HubSpot — distintos de los IDs v1 de la UI.
-const PRODUCT_LIST_ID: Record<'Plataforma' | 'Recupera' | 'Opera', string> = {
-  Plataforma: '362',
-  Recupera: '363',
-  Opera: '364',
-}
 
 // Scoring A/B/C basado en tamaño de cartera + urgencia de cobro
 function calcPrioridad(facturas: string, cobrando: string): 'A' | 'B' | 'C' {
@@ -62,78 +62,7 @@ function normalizeCobrando(value: string): string {
   return v
 }
 
-function getToken(): string {
-  const t = process.env.HUBSPOT_ACCESS_TOKEN
-  if (!t) throw new Error('HUBSPOT_ACCESS_TOKEN no configurado')
-  return t
-}
-
-async function findContactByEmail(token: string, email: string): Promise<string | null> {
-  const res = await fetch(`${HS_API}/crm/v3/objects/contacts/search`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({
-      filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
-      properties: ['email'],
-      limit: 1,
-    }),
-  })
-  if (!res.ok) return null
-  const data = await res.json()
-  return data.total > 0 ? data.results[0].id : null
-}
-
-// Propiedades de clasificación: útiles para reporting, pero nunca deben costar el lead.
-// Si HubSpot rechaza alguna por INVALID_OPTION, se reintenta sin ellas — los datos de
-// contacto (nombre, email, teléfono, empresa) sí se guardan.
-const CLASSIFICATION_PROPS = [
-  'origen',
-  'origen_detalle',
-  'fuente_del_lead',
-  'interes_del_producto',
-  'tipo_de_origen',
-  'etapa_del_lead',
-  'sena_prioridad',
-  'sena_intencion',
-  'facturas_pendientes',
-  'alguien_cobrando',
-]
-
-async function writeContact(
-  token: string,
-  method: 'POST' | 'PATCH',
-  path: string,
-  properties: Record<string, string>
-): Promise<Response> {
-  const send = (props: Record<string, string>) =>
-    fetch(`${HS_API}${path}`, {
-      method,
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ properties: props }),
-    })
-
-  const res = await send(properties)
-  if (res.ok) return res
-
-  const err = await res
-    .clone()
-    .json()
-    .catch(() => ({}))
-  const invalidOption = (err as { errors?: { code?: string }[] }).errors?.some(
-    (e) => e.code === 'INVALID_OPTION'
-  )
-  if (!invalidOption) return res
-
-  const safe = Object.fromEntries(
-    Object.entries(properties).filter(([key]) => !CLASSIFICATION_PROPS.includes(key))
-  )
-  console.error(
-    `[HubSpot] INVALID_OPTION, reintentando sin propiedades de clasificación: ${JSON.stringify(err)}`
-  )
-  return send(safe)
-}
-
-async function upsertContact(token: string, body: LeadPayload): Promise<string> {
+function buildContactProperties(body: LeadPayload): Record<string, string> {
   const producto = body.producto ?? 'Plataforma'
   const prioridad = calcPrioridad(body.facturas_pendientes, body.alguien_cobrando)
   const clasificacion = classifyLead({
@@ -174,70 +103,7 @@ async function upsertContact(token: string, body: LeadPayload): Promise<string> 
   if (body.utmCampaign) properties.utm_campaign = body.utmCampaign
   if (body.utmTerm) properties.utm_term = body.utmTerm
 
-  const existingId = await findContactByEmail(token, body.email)
-
-  if (existingId) {
-    const res = await writeContact(token, 'PATCH', `/crm/v3/objects/contacts/${existingId}`, properties)
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}))
-      throw new Error(`PATCH contact failed: ${JSON.stringify(err)}`)
-    }
-    return existingId
-  }
-
-  const res = await writeContact(token, 'POST', '/crm/v3/objects/contacts', properties)
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(`POST contact failed: ${JSON.stringify(err)}`)
-  }
-  const data = await res.json()
-  return data.id
-}
-
-async function createDeal(token: string, contactId: string, body: LeadPayload): Promise<void> {
-  const producto = body.producto ?? 'Plataforma'
-  const prioridad = calcPrioridad(body.facturas_pendientes, body.alguien_cobrando)
-
-  const res = await fetch(`${HS_API}/crm/v3/objects/deals`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify({
-      properties: {
-        dealname: `${producto} — ${body.empresa}`,
-        dealstage: 'appointmentscheduled',
-        pipeline: 'default',
-        hubspot_owner_id: OWNER_FRANCISCO,
-        closedate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        description: `Prioridad: ${prioridad} · Facturas: ${body.facturas_pendientes} · Cobrando: ${body.alguien_cobrando}`,
-      },
-    }),
-  })
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}))
-    throw new Error(`POST deal failed: ${JSON.stringify(err)}`)
-  }
-  const deal = await res.json()
-
-  await fetch(`${HS_API}/crm/v3/objects/deals/${deal.id}/associations/contacts/${contactId}/3`, {
-    method: 'PUT',
-    headers: { Authorization: `Bearer ${token}` },
-  })
-}
-
-async function addToList(
-  token: string,
-  contactId: string,
-  producto: 'Plataforma' | 'Recupera' | 'Opera'
-): Promise<void> {
-  const res = await fetch(`${HS_API}/crm/v3/lists/${PRODUCT_LIST_ID[producto]}/memberships/add`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    body: JSON.stringify([contactId]),
-  })
-  const data = await res.json().catch(() => ({}))
-  if (!res.ok || (data as { recordIdsMissing?: string[] }).recordIdsMissing?.length) {
-    throw new Error(`addToList failed for contact ${contactId}: ${JSON.stringify(data)}`)
-  }
+  return properties
 }
 
 async function sendMetaCapi(body: LeadPayload): Promise<void> {
@@ -312,9 +178,16 @@ export async function POST(req: NextRequest) {
   const capiPromise = sendMetaCapi(body)
 
   try {
-    const contactId = await upsertContact(token, body)
     const producto = body.producto ?? 'Plataforma'
-    await Promise.all([createDeal(token, contactId, body), addToList(token, contactId, producto)])
+    const contactId = await upsertContact(token, buildContactProperties(body))
+    const prioridad = calcPrioridad(body.facturas_pendientes, body.alguien_cobrando)
+    await Promise.all([
+      createDeal(token, contactId, {
+        dealname: `${producto} — ${body.empresa}`,
+        description: `Prioridad: ${prioridad} · Facturas: ${body.facturas_pendientes} · Cobrando: ${body.alguien_cobrando}`,
+      }),
+      addToList(token, contactId, PRODUCT_LIST_ID[producto]),
+    ])
     await capiPromise
     return NextResponse.json({ ok: true })
   } catch (err) {
