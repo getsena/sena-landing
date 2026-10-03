@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import { pixelEventOptions } from '@/lib/lead/clientAttribution'
 
 declare global {
   interface Window {
@@ -32,7 +33,7 @@ export const ThankyouPage = () => {
       window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
     }
     if (window.fbq) {
-      window.fbq('track', 'Lead', { content_name: 'plataforma' })
+      window.fbq('track', 'Lead', { content_name: 'plataforma' }, ...pixelEventOptions())
     }
   }, [])
 

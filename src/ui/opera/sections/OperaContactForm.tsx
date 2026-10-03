@@ -2,11 +2,17 @@
 
 import { useCountries } from '@/lib/services/countryService'
 import { useCurrencyStore } from '@/lib/store/useCurrencyStore'
+import {
+  getAttributionPayload,
+  landingPageUrl,
+  newEventId,
+  rememberLeadEventId,
+} from '@/lib/lead/clientAttribution'
 import Button from '@/ui/shared/Button'
 import { Input } from '@/ui/shared/Input'
 import SimpleCountrySelect, { OptionSelect } from '@/ui/shared/SimpleCountrySelect'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
@@ -33,16 +39,7 @@ export const OperaContactForm = () => {
   const { data: countries = [] } = useCountries()
   const { ipCurrency } = useCurrencyStore()
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [countrySelect, setCountrySelect] = useState<string | null>(null)
-  const [gclid, setGclid] = useState<string | null>(null)
-  const [fbclid, setFbclid] = useState<string | null>(null)
-
-  const utmSource = searchParams?.get('utm_source') || null
-  const utmMedium = searchParams?.get('utm_medium') || null
-  const utmCampaign = searchParams?.get('utm_campaign') || null
-  const utmContent = searchParams?.get('utm_content') || null
-  const utmTerm = searchParams?.get('utm_term') || null
 
   const countryOptions = useMemo(() => {
     if (!countries.length) return []
@@ -74,20 +71,6 @@ export const OperaContactForm = () => {
     if (ipCurrency && currencyMap[ipCurrency]) setCountrySelect(currencyMap[ipCurrency])
   }, [ipCurrency])
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const gc = params.get('gclid') || sessionStorage.getItem('gclid')
-    const fb = params.get('fbclid') || sessionStorage.getItem('fbclid')
-    if (gc) {
-      setGclid(gc)
-      sessionStorage.setItem('gclid', gc)
-    }
-    if (fb) {
-      setFbclid(fb)
-      sessionStorage.setItem('fbclid', fb)
-    }
-  }, [])
-
   const {
     control,
     handleSubmit,
@@ -107,6 +90,7 @@ export const OperaContactForm = () => {
   const onSubmit = async (data: FormData) => {
     setIsLoading(true)
     setSubmitError('')
+    const eventId = newEventId()
     const telefono = (countrySelect || '') + data.whatsapp
     try {
       const res = await fetch('/api/lead', {
@@ -121,14 +105,9 @@ export const OperaContactForm = () => {
           facturas_pendientes: data.facturas_pendientes,
           alguien_cobrando: data.alguien_cobrando,
           producto: 'Opera',
-          utmSource: utmSource ?? undefined,
-          utmMedium: utmMedium ?? undefined,
-          utmCampaign: utmCampaign ?? undefined,
-          utmContent: utmContent ?? undefined,
-          utmTerm: utmTerm ?? undefined,
-          gclid: gclid ?? undefined,
-          fbclid: fbclid ?? undefined,
-          landingPage: window.location.href,
+          ...getAttributionPayload(),
+          landingPage: landingPageUrl(),
+          eventId,
         }),
       })
       const json = await res.json().catch(() => ({ ok: false }))
@@ -142,7 +121,8 @@ export const OperaContactForm = () => {
         window.gtag('event', 'completar_formulario', { product: 'opera' })
         window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
       }
-      if (window.fbq) window.fbq('track', 'Lead', { content_name: 'opera' })
+      rememberLeadEventId(eventId)
+      if (window.fbq) window.fbq('track', 'Lead', { content_name: 'opera' }, { eventID: eventId })
 
       router.push('/opera/gracias')
     } catch {
