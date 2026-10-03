@@ -159,12 +159,17 @@ export async function POST(req: NextRequest) {
   const capiPromise = sendMetaCapi(body)
 
   try {
-    const contactId = await upsertContact(token, buildContactProperties(body))
+    const { id: contactId, isNew } = await upsertContact(token, buildContactProperties(body))
     await Promise.all([
-      createDeal(token, contactId, {
-        dealname: `Plataforma — ${body.empresa}`,
-        description: `Lead Analizador de Cartera. Total: ${fmtCLP(body.cartera_total_riesgo_clp)}. Recuperable: ${fmtCLP(body.cartera_recuperable_clp)}. Industria: ${body.industria}.`,
-      }),
+      createDeal(
+        token,
+        contactId,
+        {
+          dealname: `Plataforma — ${body.empresa}`,
+          description: `Lead Analizador de Cartera. Total: ${fmtCLP(body.cartera_total_riesgo_clp)}. Recuperable: ${fmtCLP(body.cartera_recuperable_clp)}. Industria: ${body.industria}.`,
+        },
+        !isNew
+      ),
       addToList(token, contactId, PRODUCT_LIST_ID.Plataforma),
     ])
     await capiPromise
