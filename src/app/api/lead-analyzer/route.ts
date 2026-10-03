@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { classifyLead } from '@/lib/lead/classify'
 import { isSmokeTest } from '@/lib/lead/smoke'
+import { readJsonBody, validateAnalyzerLead, type AnalyzerLeadPayload } from '@/lib/lead/validate'
 import {
   OWNER_FRANCISCO,
   PRODUCT_LIST_ID,
@@ -11,28 +12,6 @@ import {
   getToken,
   upsertContact,
 } from '@/lib/lead/hubspot'
-
-type AnalyzerLeadPayload = {
-  nombre: string
-  empresa: string
-  email: string
-  telefono?: string
-  cartera_total_riesgo_clp: number
-  cartera_recuperable_clp: number
-  cartera_bucket_critico: number
-  facturacion_mensual_rango: string
-  industria: string
-  utmSource?: string
-  utmMedium?: string
-  utmCampaign?: string
-  gclid?: string
-  gbraid?: string
-  wbraid?: string
-  fbclid?: string
-  landingPage?: string
-  // id compartido con el pixel del navegador para que Meta deduplique el evento
-  eventId?: string
-}
 
 const INTERES_DEL_PRODUCTO = 'Cuentas por Cobrar'
 
@@ -125,40 +104,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'HubSpot no configurado' }, { status: 500 })
   }
 
-  let body: AnalyzerLeadPayload
-  try {
-    body = await req.json()
-  } catch {
-    return NextResponse.json({ error: 'Payload inválido' }, { status: 400 })
-  }
-
-  const {
-    nombre,
-    empresa,
-    email,
-    cartera_total_riesgo_clp,
-    cartera_recuperable_clp,
-    cartera_bucket_critico,
-    facturacion_mensual_rango,
-    industria,
-  } = body
-  if (
-    !nombre ||
-    !empresa ||
-    !email ||
-    cartera_total_riesgo_clp == null ||
-    cartera_recuperable_clp == null ||
-    cartera_bucket_critico == null ||
-    !facturacion_mensual_rango ||
-    !industria
-  ) {
-    return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 })
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email)) {
-    return NextResponse.json({ error: 'Email inválido' }, { status: 400 })
-  }
+  const parsed = await readJsonBody(req)
+  if (!parsed.ok) return NextResponse.json({ error: parsed.error }, { status: parsed.status })
+  const validated = validateAnalyzerLead(parsed.value)
+  if (!validated.ok) return NextResponse.json({ error: validated.error }, { status: validated.status })
+  const body = validated.value
 
   try {
     const { id: contactId, isNew } = await upsertContact(token, buildContactProperties(body))

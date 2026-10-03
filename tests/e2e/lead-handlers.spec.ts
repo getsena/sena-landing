@@ -171,13 +171,13 @@ test.describe('Meta CAPI: solo se reporta lo que el CRM guardó', () => {
     test(`${nombre}: envía el evento Lead con event_id después de guardar en HubSpot`, async () => {
       const m = mockHubspot()
       try {
-        const res = await run({ ...base, eventId: 'evt-123' })
+        const res = await run({ ...base, eventId: '123e4567-e89b-42d3-a456-426614174000' })
         expect(res.status).toBe(200)
         const capi = capiCalls(m.calls)
         expect(capi).toHaveLength(1)
         const evento = (capi[0].body as { data: { event_id: string; event_name: string }[] }).data[0]
         expect(evento.event_name).toBe('Lead')
-        expect(evento.event_id).toBe('evt-123')
+        expect(evento.event_id).toBe('123e4567-e89b-42d3-a456-426614174000')
         // el evento sale después de crear el contacto, no antes
         const iContacto = m.calls.findIndex((c) => c.method === 'POST' && c.url.endsWith('/crm/v3/objects/contacts'))
         expect(m.calls.indexOf(capi[0])).toBeGreaterThan(iContacto)

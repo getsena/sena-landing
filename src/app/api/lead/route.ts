@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { classifyLead } from '@/lib/lead/classify'
 import { isSmokeTest } from '@/lib/lead/smoke'
+import { readJsonBody, validateLead, type LeadPayload } from '@/lib/lead/validate'
 import {
   OWNER_FRANCISCO,
   PRODUCT_LIST_ID,
@@ -10,31 +11,7 @@ import {
   createDeal,
   getToken,
   upsertContact,
-  type Producto,
 } from '@/lib/lead/hubspot'
-
-type LeadPayload = {
-  nombre: string
-  apellido: string
-  empresa: string
-  email: string
-  telefono: string
-  facturas_pendientes: string
-  alguien_cobrando: string
-  producto?: Producto
-  utmSource?: string
-  utmMedium?: string
-  utmCampaign?: string
-  utmContent?: string
-  utmTerm?: string
-  gclid?: string
-  gbraid?: string
-  wbraid?: string
-  fbclid?: string
-  landingPage?: string
-  // id compartido con el pixel del navegador para que Meta deduplique el evento
-  eventId?: string
-}
 
 const INTERES_DEL_PRODUCTO = 'Cuentas por Cobrar'
 
@@ -157,27 +134,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'HubSpot no configurado' }, { status: 500 })
   }
 
-  let body: LeadPayload
-  try {
-    body = await req.json()
-  } catch {
-    return NextResponse.json({ error: 'Payload inválido' }, { status: 400 })
-  }
-
-  const { nombre, apellido, empresa, email, telefono, facturas_pendientes, alguien_cobrando } = body
-  if (!nombre || !apellido || !empresa || !email || !telefono || !facturas_pendientes || !alguien_cobrando) {
-    return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 })
-  }
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  if (!emailRegex.test(email)) {
-    return NextResponse.json({ error: 'Email inválido' }, { status: 400 })
-  }
-
-  const PRODUCTOS_VALIDOS = ['Plataforma', 'Recupera', 'Opera'] as const
-  if (body.producto && !PRODUCTOS_VALIDOS.includes(body.producto)) {
-    body.producto = undefined
-  }
+  const parsed = await readJsonBody(req)
+  if (!parsed.ok) return NextResponse.json({ error: parsed.error }, { status: parsed.status })
+  const validated = validateLead(parsed.value)
+  if (!validated.ok) return NextResponse.json({ error: validated.error }, { status: validated.status })
+  const body = validated.value
 
   try {
     const producto = body.producto ?? 'Plataforma'
