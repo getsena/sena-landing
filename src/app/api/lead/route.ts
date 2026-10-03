@@ -119,7 +119,7 @@ async function sendMetaCapi(body: LeadPayload, eventId: string): Promise<void> {
           },
         ],
       }),
-      signal: AbortSignal.timeout(5000),
+      signal: AbortSignal.timeout(2000),
     })
   } catch (err) {
     console.error('[CAPI] error:', err instanceof Error ? err.message : 'CAPI error')

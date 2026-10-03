@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-import { mergeAttribution, parseAttribution, toPayload } from '@/lib/lead/clientAttribution'
+import { mergeAttribution, newEventId, parseAttribution, toPayload } from '@/lib/lead/clientAttribution'
 
 test.describe('parseAttribution', () => {
   test('lee gclid, gbraid, wbraid, fbclid y los cinco utm', () => {
@@ -67,5 +67,54 @@ test.describe('toPayload', () => {
 
   test('sin datos devuelve todo indefinido', () => {
     expect(Object.values(toPayload({})).every((v) => v === undefined)).toBe(true)
+  })
+})
+
+test.describe('mergeAttribution: utm_medium pagado sin click id', () => {
+  test('un utm_medium pagado en la URL reemplaza lo guardado (LinkedIn y Bing no traen click id)', () => {
+    const stored = { utm_source: 'newsletter', utm_medium: 'email', utm_campaign: 'promo' }
+    const current = { utm_source: 'linkedin', utm_medium: 'CPC', utm_campaign: 'cobranza' }
+    expect(mergeAttribution(stored, current)).toEqual(current)
+  })
+
+  test('un medio no pagado no reemplaza lo guardado', () => {
+    const stored = { gclid: 'g1', utm_campaign: '23588970667' }
+    expect(mergeAttribution(stored, { utm_medium: 'email' })).toEqual({ ...stored, utm_medium: 'email' })
+  })
+})
+
+test.describe('newEventId', () => {
+  const UUID_V4 = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+
+  test('devuelve un UUID', () => {
+    expect(newEventId()).toMatch(UUID_V4)
+  })
+
+  test('sigue funcionando si el navegador no tiene crypto.randomUUID', () => {
+    const original = Object.getOwnPropertyDescriptor(globalThis, 'crypto')
+    Object.defineProperty(globalThis, 'crypto', { value: {}, configurable: true })
+    try {
+      const a = newEventId()
+      const b = newEventId()
+      expect(a).toMatch(UUID_V4)
+      expect(a).not.toBe(b)
+    } finally {
+      if (original) Object.defineProperty(globalThis, 'crypto', original)
+    }
+  })
+
+  test('sigue funcionando si acceder a crypto lanza un error', () => {
+    const original = Object.getOwnPropertyDescriptor(globalThis, 'crypto')
+    Object.defineProperty(globalThis, 'crypto', {
+      get() {
+        throw new Error('bloqueado')
+      },
+      configurable: true,
+    })
+    try {
+      expect(newEventId()).toMatch(UUID_V4)
+    } finally {
+      if (original) Object.defineProperty(globalThis, 'crypto', original)
+    }
   })
 })

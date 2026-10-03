@@ -49,6 +49,8 @@ async function emittedProperties(
   } finally {
     globalThis.fetch = realFetch
   }
+  // sin esto el test pasaría en vacío si la ruta fallara antes de crear el contacto
+  expect(Object.keys(captured).length, `${path} no llegó a crear el contacto`).toBeGreaterThan(0)
   return captured
 }
 

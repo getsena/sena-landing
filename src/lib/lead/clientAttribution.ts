@@ -1,9 +1,11 @@
+import { PAID_MEDIUMS } from '@/lib/lead/taxonomy'
+
 // Captura de atribución en el navegador (taxonomía de atribución v1.1.0).
 //
 // Política:
 //  - Se guardan en sessionStorage los parámetros de la URL de entrada, para que sobrevivan a la
 //    navegación entre páginas y a recargas sin query (first-touch dentro de la sesión).
-//  - Si llega un clic pagado nuevo (gclid, gbraid, wbraid o fbclid), reemplaza lo guardado: el último
+//  - Si llega un clic pagado nuevo (gclid, gbraid, wbraid, fbclid o un utm_medium pagado), reemplaza lo guardado: el último
 //    clic pagado gana, para no mezclar una campaña con parámetros de otra visita.
 //  - Sin clic pagado, lo guardado manda y la URL actual solo completa lo que falte.
 
@@ -23,6 +25,15 @@ export type AttributionKey = (typeof ATTRIBUTION_KEYS)[number]
 export type AttributionParams = Partial<Record<AttributionKey, string>>
 
 const CLICK_IDS: AttributionKey[] = ['gclid', 'gbraid', 'wbraid', 'fbclid']
+
+// LinkedIn y Bing no traen click id: un utm_medium pagado en la URL también es un clic pagado nuevo.
+function hasPaidMedium(p: AttributionParams): boolean {
+  const medium = (p.utm_medium ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/[-\s]+/g, '_')
+  return PAID_MEDIUMS.includes(medium)
+}
 const MAX_LENGTH = 256
 const STORAGE_KEY = 'sena_attribution_v1'
 const EVENT_ID_KEY = 'sena_lead_event_id'
@@ -38,7 +49,7 @@ export function parseAttribution(search: string): AttributionParams {
 }
 
 export function mergeAttribution(stored: AttributionParams, current: AttributionParams): AttributionParams {
-  const hasNewPaidClick = CLICK_IDS.some((k) => current[k])
+  const hasNewPaidClick = CLICK_IDS.some((k) => current[k]) || hasPaidMedium(current)
   if (hasNewPaidClick) return { ...current }
   return { ...current, ...stored }
 }
@@ -103,7 +114,15 @@ export function landingPageUrl(): string {
 
 // Id compartido entre el pixel del navegador y Meta CAPI para que Meta deduplique el evento Lead.
 export function newEventId(): string {
-  return globalThis.crypto.randomUUID()
+  // randomUUID no existe en navegadores o webviews antiguos: el envío del formulario no puede depender de él.
+  try {
+    if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID()
+  } catch {
+    // se usa el respaldo
+  }
+  const hex = (n: number) =>
+    Array.from({ length: n }, () => Math.floor(Math.random() * 16).toString(16)).join('')
+  return `${hex(8)}-${hex(4)}-4${hex(3)}-a${hex(3)}-${hex(12)}`
 }
 
 export function rememberLeadEventId(eventId: string): void {
