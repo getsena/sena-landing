@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server'
 import { test, expect } from '@playwright/test'
 
 import { POST as postAnalyzer } from '@/app/api/lead-analyzer/route'
+import { POST as postLead } from '@/app/api/lead/route'
 
 type Call = { method: string; url: string; body: unknown }
 
@@ -139,4 +140,72 @@ test.describe('/api/lead-analyzer: atribución', () => {
       m.restore()
     }
   })
+})
+
+const leadPayload = {
+  nombre: 'Ana',
+  apellido: 'Pérez',
+  empresa: 'Acme',
+  email: 'ana@acme.cl',
+  telefono: '+56911111111',
+  facturas_pendientes: '10-50',
+  alguien_cobrando: 'No',
+  producto: 'Recupera',
+  fbclid: 'fb1',
+}
+
+const capiCalls = (calls: Call[]) => calls.filter((c) => c.url.includes('graph.facebook.com'))
+
+test.describe('Meta CAPI: solo se reporta lo que el CRM guardó', () => {
+  test.beforeEach(() => {
+    process.env.META_PIXEL_ID = 'pixel-1'
+    process.env.META_CAPI_TOKEN = 'capi-token'
+  })
+
+  for (const [nombre, run] of [
+    ['/api/lead', (p: object) => postLead(req('/api/lead', p))],
+    ['/api/lead-analyzer', (p: object) => postAnalyzer(req('/api/lead-analyzer', p))],
+  ] as const) {
+    const base = nombre === '/api/lead' ? leadPayload : analyzerPayload
+
+    test(`${nombre}: envía el evento Lead con event_id después de guardar en HubSpot`, async () => {
+      const m = mockHubspot()
+      try {
+        const res = await run({ ...base, eventId: 'evt-123' })
+        expect(res.status).toBe(200)
+        const capi = capiCalls(m.calls)
+        expect(capi).toHaveLength(1)
+        const evento = (capi[0].body as { data: { event_id: string; event_name: string }[] }).data[0]
+        expect(evento.event_name).toBe('Lead')
+        expect(evento.event_id).toBe('evt-123')
+        // el evento sale después de crear el contacto, no antes
+        const iContacto = m.calls.findIndex((c) => c.method === 'POST' && c.url.endsWith('/crm/v3/objects/contacts'))
+        expect(m.calls.indexOf(capi[0])).toBeGreaterThan(iContacto)
+      } finally {
+        m.restore()
+      }
+    })
+
+    test(`${nombre}: genera un event_id si el cliente no manda uno`, async () => {
+      const m = mockHubspot()
+      try {
+        await run(base)
+        const evento = (capiCalls(m.calls)[0].body as { data: { event_id: string }[] }).data[0]
+        expect(evento.event_id).toMatch(/^[0-9a-f-]{36}$/)
+      } finally {
+        m.restore()
+      }
+    })
+
+    test(`${nombre}: no reporta a Meta si HubSpot falla`, async () => {
+      const m = mockHubspot({ contactPost: [{ status: 500, json: { message: 'boom' } }] })
+      try {
+        const res = await run(base)
+        expect(res.status).toBe(502)
+        expect(capiCalls(m.calls)).toHaveLength(0)
+      } finally {
+        m.restore()
+      }
+    })
+  }
 })
