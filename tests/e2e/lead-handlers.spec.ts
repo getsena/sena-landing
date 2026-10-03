@@ -209,3 +209,64 @@ test.describe('Meta CAPI: solo se reporta lo que el CRM guardó', () => {
     })
   }
 })
+
+test.describe('rutas de lead: un campo de clasificación rechazado no pierde el lead', () => {
+  const CLASIFICACION = ['origen', 'origen_detalle', 'fuente_del_lead', 'sena_prioridad', 'etapa_del_lead']
+
+  for (const [nombre, run, base] of [
+    ['/api/lead', (p: object) => postLead(req('/api/lead', p)), leadPayload],
+    ['/api/lead-analyzer', (p: object) => postAnalyzer(req('/api/lead-analyzer', p)), analyzerPayload],
+  ] as const) {
+    test(`${nombre}: ante 400 INVALID_OPTION reintenta sin clasificación y responde ok`, async () => {
+      const m = mockHubspot({
+        contactPost: [
+          { status: 400, json: { errors: [{ code: 'INVALID_OPTION', message: 'fuente_del_lead' }] } },
+          { status: 201, json: { id: '77' } },
+        ],
+      })
+      try {
+        const res = await run({ ...base, gclid: 'abc' })
+        expect(res.status).toBe(200)
+        const writes = contactWrites(m.calls)
+        expect(writes).toHaveLength(2)
+        const reintento = (writes[1].body as { properties: Record<string, string> }).properties
+        for (const k of CLASIFICACION) expect(reintento).not.toHaveProperty(k)
+        expect(reintento.email).toBe(base.email)
+        expect(reintento.firstname).toBe('Ana')
+      } finally {
+        m.restore()
+      }
+    })
+
+    test(`${nombre}: ante PROPERTY_DOESNT_EXIST también guarda el lead sin clasificación`, async () => {
+      const m = mockHubspot({
+        contactPost: [
+          {
+            status: 400,
+            json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"origen_detalle"}]' },
+          },
+          { status: 201, json: { id: '78' } },
+        ],
+      })
+      try {
+        const res = await run({ ...base, gclid: 'abc' })
+        expect(res.status).toBe(200)
+        expect(contactWrites(m.calls)).toHaveLength(2)
+      } finally {
+        m.restore()
+      }
+    })
+
+    test(`${nombre}: un error que no es de clasificación no se reintenta y responde 502`, async () => {
+      const m = mockHubspot({ contactPost: [{ status: 500, json: { message: 'boom' } }] })
+      try {
+        const res = await run(base)
+        expect(res.status).toBe(502)
+        expect(contactWrites(m.calls)).toHaveLength(1)
+      } finally {
+        m.restore()
+      }
+    })
+  }
+})
+
