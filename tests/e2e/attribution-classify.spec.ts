@@ -86,6 +86,12 @@ test.describe('reglas y bordes', () => {
     )
   })
 
+  test('utm_campaign con nombres heredados del objeto no rompe la clasificación', () => {
+    for (const utmCampaign of ['__proto__', 'constructor', 'toString', 'hasOwnProperty']) {
+      expect(classifyLead({ gclid: 'a', utmCampaign }).origenDetalle).toBe('google_campana_desconocida')
+    }
+  })
+
   test('entradas con espacios y mayúsculas se normalizan', () => {
     expect(classifyLead({ utmSource: '  FaceBook ', utmMedium: 'Paid Social' }).origen).toBe('Meta')
   })

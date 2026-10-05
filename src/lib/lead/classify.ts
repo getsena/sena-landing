@@ -35,7 +35,9 @@ export function classifyLead(input: AttributionInput): LeadClassification {
 
   if (input.gclid || input.gbraid || input.wbraid || (source === 'google' && paid)) {
     const detalle: OrigenDetalle = campaign
-      ? (GOOGLE_ADS_CAMPAIGNS[campaign] ?? 'google_campana_desconocida')
+      ? Object.hasOwn(GOOGLE_ADS_CAMPAIGNS, campaign)
+        ? GOOGLE_ADS_CAMPAIGNS[campaign]
+        : 'google_campana_desconocida'
       : 'google_sin_utm'
     return { fuente: 'Ads', origen: 'Google', origenDetalle: detalle, regla: 'R1' }
   }
