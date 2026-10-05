@@ -92,6 +92,31 @@ test.describe('validateLead', () => {
     }
   })
 
+  test('descarta landingPage de hosts ajenos a SENA', () => {
+    for (const landingPage of [
+      'https://evil.com/somossena.com',
+      'https://somossena.com.evil.com/',
+      'https://evilsomossena.com/',
+      'http://localhost:3000/',
+    ]) {
+      const r = okLead({ landingPage })
+      expect(r.ok).toBe(true)
+      if (r.ok) expect(r.value.landingPage).toBeUndefined()
+    }
+  })
+
+  test('conserva landingPage de somossena.com y sus subdominios', () => {
+    for (const landingPage of [
+      'https://somossena.com/plataforma',
+      'https://recupera.somossena.com/?gclid=x',
+      'https://agente.somossena.com/',
+    ]) {
+      const r = okLead({ landingPage })
+      expect(r.ok).toBe(true)
+      if (r.ok) expect(r.value.landingPage).toBe(landingPage)
+    }
+  })
+
   test('conserva una URL http(s) válida y un eventId UUID', () => {
     const id = '123e4567-e89b-42d3-a456-426614174000'
     const r = okLead({ landingPage: 'https://www.somossena.com/recupera', eventId: id.toUpperCase() })

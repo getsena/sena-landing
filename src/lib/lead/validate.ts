@@ -99,7 +99,9 @@ function httpUrl(value: unknown): string | undefined {
   if (!v) return undefined
   try {
     const u = new URL(v)
-    return u.protocol === 'http:' || u.protocol === 'https:' ? v : undefined
+    const host = u.hostname.toLowerCase()
+    const ownHost = host === 'somossena.com' || host.endsWith('.somossena.com')
+    return (u.protocol === 'http:' || u.protocol === 'https:') && ownHost ? v : undefined
   } catch {
     return undefined
   }
