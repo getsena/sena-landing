@@ -119,7 +119,7 @@ export const RecuperaContactForm = () => {
 
       if (window.gtag) {
         window.gtag('event', 'completar_formulario', { product: 'recupera' })
-        window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
+        window.gtag('event', 'conversion', { send_to: 'AW-17962976949/sCCeCNfunKccELWNtfVC' })
       }
       rememberLeadEventId(eventId)
       if (window.fbq) window.fbq('track', 'Lead', { content_name: 'recupera' }, { eventID: eventId })

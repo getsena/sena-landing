@@ -23,7 +23,7 @@ export const OperaGraciasPage = () => {
     window.dataLayer.push({ event: 'conversion_event_signup_2', origin: 'opera' })
     if (window.gtag) {
       window.gtag('event', 'completar_formulario', { product: 'opera' })
-      window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
+      window.gtag('event', 'conversion', { send_to: 'AW-17962976949/TyATCOr4nKccELWNtfVC' })
     }
     if (window.fbq) window.fbq('track', 'Lead', { content_name: 'opera' }, ...pixelEventOptions())
   }, [])
