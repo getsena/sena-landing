@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Script from 'next/script'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { pixelEventOptions } from '@/lib/lead/clientAttribution'
 
 declare global {
   interface Window {
@@ -24,7 +25,7 @@ export const PlataformaGraciasPage = () => {
       window.gtag('event', 'completar_formulario', { product: 'plataforma' })
       window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
     }
-    if (window.fbq) window.fbq('track', 'Lead', { content_name: 'plataforma' })
+    if (window.fbq) window.fbq('track', 'Lead', { content_name: 'plataforma' }, ...pixelEventOptions())
   }, [])
 
   return (

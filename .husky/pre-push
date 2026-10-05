@@ -2,4 +2,11 @@ if [ "$(uname)" = "Linux" ]; then
     sudo chown -R $USER:$USER $(pwd)
 fi
 
+# Puerta de publicación del blog. Va antes del build a propósito: corre en
+# segundos y falla por lo que de verdad se rompe (un post sin lector declarado,
+# un bloqueo sin resolver, una imagen que no sirve para el hero). Esperar tres
+# minutos de build para enterarse de eso es lo que hace que la gente use
+# --no-verify. La copia que no se puede saltar corre en el PR.
+npm run blog:gate
+
 npm run build

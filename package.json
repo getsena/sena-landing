@@ -17,7 +17,8 @@
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx --fix .",
     "prettier": "prettier --write .",
     "lint-staged": "lint-staged --no-stash",
-    "test:e2e": "playwright test --reporter=line"
+    "test:e2e": "playwright test --reporter=line",
+    "blog:gate": "node scripts/blog-gate.mjs"
   },
   "dependencies": {
     "@next/third-parties": "^16.2.2",
