@@ -1,7 +1,11 @@
 # Contrato con HubSpot: lo que las rutas de lead envían existe en HubSpot.
 #
 # Es de solo lectura: el test lee las propiedades con GET y ejecuta las rutas contra un HubSpot
-# simulado. Corre a diario y a mano, y no en cada PR, para que los PR de forks nunca vean el secreto.
+# simulado. Por ahora corre solo a mano (workflow_dispatch) y no en cada PR, para que los PR de
+# forks nunca vean el secreto.
+#
+# El cron diario se reactivará cuando exista el secreto HUBSPOT_CONTRACT_TOKEN (app privada de
+# HubSpot de solo lectura); sin él, un cron fallaría cada día.
 #
 # Requiere el secreto HUBSPOT_CONTRACT_TOKEN: una app privada de HubSpot con el permiso mínimo
 # `crm.schemas.contacts.read` (no el token de producción de las rutas). Si el job falla, un valor
@@ -9,8 +13,6 @@
 name: HubSpot contract
 
 on:
-  schedule:
-    - cron: '0 12 * * *'
   workflow_dispatch:
 
 permissions:

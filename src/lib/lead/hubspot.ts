@@ -246,10 +246,16 @@ export async function createDeal(
   }
   const created = await res.json()
 
-  await fetch(`${HS_API}/crm/v3/objects/deals/${created.id}/associations/contacts/${contactId}/3`, {
-    method: 'PUT',
-    headers: { Authorization: `Bearer ${token}` },
-  })
+  // Sin asociación el deal queda huérfano: se falla para que la ruta responda 502 y el reintento
+  // del usuario lo encuentre con hasOpenDeal en vez de duplicarlo.
+  const assoc = await fetch(
+    `${HS_API}/crm/v3/objects/deals/${created.id}/associations/contacts/${contactId}/3`,
+    { method: 'PUT', headers: { Authorization: `Bearer ${token}` } }
+  )
+  if (!assoc.ok) {
+    const err = await assoc.json().catch(() => ({}))
+    throw new Error(`PUT deal association failed: ${describeHubspotError(assoc.status, err)}`)
+  }
 }
 
 export async function addToList(token: string, contactId: string, listId: string): Promise<void> {
