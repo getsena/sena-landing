@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 import { isSmokeTest } from '@/lib/lead/smoke'
-import { CLASSIFICATION_PROPS, describeHubspotError, upsertContact, writeContact } from '@/lib/lead/hubspot'
+import { CLASSIFICATION_PROPS, createDeal, describeHubspotError, upsertContact, writeContact } from '@/lib/lead/hubspot'
 
 type Call = { method: string; url: string; body: { properties: Record<string, string> } }
 
@@ -287,6 +287,72 @@ test.describe('robustez del guardado de contactos', () => {
         expect(patch).not.toHaveProperty(k)
       }
       expect(patch.gclid).toBe('abc')
+    } finally {
+      m.restore()
+    }
+  })
+})
+
+// Simula HubSpot para createDeal: enruta por método y URL (el PUT de asociación no lleva cuerpo).
+function mockDealFetch(handler: (method: string, url: string) => { status: number; json: unknown }) {
+  const calls: { method: string; url: string }[] = []
+  const original = globalThis.fetch
+  globalThis.fetch = (async (url: string, init: RequestInit) => {
+    const method = init.method ?? 'GET'
+    calls.push({ method, url })
+    const r = handler(method, url)
+    return new Response(JSON.stringify(r.json), {
+      status: r.status,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }) as typeof fetch
+  return { calls, restore: () => (globalThis.fetch = original) }
+}
+
+const DEAL = { dealname: 'Plataforma — Acme SpA', description: 'Prioridad: A' }
+
+test.describe('createDeal: la asociación deal-contacto no puede fallar en silencio', () => {
+  test('si el PUT de asociación falla, lanza un error sin PII para que el flujo responda 502', async () => {
+    const m = mockDealFetch((method) =>
+      method === 'POST'
+        ? { status: 201, json: { id: 'deal-1' } }
+        : { status: 500, json: { message: 'ana@acme.cl', errors: [{ code: 'INTERNAL_ERROR' }] } }
+    )
+    try {
+      const err = await createDeal('tok', 'c-1', DEAL).then(
+        () => null,
+        (e: Error) => e
+      )
+      expect(err).not.toBeNull()
+      expect(err!.message).toContain('status=500')
+      expect(err!.message).toContain('INTERNAL_ERROR')
+      expect(err!.message).not.toContain('ana@acme.cl')
+      expect(m.calls.map((c) => c.method)).toEqual(['POST', 'PUT'])
+    } finally {
+      m.restore()
+    }
+  })
+
+  test('el reintento tras ese fallo no duplica: el dedupe ve el deal huérfano y no crea otro', async () => {
+    const m = mockDealFetch((method, url) =>
+      url.endsWith('/deals/search') ? { status: 200, json: { total: 1 } } : { status: 500, json: {} }
+    )
+    try {
+      await createDeal('tok', 'c-1', DEAL, true)
+      expect(m.calls).toHaveLength(1)
+      expect(m.calls[0].url).toContain('/deals/search')
+    } finally {
+      m.restore()
+    }
+  })
+
+  test('si la asociación responde ok, no lanza', async () => {
+    const m = mockDealFetch((method) =>
+      method === 'POST' ? { status: 201, json: { id: 'deal-1' } } : { status: 200, json: {} }
+    )
+    try {
+      await createDeal('tok', 'c-1', DEAL)
+      expect(m.calls.map((c) => c.method)).toEqual(['POST', 'PUT'])
     } finally {
       m.restore()
     }
