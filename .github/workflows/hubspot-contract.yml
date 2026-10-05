@@ -1,0 +1,42 @@
+# Contrato con HubSpot: lo que las rutas de lead envían existe en HubSpot.
+#
+# Es de solo lectura: el test lee las propiedades con GET y ejecuta las rutas contra un HubSpot
+# simulado. Corre a diario y a mano, y no en cada PR, para que los PR de forks nunca vean el secreto.
+#
+# Requiere el secreto HUBSPOT_CONTRACT_TOKEN: una app privada de HubSpot con el permiso mínimo
+# `crm.schemas.contacts.read` (no el token de producción de las rutas). Si el job falla, un valor
+# o una propiedad que el código envía ya no coincide con HubSpot y se están perdiendo leads.
+name: HubSpot contract
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Exigir el token (sin él el test se omitiría en silencio)
+        env:
+          HUBSPOT_CONTRACT_TOKEN: ${{ secrets.HUBSPOT_CONTRACT_TOKEN }}
+        run: test -n "$HUBSPOT_CONTRACT_TOKEN" || { echo "Falta el secreto HUBSPOT_CONTRACT_TOKEN"; exit 1; }
+
+      - run: corepack enable
+
+      - run: yarn install --immutable
+
+      - name: Contrato con HubSpot
+        env:
+          HUBSPOT_CONTRACT_TOKEN: ${{ secrets.HUBSPOT_CONTRACT_TOKEN }}
+        run: yarn playwright test tests/e2e/hubspot-contract.spec.ts --reporter=line

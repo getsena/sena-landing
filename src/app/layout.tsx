@@ -1,5 +1,6 @@
 import { getCountriesServer } from '@/lib/services/countryService.server'
 import { getIpInfoServer } from '@/lib/services/ipConfigService.server'
+import AttributionCapture from '@/ui/shared/AttributionCapture'
 import { ModalRenderer } from '@/ui/shared/ModalRender'
 import { Toast } from '@/ui/shared/Toast'
 import NinoChatInit from '@/ui/shared/NinoChatInit'
@@ -173,6 +174,7 @@ export default async function RootLayout({
               })();
             `}
           </Script>
+          <AttributionCapture />
           <Suspense>{children}</Suspense>
           <ModalRenderer />
           <Toast />

@@ -4,6 +4,7 @@ import { Button } from '@/ui/shared/Button'
 import { Input } from '@/ui/shared/Input'
 import { useModalStore } from '@/lib/store/modalStore'
 import { useEffect, useRef, useState } from 'react'
+import { getAttributionPayload, landingPageUrl, newEventId } from '@/lib/lead/clientAttribution'
 import {
   BUCKET_COLORS,
   BUCKET_LABELS,
@@ -60,30 +61,6 @@ export function PortfolioAnalyzerModal() {
   // Loading animation
   const [loadingMsg, setLoadingMsg] = useState(LOADING_MESSAGES[0])
   const loadingRef = useRef<ReturnType<typeof setInterval> | null>(null)
-
-  // Atribución de campaña
-  const [utmSource, setUtmSource] = useState<string | null>(null)
-  const [gclid, setGclid] = useState<string | null>(null)
-  const [fbclid, setFbclid] = useState<string | null>(null)
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const utm = params.get('utm_source') || sessionStorage.getItem('utm_source')
-    const gc = params.get('gclid') || sessionStorage.getItem('gclid')
-    const fb = params.get('fbclid') || sessionStorage.getItem('fbclid')
-    if (utm) {
-      setUtmSource(utm)
-      sessionStorage.setItem('utm_source', utm)
-    }
-    if (gc) {
-      setGclid(gc)
-      sessionStorage.setItem('gclid', gc)
-    }
-    if (fb) {
-      setFbclid(fb)
-      sessionStorage.setItem('fbclid', fb)
-    }
-  }, [])
 
   const progressPct = Math.round((step / TOTAL_STEPS) * 100)
 
@@ -148,10 +125,9 @@ export function PortfolioAnalyzerModal() {
           cartera_bucket_critico: state.result.criticalBucket,
           facturacion_mensual_rango: state.facturacion,
           industria: state.industria,
-          utmSource: utmSource ?? undefined,
-          gclid: gclid ?? undefined,
-          fbclid: fbclid ?? undefined,
-          landingPage: typeof window !== 'undefined' ? window.location.href : '',
+          ...getAttributionPayload(),
+          landingPage: landingPageUrl(),
+          eventId: newEventId(),
         }),
       })
     } catch {
