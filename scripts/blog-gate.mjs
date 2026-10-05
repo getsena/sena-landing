@@ -101,7 +101,7 @@ const avisa = (msg) => ({ msg, aviso: true })
   vivos: un post comentado no se publica y no tiene por qué declarar nada.
 */
 function leerPosts() {
-  const lineas = readFileSync(DATA, 'utf8').split('\n')
+  const lineas = readFileSync(DATA, 'utf8').split(/\r?\n/)
   const posts = []
   let actual = null
   let profundidad = 0
