@@ -118,7 +118,6 @@ export const OperaContactForm = () => {
       }
 
       if (window.gtag) {
-        window.gtag('event', 'completar_formulario', { product: 'opera' })
         window.gtag('event', 'conversion', { send_to: 'AW-17962976949/TyATCOr4nKccELWNtfVC' })
       }
       rememberLeadEventId(eventId)

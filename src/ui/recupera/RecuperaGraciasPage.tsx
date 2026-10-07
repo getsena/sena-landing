@@ -22,7 +22,6 @@ export const RecuperaGraciasPage = () => {
     if (!window.dataLayer) window.dataLayer = []
     window.dataLayer.push({ event: 'conversion_event_signup_2', origin: 'recupera' })
     if (window.gtag) {
-      window.gtag('event', 'completar_formulario', { product: 'recupera' })
       window.gtag('event', 'conversion', { send_to: 'AW-17962976949/sCCeCNfunKccELWNtfVC' })
     }
     if (window.fbq) window.fbq('track', 'Lead', { content_name: 'recupera' }, ...pixelEventOptions())

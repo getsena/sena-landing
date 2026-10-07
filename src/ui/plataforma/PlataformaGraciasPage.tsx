@@ -22,7 +22,6 @@ export const PlataformaGraciasPage = () => {
     if (!window.dataLayer) window.dataLayer = []
     window.dataLayer.push({ event: 'conversion_event_signup_2', origin: 'plataforma' })
     if (window.gtag) {
-      window.gtag('event', 'completar_formulario', { product: 'plataforma' })
       window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
     }
     if (window.fbq) window.fbq('track', 'Lead', { content_name: 'plataforma' }, ...pixelEventOptions())
