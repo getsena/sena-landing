@@ -136,13 +136,6 @@ export const Hero = () => {
           />
         </div>
       </div>
-
-      <div className="py-3 mt-4 md:mt-0">
-        <p className="text-slate-500 text-xs md:text-sm text-left md:text-right">
-          Más de <span className="font-bold text-brand-secondary">40 años</span> de experiencia operativa en
-          cobranza: 146 millones de gestiones al mes en 15 países de Latinoamérica.
-        </p>
-      </div>
     </div>
   )
 }
