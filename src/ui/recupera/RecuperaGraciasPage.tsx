@@ -58,7 +58,7 @@ export const RecuperaGraciasPage = () => {
                 ¡Recibimos tu solicitud!
               </h1>
               <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-1">
-                Nuestro equipo evaluará tu cartera y te contactará en 24-48 horas.
+                Nuestro equipo evaluará tu cartera y te contactará en 24 horas.
               </p>
               <p className="text-brand-primary-dark text-sm md:text-base font-bold leading-relaxed mb-6">
                 Si prefieres avanzar ahora, agenda tu evaluación directamente:
