@@ -90,7 +90,7 @@ export const PlataformaPage = () => {
 
             <p className="text-text-secondary text-base md:text-xl leading-relaxed mb-8 max-w-2xl mx-auto">
               Gestiona cuentas por cobrar, envía recordatorios automáticos y consolida tu cartera sin
-              reemplazar tu tech stack. Primer resultado en 30 días.
+              reemplazar tu tech stack. Primer resultado en 2 semanas.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
@@ -121,7 +121,7 @@ export const PlataformaPage = () => {
             {/* Stats bar */}
             <div className="grid grid-cols-3 gap-4 bg-white rounded-2xl shadow-lg p-6 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">30 días</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">2 semanas</div>
                 <div className="text-text-secondary text-xs md:text-sm font-medium leading-tight">
                   Primer resultado
                 </div>

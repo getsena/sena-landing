@@ -569,8 +569,8 @@ export const Header = ({ variant }: Props) => {
                         <div className="col-span-4 bg-gray-50 p-7">
                           <h4 className="text-2xl font-extrabold text-black">Productos</h4>
                           <p className="text-sm text-gray-600 mt-3 leading-relaxed">
-                            Conoce nuestras soluciones de cobranza y elige la que mejor se adapte a tu
-                            operación.
+                            Una sola operación de cobranza. Activas la parte que necesitas, y analizamos tu
+                            caso para decirte cuál.
                           </p>
 
                           <div className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-primary">
