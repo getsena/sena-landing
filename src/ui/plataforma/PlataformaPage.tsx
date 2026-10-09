@@ -127,9 +127,9 @@ export const PlataformaPage = () => {
                 </div>
               </div>
               <div className="text-center border-x border-border-default">
-                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">+85%</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">USD 39</div>
                 <div className="text-text-secondary text-xs md:text-sm font-medium leading-tight">
-                  Tasa de recupero
+                  Al mes, desde
                 </div>
               </div>
               <div className="text-center">
@@ -204,7 +204,7 @@ export const PlataformaPage = () => {
                 {
                   step: '03',
                   title: 'Conciliación sin fricción',
-                  desc: 'Se integra con tu ERP o facturador. Sin reemplazar nada. Funcional en días, no meses.',
+                  desc: 'Se integra con tu ERP o facturador. Sin reemplazar nada. Operativo en 2 semanas.',
                 },
               ].map((item) => (
                 <div
@@ -227,9 +227,9 @@ export const PlataformaPage = () => {
               <div className="flex flex-wrap justify-center gap-5">
                 {[
                   'Sin contrato de largo plazo',
-                  'Implementación en días',
+                  'Implementación en 2 semanas',
                   'Soporte en español',
-                  'Datos 100% en Chile',
+                  'Se integra con tu ERP',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-text-secondary text-sm">
                     <CheckCircle className="h-4 w-4 text-brand-primary shrink-0" />
