@@ -90,7 +90,7 @@ export const PlataformaPage = () => {
 
             <p className="text-text-secondary text-base md:text-xl leading-relaxed mb-8 max-w-2xl mx-auto">
               Gestiona cuentas por cobrar, envía recordatorios automáticos y consolida tu cartera sin
-              reemplazar tu tech stack. Primer resultado en 30 días.
+              reemplazar tu tech stack. Primer resultado en 2 semanas.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-12">
@@ -121,15 +121,15 @@ export const PlataformaPage = () => {
             {/* Stats bar */}
             <div className="grid grid-cols-3 gap-4 bg-white rounded-2xl shadow-lg p-6 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">30 días</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">2 semanas</div>
                 <div className="text-text-secondary text-xs md:text-sm font-medium leading-tight">
                   Primer resultado
                 </div>
               </div>
               <div className="text-center border-x border-border-default">
-                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">+85%</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">USD 39</div>
                 <div className="text-text-secondary text-xs md:text-sm font-medium leading-tight">
-                  Tasa de recupero
+                  Al mes, desde
                 </div>
               </div>
               <div className="text-center">
@@ -204,7 +204,7 @@ export const PlataformaPage = () => {
                 {
                   step: '03',
                   title: 'Conciliación sin fricción',
-                  desc: 'Se integra con tu ERP o facturador. Sin reemplazar nada. Funcional en días, no meses.',
+                  desc: 'Se integra con tu ERP o facturador. Sin reemplazar nada. Operativo en 2 semanas.',
                 },
               ].map((item) => (
                 <div
@@ -227,9 +227,9 @@ export const PlataformaPage = () => {
               <div className="flex flex-wrap justify-center gap-5">
                 {[
                   'Sin contrato de largo plazo',
-                  'Implementación en días',
+                  'Implementación en 2 semanas',
                   'Soporte en español',
-                  'Datos 100% en Chile',
+                  'Se integra con tu ERP',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-text-secondary text-sm">
                     <CheckCircle className="h-4 w-4 text-brand-primary shrink-0" />

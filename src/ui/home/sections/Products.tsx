@@ -63,7 +63,7 @@ export const Products = () => {
         name: 'Plataforma Sena',
         promise: 'Todo el ciclo de cobranza, ordenado en una sola plataforma.',
         description:
-          'Tu equipo opera con mejor tecnología: cartera unificada, recordatorios multicanal y conciliación, sin reemplazar tu ERP. Primer cobro automatizado operando en 30 días.',
+          'Tu equipo opera con mejor tecnología: cartera unificada, recordatorios multicanal y conciliación, sin reemplazar tu ERP. Primer cobro automatizado operando en 2 semanas.',
         fit: 'tienes un equipo administrativo o financiero que hoy cobra con planillas y mensajes sueltos.',
         cta: 'Agenda una demo',
         image: AssetImage.autogestion,
@@ -138,12 +138,12 @@ export const Products = () => {
       <div className="bg-surface-secondary px-4 py-10 md:rounded-3xl md:p-10">
         <div className="max-w-3xl">
           <p className="font-adobe text-brand-primary-dark text-2xl sm:text-4xl font-black">
-            Tres formas de trabajar con Sena
+            Un servicio, tres formas de activarlo
             <span className="text-brand-secondary font-caslon">.</span>
           </p>
           <p className="font-adobe text-black mt-3 text-lg leading-6">
-            La misma operación de cobranza, con el nivel de delegación que tu empresa necesita. Opera tú,
-            delega en nuestro equipo o recupera lo que ya venció.
+            Somos cobranza B2B. Activas lo que necesitas, y subir de capacidad siempre está disponible.
+            Analizamos tu caso y te decimos cuál conviene — el análisis de tu cartera es gratis.
           </p>
         </div>
 

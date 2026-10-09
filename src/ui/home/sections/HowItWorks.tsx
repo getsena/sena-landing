@@ -52,7 +52,7 @@ export const HowItWorks = () => {
         title: '4. Recupera',
         subtitle: 'Especialistas en recuperación para los casos difíciles.',
         description:
-          'Cuando hace falta entran nuestros especialistas en recuperación, que cuidan tu marca y la relación con el cliente mientras gestionan el recupero. Es lo que llevamos haciendo por más de 40 años.',
+          'Cuando hace falta entran nuestros especialistas en recuperación, que cuidan tu marca y la relación con el cliente mientras gestionan el recupero.',
       },
       {
         key: 'Concilia' as const,

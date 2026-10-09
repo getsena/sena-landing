@@ -58,7 +58,7 @@ export const OperaGraciasPage = () => {
                 ¡Recibimos tu solicitud!
               </h1>
               <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-1">
-                Nuestro equipo te contactará en las próximas 48 horas.
+                Nuestro equipo te contactará en las próximas 24 horas.
               </p>
               <p className="text-brand-primary-dark text-sm md:text-base font-bold leading-relaxed mb-6">
                 Si prefieres avanzar ahora, agenda tu diagnóstico directamente:
