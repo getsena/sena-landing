@@ -2529,11 +2529,11 @@ export const blogPosts: BlogPost[] = [
           [
             {
               type: 'bold',
-              text: 'Reducción comprobada del DSO',
+              text: 'Visibilidad del DSO',
             },
             {
               type: 'text',
-              text: ' en hasta 33%.',
+              text: ': cuánto demora cobrarse cada factura y qué está empujando el promedio.',
             },
           ],
           [
@@ -3516,7 +3516,7 @@ export const blogPosts: BlogPost[] = [
           },
           {
             type: 'text',
-            text: ' ofrecen dashboards en tiempo real con métricas de cobranza, permiten automatizar campañas de recordatorios y segmentar clientes por riesgo. Con estas herramientas, el DSO puede reducirse hasta en un 33% en pocos meses.',
+            text: ' ofrecen dashboards en tiempo real con métricas de cobranza, permiten automatizar campañas de recordatorios y segmentar clientes por riesgo. El efecto sobre el DSO depende de tu cartera y de cuánto seguimiento hacías antes.',
           },
         ],
       },
@@ -4082,11 +4082,11 @@ export const blogPosts: BlogPost[] = [
           [
             {
               type: 'bold',
-              text: 'Menor DSO',
+              text: 'Menos días entre la factura emitida y el pago conciliado',
             },
             {
               type: 'text',
-              text: ' en promedio hasta un 33%.',
+              text: ', porque el seguimiento deja de depender de que alguien se acuerde.',
             },
           ],
           [
@@ -5734,6 +5734,235 @@ export const blogPosts: BlogPost[] = [
           {
             type: 'text',
             text: '.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 34,
+    slug: 'cuanto-cuesta-externalizar-la-cobranza-en-chile',
+    title: '¿Cuánto cuesta externalizar la cobranza en Chile?',
+    intro:
+      'En Chile puedes externalizar la cobranza con tres modelos de precio: comisión por éxito, cuota mensual o híbrido. Aquí están los números, lo que debe incluir el servicio, y lo que cobra Sena.',
+    date: '07 de octubre 2026',
+    tags: ['Blog', 'Cobranza', 'Externalización'],
+    image: AssetImageBlog.blog_31_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: '¿Cuánto cobra Sena por externalizar la cobranza?',
+        answer:
+          'Depende del servicio. Ópera parte desde US$50 al mes para carteras con menos de 10 relaciones (clientes activos). Para equipos que gestionan más de 50 relaciones, el precio de configuración estándar parte en US$300 al mes. Recupera no tiene cuota mensual: cobra el 15% sobre el monto que se recupera efectivamente.',
+      },
+      {
+        question: '¿Hay costo si no recuperan nada?',
+        answer:
+          'No. Recupera opera con modelo de comisión por éxito: solo pagas el 15% si logramos recuperar. Si no hay recuperación, no hay cobro.',
+      },
+      {
+        question: '¿El 15% de Recupera aplica sobre el total de la factura o sobre lo que se recupera?',
+        answer:
+          'Sobre lo recuperado efectivamente. Si una factura de $5 millones se recupera en su totalidad, la comisión es $750.000.',
+      },
+      {
+        question: '¿El precio de Ópera varía según el tamaño de mi cartera?',
+        answer:
+          'Sí. El precio escala con la cantidad de relaciones que necesitas gestionar. Carteras de menos de 10 relaciones parten en US$50 al mes; carteras de más de 50 relaciones parten en US$300 con configuración estándar. Para requerimientos específicos, el precio se define caso a caso.',
+      },
+      {
+        question: '¿Qué diferencia hay entre Ópera y Recupera?',
+        answer:
+          'Ópera es un servicio mensual para complementar o reemplazar la capacidad de cobranza de tu equipo: gestiona facturas activas y vencidas de forma continua. Recupera está pensado para carteras con antigüedad —en general, más de 90 días de vencimiento— y no tiene cuota fija: solo pagas si se recupera.',
+      },
+    ],
+    content: [
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'En Chile, puedes encontrar tres modelos de precio por externalizar la cobranza: comisión por éxito (6-19% sobre lo recuperado), cuota mensual fija y un modelo híbrido. En Sena, nuestro servicio de externalización inteligente llamado ',
+          },
+          { type: 'link', text: 'Ópera', href: '/opera' },
+          {
+            type: 'text',
+            text: ' parte desde los US$50 al mes para carteras pequeñas y sube de acuerdo a la cantidad de relaciones que gestionas (relaciones = clientes); ',
+          },
+          { type: 'link', text: 'Recupera', href: '/recupera' },
+          {
+            type: 'text',
+            text: ' funciona en base a una comisión del 15% sobre lo recuperado, sin costo fijo. Sigue leyendo para más detalles respecto a los diferentes modelos y las prestaciones que debieran tener.',
+          },
+        ],
+      },
+      {
+        type: 'title',
+        text: '¿Qué modelos de precio existen para externalizar la cobranza en Chile?',
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Después de abrir varias páginas que ofrecen el servicio de cobranza, es probable que aún no tengas claro cuánto sale externalizar y sobre todo automatizar la cobranza dentro de tu área. La mayoría de los servicios requieren hacer un análisis de tu cartera para definir un precio, donde revisarán: tamaño de la cartera, vencimientos, contrapartes y también puede incluir análisis de riesgo.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [{ type: 'text', text: 'Existen tres modelos de precios para la cobranza en Chile:' }],
+      },
+      {
+        type: 'list',
+        items: [
+          [
+            { type: 'bold', text: 'Comisión por éxito: ' },
+            {
+              type: 'text',
+              text: 'Este servicio está enfocado en recuperar facturas vencidas, que tienen más de 90 días de antigüedad. La comisión varía entre 6-19% (tarifas de mercado disponibles públicamente) dependiendo de la antigüedad, monto y contraparte. Algunos servicios cobran un fee mínimo, pero por lo general, se cobra solo la comisión de éxito. Es recomendable cuando son facturas específicas y/o casos puntuales de cobranza.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Cuota mensual fija: ' },
+            {
+              type: 'text',
+              text: 'El servicio se cobra como una mensualidad y está pensado para aquellas áreas que requieren un servicio que complemente su capacidad de cobranza. Por lo general, son equipos que tienen repartida su información en diferentes SaaS o planillas excel y buscan un lugar donde se centralice toda la cobranza.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Híbrido: ' },
+            {
+              type: 'text',
+              text: 'Es una mezcla entre una cuota mensual y una comisión por éxito. Esto es especialmente relevante cuando se tienen carteras dinámicas, períodos de alta demanda y por lo tanto, consumos variables dentro del servicio de cobranza.',
+            },
+          ],
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Tanto la modalidad de cuota mensual como híbrido son útiles cuando se está evaluando aumentar la capacidad de cobranza de la empresa y quieres tener algo disponible y accesible, o bien aumentar las capacidades técnicas a través de herramientas, dejando la toma de decisiones dentro de tu equipo de cobranza.',
+          },
+        ],
+      },
+      {
+        type: 'title',
+        text: '¿Qué incluye el precio y qué preguntar antes de contratar?',
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Un buen servicio de cobranza externo debiese contar con al menos:' },
+        ],
+      },
+      {
+        type: 'list',
+        items: [
+          [
+            { type: 'bold', text: 'Canales de contacto: ' },
+            { type: 'text', text: 'WhatsApp, email, llamadas.' },
+          ],
+          [
+            { type: 'bold', text: 'Reportería del proceso: ' },
+            {
+              type: 'text',
+              text: 'Un dashboard o panel de control que permita visualizar todas las gestiones y salud de la cartera.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Frecuencia de gestión: ' },
+            {
+              type: 'text',
+              text: 'Debe estar alineado con las políticas de la empresa y además con las diversas regulaciones relacionadas con la cobranza.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Conciliación: ' },
+            { type: 'text', text: 'Identificar pagos y asociarlos a facturas pendientes.' },
+          ],
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Los servicios de cobranza más modernos incorporan inteligencia artificial para aumentar la capacidad de su solución, hacerlos más eficientes o escalables. Es ideal que estos servicios incorporen la mirada de compliance dentro del producto.',
+          },
+        ],
+      },
+      {
+        type: 'title',
+        text: '¿Cuánto cuesta externalizar la cobranza en Sena?',
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'En Sena, el servicio de externalización de cobranza se llama ' },
+          { type: 'link', text: 'Ópera', href: '/opera' },
+          {
+            type: 'text',
+            text: ': un sistema automatizado e inteligente que analiza tu cartera buscando aumentar tu capacidad de cobranza y gestión de caja.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Ópera parte desde los US$50 para empresas con menos de 10 relaciones, donde las relaciones son la cantidad de clientes de la cartera.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Lo que debes considerar para evaluar si es un servicio conveniente para ti: en promedio, un ejecutivo de cobranza tiene un costo de entre $850.000 y $1.000.000 al mes (Trabajando.com, septiembre 2026). Por otro lado, un ejecutivo es capaz de gestionar alrededor de 50 relaciones al mes, según la operación de Sena.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Con Ópera, gestionar más de 50 relaciones parte en los US$300 al mes, con la configuración estándar. Para configuraciones específicas, el precio puede variar dependiendo de los requerimientos.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [{ type: 'text', text: 'Si lo que buscas es:' }],
+      },
+      {
+        type: 'list',
+        items: [
+          'Hacer más eficiente la cobranza dentro de tu equipo',
+          'Disminuir las facturas vencidas y con problemas de recaudación',
+          'O aumentar la capacidad de tu equipo por crecimiento o por peaks de demanda',
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Entonces definitivamente te conviene evaluar un servicio de externalización de cobranza. ',
+          },
+          {
+            type: 'link',
+            text: 'Agenda un demo con nuestro equipo comercial',
+            href: 'https://meetings.hubspot.com/francisco502',
+          },
+          {
+            type: 'text',
+            text: ' para evaluar tu negocio y ver si te podemos apoyar en tu cobranza.',
           },
         ],
       },
