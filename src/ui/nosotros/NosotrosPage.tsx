@@ -4,6 +4,7 @@ import { Hero } from './sections/Hero'
 import { OurInspiration } from './sections/OurInspiration'
 import { OurTeamRecsa } from './sections/OurTeamRecsa'
 import { SenaRecovery } from './sections/SenaRecovery'
+import { WhoWeAre } from './sections/WhoWeAre'
 
 export const NosotrosPage = () => {
   return (
@@ -16,6 +17,7 @@ export const NosotrosPage = () => {
           </div>
         </div>
         <OurInspiration />
+        <WhoWeAre />
         <OurTeamRecsa />
         <SenaRecovery />
       </div>
