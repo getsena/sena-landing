@@ -2067,6 +2067,7 @@ export const blogPosts: BlogPost[] = [
     date: '06 de marzo 2026',
     tags: ['Blog', 'Producto', 'Servicio'],
     image: AssetImageBlog.blog_23_main.src,
+    lector: 'pyme-que-cobra',
     content: [
       {
         type: 'paragraph',
@@ -3143,6 +3144,7 @@ export const blogPosts: BlogPost[] = [
     date: '17 de marzo 2026',
     tags: ['Blog', 'Cobranza'],
     image: AssetImageBlog.blog_26_main.src,
+    lector: 'pyme-que-cobra',
     content: [
       {
         type: 'paragraph',
@@ -3685,6 +3687,7 @@ export const blogPosts: BlogPost[] = [
     date: '20 de marzo 2026',
     tags: ['Blog', 'Producto', 'Servicio'],
     image: AssetImageBlog.blog_27_main.src,
+    lector: 'pyme-que-cobra',
     content: [
       {
         type: 'paragraph',
