@@ -1,4 +1,4 @@
-export const OurTeamRecsa = () => {
+export const OurTeamIntro = () => {
   return (
     <section className=" bg-surface-secondary">
       <div className="px-4 py-4 md:py-0 md:px-8 max-w-[1280px] mx-auto">
