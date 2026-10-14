@@ -106,6 +106,15 @@ en el cuerpo de un commit no detiene un merge. Una salida distinta de cero sí.
   fuente en `sena-brain`. Este repo es **público**: no escribir nombres de
   cuentas ni pricing que no esté ya publicado.
 
+## Revisión de PRs
+
+- PRs hacia `dev` y `main` requieren 1 aprobación (ruleset `aprobacion-externos`),
+  **excepto** si el autor está en `.github/REVIEWERS` (los expertos, que son admin
+  y tienen bypass).
+- Si el autor no es experto, `.github/workflows/pr-reviewers.yml` asigna a todos
+  los expertos como reviewers, y `/build` le dice al dev quién debe aprobar.
+- Agregar un experto = agregarlo a `.github/REVIEWERS` **y** darle rol admin.
+
 ## Context policy
 
 Todo contexto de proyecto vive en GitHub.

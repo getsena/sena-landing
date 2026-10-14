@@ -356,6 +356,54 @@ Marcar el work-item con label `review` y quitar `in-progress`:
 gh issue edit $PARENT_N --add-label "review" --remove-label "in-progress"
 ```
 
+### 6.5.1. Asignar revisores y avisar quién debe aprobar
+
+Inmediatamente después de abrir el PR (o al llegar a 6.6 con un PR preexistente), decidir según **quién es el autor**. No se pregunta: es parte de abrir el PR.
+
+La política vive en `.github/REVIEWERS` (un login por línea) y en el ruleset `aprobacion-externos` de GitHub:
+
+- **Autor en `REVIEWERS` (experto):** no requiere review. No se asigna a nadie; puede mergear él mismo.
+- **Cualquier otro autor:** requiere 1 aprobación de un experto. Se asignan todos los expertos.
+
+El workflow `.github/workflows/pr-reviewers.yml` ya asigna en GitHub; este paso lo repite (idempotente) para no depender de que el Action haya corrido, y sobre todo para **decírselo al dev**.
+
+```bash
+BASE=$(gh pr view "$PR_NUMBER" --json baseRefName --jq .baseRefName)
+AUTHOR=$(gh pr view "$PR_NUMBER" --json author --jq .author.login)
+
+read_experts() {
+  gh api "repos/{owner}/{repo}/contents/.github/REVIEWERS?ref=$1" --jq .content 2>/dev/null \
+    | base64 -d 2>/dev/null | grep -v '^#' | grep -v '^[[:space:]]*$'
+}
+EXPERTS=$(read_experts "$BASE" || read_experts dev)
+
+if echo "$EXPERTS" | grep -qixF "$AUTHOR"; then
+  IS_EXPERT=1
+else
+  IS_EXPERT=0
+  for u in $EXPERTS; do
+    gh api -X POST "repos/{owner}/{repo}/pulls/$PR_NUMBER/requested_reviewers" \
+      -f "reviewers[]=$u" >/dev/null || echo "⚠ No se pudo asignar a @$u"
+  done
+fi
+```
+
+Reportar al dev (formato fijo):
+
+```
+# IS_EXPERT=0
+PR #19 abierto → feature/12-... → dev
+Necesita 1 aprobación de: @nicoariffo, @sagajardo o @RenildoChavezFlujolink (ya asignados)
+No se puede mergear hasta que uno de ellos apruebe.
+
+# IS_EXPERT=1
+PR #19 abierto → feature/12-... → dev
+@RenildoChavezFlujolink es revisor experto: no requiere review. Puedes mergearlo tú.
+```
+
+- Si `EXPERTS` está vacío (no existe `.github/REVIEWERS`), avisar y tratar el PR como `IS_EXPERT=0` sin asignar a nadie.
+- Aplica igual a PRs `dev → main`.
+
 **Multi-repo:** si el work-item afecta varios repos, abrir un PR por repo (nunca consolidar repos distintos en un solo PR). Cada PR cierra las tasks que le corresponden a ese repo.
 
 ### 6.6. Elegir el camino de review/merge
@@ -413,7 +461,7 @@ esac
 **Reglas:**
 
 - **Default = opción 1 (dejar para review humano).** No es deuda técnica esperar review — es el workflow correcto en equipos.
-- **Opción 2 (self-merge) solo tiene sentido para solo-devs** o repos donde el dev tiene permisos de merge directo. Si la rama protegida `dev` requiere review, esto fallará y se reporta el error sin reintentos creativos.
+- **Opción 2 (self-merge) solo tiene sentido para solo-devs** o repos donde el dev tiene permisos de merge directo. Con `IS_EXPERT=0` (6.5.1) **no ofrecer la opción 2**: mostrar solo 1, 3 y 4. Con `IS_EXPERT=1` la opción 2 está permitida. Nunca usar `--admin`; si GitHub rechaza el merge, reportar el error y que el dev mergee desde la web.
 - **Opción 3 (auto-merge) requiere "Allow auto-merge" habilitado** en Settings del repo. Si no está, sugerir habilitarlo y caer a opción 1 o 4.
 - **Nunca mergear sin que el dev pida explícitamente la opción 2 o 3.** Si el dev solo dijo "abre el PR", el default es **dejarlo abierto**.
 
