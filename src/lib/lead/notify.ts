@@ -9,6 +9,8 @@
 // - Los logs no llevan PII, el cuerpo de la respuesta ni la clave.
 // Nunca lanza: un fallo de SendGrid no debe romper el formulario.
 
+import { after } from 'next/server'
+
 import { isSmokeTest } from '@/lib/lead/smoke'
 
 const SENDGRID_URL = 'https://api.sendgrid.com/v3/mail/send'
@@ -109,7 +111,7 @@ function buildBody(input: NotifyLeadInput): string {
     '',
     `Producto: ${SOURCE_LABEL[input.source]}`,
     failed
-      ? `Estado en HubSpot: NO SE GUARDÓ. Hay que cargar este lead a mano. Error: "${clean(input.error ?? 'sin detalle', 300)}"`
+      ? `Estado en HubSpot: NO SE GUARDÓ COMPLETO. Hay que cargar o revisar este lead a mano${input.contactId ? ' (el contacto puede existir sin negocio o lista)' : ''}. Error: "${clean(input.error ?? 'sin detalle', 300)}"`
       : 'Estado en HubSpot: guardado',
     `Verificación anti-bot: ${input.unverified ? 'SIN VERIFICAR' : 'ok'}`,
     `Recibido (hora Chile): ${new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' })}`,
@@ -165,5 +167,16 @@ export async function notifyLead(input: NotifyLeadInput): Promise<boolean> {
     // Solo el tipo de error: el mensaje puede traer el email del lead o la URL.
     console.error('[notify] no se pudo enviar el aviso:', err instanceof Error ? err.name : 'error')
     return false
+  }
+}
+
+// Para el camino de éxito: el correo sale después de responder al visitante (after() de Next).
+// Fuera de un request (tests, scripts) after() no está disponible y se envía de inmediato.
+export function notifyLeadInBackground(input: NotifyLeadInput): void {
+  const run = () => notifyLead(input)
+  try {
+    after(run)
+  } catch {
+    void run()
   }
 }
