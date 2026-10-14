@@ -12,6 +12,7 @@ import {
 import { useToastStore } from '@/lib/store/useToastStore'
 import { ContactFormRequest } from '@/lib/types/contact'
 import Button from '@/ui/shared/Button'
+import { TurnstileWidget, useTurnstile } from '@/ui/shared/Turnstile'
 import { Input } from '@/ui/shared/Input'
 import SimpleCountrySelect, { OptionSelect } from '@/ui/shared/SimpleCountrySelect'
 import Link from 'next/link'
@@ -43,6 +44,7 @@ export const ContactForm = () => {
   const router = useRouter()
   const { showToast } = useToastStore()
   const [countrySelect, setCountrySelect] = useState<string | null>(null)
+  const turnstile = useTurnstile()
 
   const countryOptions = useMemo(() => {
     if (!countries.length) return []
@@ -103,23 +105,26 @@ export const ContactForm = () => {
     const eventId = newEventId()
     rememberLeadEventId(eventId)
 
-    // Fire-and-forget HubSpot sync
-    fetch('/api/lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        nombre: data.nombre,
-        apellido: data.apellido,
-        empresa: data.empresa,
-        email: data.email,
-        telefono: telefonoConPrefijo,
-        facturas_pendientes: data.facturas_pendientes,
-        alguien_cobrando: data.alguien_cobrando,
-        ...atribucion,
-        landingPage: landingPageUrl(),
-        eventId,
-      }),
-    }).catch(() => {})
+    // Fire-and-forget HubSpot sync. El token de Turnstile se espera un instante sin bloquear el envío al backend.
+    void turnstile.getToken(800).then((turnstileToken) =>
+      fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: data.nombre,
+          apellido: data.apellido,
+          empresa: data.empresa,
+          email: data.email,
+          telefono: telefonoConPrefijo,
+          facturas_pendientes: data.facturas_pendientes,
+          alguien_cobrando: data.alguien_cobrando,
+          ...atribucion,
+          landingPage: landingPageUrl(),
+          'cf-turnstile-response': turnstileToken,
+          eventId,
+        }),
+      }).catch(() => {})
+    )
     const contactPayload: ContactFormRequest = {
       nombre: data.nombre,
       apellido: data.apellido,
@@ -352,6 +357,8 @@ export const ContactForm = () => {
                 Política de Privacidad
               </Link>
             </p>
+
+            <TurnstileWidget turnstile={turnstile} />
 
             <Button
               type="submit"
