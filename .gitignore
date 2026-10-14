@@ -48,3 +48,5 @@ test-results/
 .playwright-cache/
 package-lock.json
 .claude/launch.json
+CLAUDE.local.md
+.claude/settings.local.json
