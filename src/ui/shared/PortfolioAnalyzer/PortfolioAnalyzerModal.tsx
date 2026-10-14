@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/ui/shared/Button'
+import { TurnstileWidget, useTurnstile } from '@/ui/shared/Turnstile'
 import { Input } from '@/ui/shared/Input'
 import { useModalStore } from '@/lib/store/modalStore'
 import { useEffect, useRef, useState } from 'react'
@@ -57,6 +58,7 @@ export function PortfolioAnalyzerModal() {
   const [telefono, setTelefono] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const turnstile = useTurnstile()
 
   // Loading animation
   const [loadingMsg, setLoadingMsg] = useState(LOADING_MESSAGES[0])
@@ -112,6 +114,7 @@ export function PortfolioAnalyzerModal() {
     setSubmitError('')
 
     try {
+      const turnstileToken = await turnstile.getToken()
       await fetch('/api/lead-analyzer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -127,6 +130,7 @@ export function PortfolioAnalyzerModal() {
           industria: state.industria,
           ...getAttributionPayload(),
           landingPage: landingPageUrl(),
+          'cf-turnstile-response': turnstileToken,
           eventId: newEventId(),
         }),
       })
@@ -134,6 +138,7 @@ export function PortfolioAnalyzerModal() {
       // fire-and-forget — siempre avanzamos a confirmación
     } finally {
       setSubmitting(false)
+      turnstile.reset()
       goTo(7)
     }
   }
@@ -501,6 +506,7 @@ export function PortfolioAnalyzerModal() {
                 value={telefono}
                 onChange={(e) => setTelefono(e.target.value)}
               />
+              <TurnstileWidget turnstile={turnstile} />
               {submitError && <p className="text-[#DC2626] text-xs">{submitError}</p>}
               <Button
                 text="Enviar y recibir mi análisis →"

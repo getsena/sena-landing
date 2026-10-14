@@ -2,7 +2,9 @@ import { createHash, randomUUID } from 'crypto'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { classifyLead } from '@/lib/lead/classify'
+import { notifyLead, notifyLeadInBackground, type NotifyLeadInput } from '@/lib/lead/notify'
 import { isSmokeTest } from '@/lib/lead/smoke'
+import { allowUnverified, clientIp, turnstileTokenFrom, verifyTurnstile } from '@/lib/lead/turnstile'
 import { readJsonBody, validateAnalyzerLead, type AnalyzerLeadPayload } from '@/lib/lead/validate'
 import {
   OWNER_FRANCISCO,
@@ -23,8 +25,8 @@ function fmtCLP(n: number): string {
   return `CLP ${Math.round(n).toLocaleString('es-CL')}`
 }
 
-function buildContactProperties(body: AnalyzerLeadPayload): Record<string, string> {
-  const clasificacion = classifyLead({
+function clasificar(body: AnalyzerLeadPayload) {
+  return classifyLead({
     utmSource: body.utmSource,
     utmMedium: body.utmMedium,
     utmCampaign: body.utmCampaign,
@@ -33,6 +35,42 @@ function buildContactProperties(body: AnalyzerLeadPayload): Record<string, strin
     wbraid: body.wbraid,
     fbclid: body.fbclid,
   })
+}
+
+// Datos del aviso interno por correo (ver src/lib/lead/notify.ts).
+function notifyInput(
+  body: AnalyzerLeadPayload,
+  outcome: NotifyLeadInput['outcome'],
+  extra: { contactId?: string; error?: string; unverified?: boolean } = {}
+): NotifyLeadInput {
+  const clasificacion = clasificar(body)
+  return {
+    outcome,
+    source: 'analizador',
+    lead: {
+      nombre: body.nombre,
+      empresa: body.empresa,
+      email: body.email,
+      telefono: body.telefono,
+      extras: {
+        'Cartera en riesgo': fmtCLP(body.cartera_total_riesgo_clp),
+        'Cartera recuperable': fmtCLP(body.cartera_recuperable_clp),
+        'Facturación mensual': body.facturacion_mensual_rango,
+        Industria: body.industria,
+      },
+    },
+    attribution: {
+      fuente: clasificacion.fuente,
+      origen: clasificacion.origen,
+      origenDetalle: clasificacion.origenDetalle,
+      utmCampaign: body.utmCampaign,
+    },
+    ...extra,
+  }
+}
+
+function buildContactProperties(body: AnalyzerLeadPayload): Record<string, string> {
+  const clasificacion = clasificar(body)
   const bucketLabel = BUCKET_LABELS[body.cartera_bucket_critico] ?? 'desconocido'
 
   const properties: Record<string, string> = {
@@ -110,9 +148,35 @@ export async function POST(req: NextRequest) {
   if (!validated.ok) return NextResponse.json({ error: validated.error }, { status: validated.status })
   const body = validated.value
 
+  // Turnstile: un token inválido se rechaza; sin token o con Cloudflare caído el lead se procesa igual,
+  // pero queda marcado, sin Meta CAPI y con tope por IP (ver src/lib/lead/turnstile.ts).
+  const ip = clientIp(req.headers)
+  const verification = await verifyTurnstile(turnstileTokenFrom(parsed.value), {
+    remoteIp: ip,
+    action: 'lead',
+  })
+  if (verification.status === 'rejected') {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'No pudimos verificar que eres una persona. Recarga la página e intenta de nuevo.',
+      },
+      { status: 403 }
+    )
+  }
+  const unverified = verification.status === 'unverified'
+  if (unverified && !allowUnverified(ip)) {
+    return NextResponse.json(
+      { ok: false, error: 'Recibimos demasiados intentos. Intenta de nuevo en unos minutos.' },
+      { status: 429 }
+    )
+  }
+
+  let savedContactId: string | undefined
   try {
     const { id: contactId, isNew } = await upsertContact(token, buildContactProperties(body))
-    await Promise.all([
+    savedContactId = contactId
+    const [dealCreated] = await Promise.all([
       createDeal(
         token,
         contactId,
@@ -125,10 +189,20 @@ export async function POST(req: NextRequest) {
       addToList(token, contactId, PRODUCT_LIST_ID.Plataforma),
     ])
     // Meta solo se entera de leads que el CRM sí guardó (evita conversiones fantasma)
-    if (!isSmokeTest(body.email)) await sendMetaCapi(body, body.eventId ?? randomUUID())
+    if (!isSmokeTest(body.email) && !unverified) await sendMetaCapi(body, body.eventId ?? randomUUID())
+    // Aviso interno solo si hay contacto o negocio nuevo: el reenvío de un lead ya abierto no repite el correo.
+    if (isNew || dealCreated) notifyLeadInBackground(notifyInput(body, 'ok', { contactId, unverified }))
     return NextResponse.json({ ok: true })
   } catch (err) {
     console.error('[HubSpot] error:', err instanceof Error ? err.message : 'CRM error')
+    // El correo es el único registro del lead: se espera (tope de 3 s) antes de responder el error.
+    await notifyLead(
+      notifyInput(body, 'hubspot_failed', {
+        contactId: savedContactId,
+        unverified,
+        error: err instanceof Error ? err.message : 'error desconocido',
+      })
+    )
     return NextResponse.json(
       { ok: false, error: 'No pudimos registrar tu solicitud. Intenta de nuevo.' },
       { status: 502 }
