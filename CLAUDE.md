@@ -6,7 +6,7 @@ Guía para Claude Code en este repositorio.
 
 Plataforma de cobranza
 
-**Repo:** `flujopay/sena-landing`
+**Repo:** `getsena/sena-landing`
 **Stack:** Next.js / React
 **Puerto local:** N/A
 
