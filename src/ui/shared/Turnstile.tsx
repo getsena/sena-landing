@@ -56,6 +56,8 @@ export function useTurnstile(action = 'lead'): TurnstileControl {
   const [el, setEl] = useState<HTMLDivElement | null>(null)
   const widgetId = useRef<string | undefined>(undefined)
   const token = useRef<string | undefined>(undefined)
+  // true cuando el script no cargó o el widget falló: getToken responde sin esperar (el envío no se retrasa).
+  const failed = useRef(false)
   const waiters = useRef<Array<(t: string | undefined) => void>>([])
 
   const flush = useCallback((t: string | undefined) => {
@@ -75,19 +77,31 @@ export function useTurnstile(action = 'lead'): TurnstileControl {
           action,
           appearance: 'interaction-only',
           callback: (t: string) => {
+            failed.current = false
             token.current = t
             flush(t)
           },
           'expired-callback': () => {
             token.current = undefined
           },
-          'error-callback': () => {
+          'timeout-callback': () => {
             token.current = undefined
+          },
+          'error-callback': () => {
+            failed.current = true
+            token.current = undefined
+            flush(undefined)
+          },
+          'unsupported-callback': () => {
+            failed.current = true
             flush(undefined)
           },
         })
       })
-      .catch(() => flush(undefined))
+      .catch(() => {
+        failed.current = true
+        flush(undefined)
+      })
     return () => {
       cancelled = true
       if (widgetId.current) window.turnstile?.remove(widgetId.current)
@@ -98,7 +112,7 @@ export function useTurnstile(action = 'lead'): TurnstileControl {
 
   const getToken = useCallback((timeoutMs = DEFAULT_WAIT_MS) => {
     if (token.current) return Promise.resolve(token.current)
-    if (!SITE_KEY) return Promise.resolve(undefined)
+    if (!SITE_KEY || failed.current) return Promise.resolve(undefined)
     return new Promise<string | undefined>((resolve) => {
       const timer = setTimeout(() => resolve(undefined), timeoutMs)
       waiters.current.push((t) => {
@@ -110,7 +124,11 @@ export function useTurnstile(action = 'lead'): TurnstileControl {
 
   const reset = useCallback(() => {
     token.current = undefined
-    if (widgetId.current) window.turnstile?.reset(widgetId.current)
+    if (widgetId.current) {
+      // El widget pedirá un token nuevo: si antes había fallado, vuelve a esperarlo.
+      failed.current = false
+      window.turnstile?.reset(widgetId.current)
+    }
   }, [])
 
   return { attach: setEl, getToken, reset }

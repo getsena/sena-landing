@@ -10,7 +10,13 @@
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 const TIMEOUT_MS = 3000
 const MAX_TOKEN_LENGTH = 2048
-const DEFAULT_HOSTNAMES = ['www.somossena.com', 'somossena.com']
+// Sitios donde se renderiza el widget: sena-landing (www), recupera-landing y agent-project-landing (Opera).
+const DEFAULT_HOSTNAMES = [
+  'www.somossena.com',
+  'somossena.com',
+  'recupera.somossena.com',
+  'agente.somossena.com',
+]
 // Claves de prueba que publica Cloudflare (1x pasa, 2x falla, 3x token ya usado): su respuesta no trae acción.
 const CLOUDFLARE_TEST_SECRET = /^[123]x0+AA$/
 

@@ -17,6 +17,7 @@ function mockServices(
     existing?: boolean
     openDeal?: boolean
     contactStatus?: number
+    dealStatus?: number
     sendgrid?: 'ok' | 'down' | number
     sendgridDelayMs?: number
   } = {}
@@ -48,7 +49,9 @@ function mockServices(
         : json(201, { id: '77' })
     }
     if (url.includes('/deals/search')) return json(200, { total: opts.openDeal ? 1 : 0 })
-    if (url.endsWith('/crm/v3/objects/deals')) return json(201, { id: '88' })
+    if (url.endsWith('/crm/v3/objects/deals')) {
+      return opts.dealStatus && opts.dealStatus >= 400 ? json(opts.dealStatus, {}) : json(201, { id: '88' })
+    }
     return json(200, {})
   }) as typeof fetch
   const sendgridCalls = () => calls.filter((c) => c.url.includes('api.sendgrid.com'))
@@ -139,6 +142,25 @@ test.describe('/api/lead: aviso por correo', () => {
         expect(mail.content[0].value).toContain(dato)
       }
     } finally {
+      m.restore()
+    }
+  })
+
+  test('si el negocio falla después de guardar el contacto: 502, un solo aviso FALLÓ con el link al contacto y sin aviso ok', async () => {
+    const m = mockServices({ dealStatus: 500 })
+    const originalError = console.error
+    console.error = () => {}
+    try {
+      const res = await postLead(req('/api/lead', leadPayload))
+      expect(res.status).toBe(502)
+      await settle()
+      expect(m.sendgridCalls()).toHaveLength(1)
+      const mail = sgBody(m.sendgridCalls()[0])
+      expect(mail.subject.startsWith('FALLÓ HUBSPOT')).toBe(true)
+      expect(mail.content[0].value).toContain('record/0-1/77')
+      expect(mail.content[0].value).toContain('el contacto puede existir sin negocio')
+    } finally {
+      console.error = originalError
       m.restore()
     }
   })

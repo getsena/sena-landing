@@ -59,10 +59,16 @@ const UNSAFE_RANGES: [number, number][] = [
   [0x2028, 0x202e], // separadores de línea y bidi
   [0x2060, 0x2069], // joiner y aislamiento bidi
   [0xfeff, 0xfeff], // BOM
+  [0x61c, 0x61c], // marca de letra árabe
+  [0x115f, 0x1160], // rellenos de hangul
+  [0x180e, 0x180e], // separador mongol
+  [0x3164, 0x3164], // relleno de hangul
+  [0xffa0, 0xffa0], // relleno de hangul de ancho medio
+  [0xe0000, 0xe007f], // caracteres de etiqueta (invisibles)
 ]
 const UNSAFE = new RegExp(
   `[${UNSAFE_RANGES.map(([a, b]) => `${String.fromCodePoint(a)}-${String.fromCodePoint(b)}`).join('')}<>]`,
-  'g'
+  'gu'
 )
 const EMAIL = /^[^\s@<>",;]+@[^\s@<>",;]+\.[^\s@<>",;]+$/
 

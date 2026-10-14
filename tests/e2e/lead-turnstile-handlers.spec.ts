@@ -186,6 +186,20 @@ test.describe('/api/lead: Turnstile', () => {
     }
   })
 
+  test('con la verificación desactivada ningún lead cuenta para el tope por IP', async () => {
+    delete process.env.TURNSTILE_SECRET_KEY
+    const m = mockServices()
+    const ip = nextIp()
+    try {
+      for (let i = 0; i < 6; i++) {
+        const res = await postLead(req('/api/lead', { ...leadPayload, email: `d${i}@acme.cl` }, ip))
+        expect(res.status).toBe(200)
+      }
+    } finally {
+      m.restore()
+    }
+  })
+
   test('un email smoke+ no se exime de Turnstile: sin token también queda marcado', async () => {
     const m = mockServices()
     try {

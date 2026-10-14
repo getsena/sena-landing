@@ -127,6 +127,20 @@ test.describe('notifyLead: contenido del correo', () => {
     }
   })
 
+  test('quita también rellenos de hangul, marca árabe y caracteres de etiqueta (invisibles)', async () => {
+    const sg = mockSendGrid()
+    try {
+      const invisibles = [0x61c, 0x115f, 0x1160, 0x180e, 0x3164, 0xffa0, 0xe0041, 0xe0042]
+        .map((c) => String.fromCodePoint(c))
+        .join('')
+      await notifyLead({ ...base, lead: { ...base.lead, empresa: `Acme${invisibles}SpA` } })
+      const empresa = lines(sg.calls).find((l) => l.startsWith('Empresa:'))!
+      expect(empresa).toBe('Empresa: "Acme SpA"')
+    } finally {
+      sg.restore()
+    }
+  })
+
   test('el link a HubSpot solo se arma con un contactId numérico', async () => {
     const sg = mockSendGrid()
     try {

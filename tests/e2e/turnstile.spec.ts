@@ -64,6 +64,17 @@ test.describe('verifyTurnstile: token presente', () => {
     }
   })
 
+  test('acepta los 3 sitios que renderizan el widget (www, recupera y agente)', async () => {
+    for (const hostname of ['www.somossena.com', 'recupera.somossena.com', 'agente.somossena.com']) {
+      const cf = mockCloudflare({ json: { ...ok, hostname } })
+      try {
+        expect((await verifyTurnstile('t', opts)).status, hostname).toBe('verified')
+      } finally {
+        cf.restore()
+      }
+    }
+  })
+
   test('un token emitido para otro sitio se rechaza', async () => {
     const cf = mockCloudflare({ json: { ...ok, hostname: 'sitio-ajeno.example' } })
     try {

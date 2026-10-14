@@ -42,7 +42,18 @@ La IP se lee de `x-real-ip`; `x-forwarded-for` no es confiable.
 | `NOTIFY_LEAD_TO` | texto | Destinatarios separados por coma |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | texto | Pública; se fija en el build, hay que redesplegar al cambiarla |
 | `TURNSTILE_SECRET_KEY` | sensitive | Nunca con prefijo `NEXT_PUBLIC_` |
-| `TURNSTILE_ALLOWED_HOSTNAMES` | texto, opcional | Hostnames extra permitidos (preview, CI con claves de prueba) |
+| `TURNSTILE_ALLOWED_HOSTNAMES` | texto, opcional | Hostnames extra permitidos (preview, CI con claves de prueba). Por defecto se aceptan `www.somossena.com`, `somossena.com`, `recupera.somossena.com` y `agente.somossena.com` |
+
+## Orden seguro de despliegue
+
+1. Cargar `NEXT_PUBLIC_TURNSTILE_SITE_KEY` en los 3 proyectos y redesplegar (la clave pública se fija en el build).
+2. Comprobar en el sitio que el widget entrega token (el campo oculto `cf-turnstile-response` tiene valor).
+3. Recién entonces cargar `TURNSTILE_SECRET_KEY` y redesplegar.
+
+Cargar el secreto sin la clave pública deja a todos los visitantes sin token: todos los leads quedan
+`[SIN VERIFICAR]`, sin Meta CAPI y con tope de 3 por IP. Sin `SENDGRID_API_KEY`, sin `NOTIFY_LEAD_TO` o sin
+`TURNSTILE_SECRET_KEY` el sitio se comporta como antes. El widget debe tener registrados en Cloudflare los 4 hostnames
+de la tabla de variables.
 
 ## Límite por IP (Vercel Firewall)
 
@@ -67,4 +78,5 @@ Para revertir: Vercel → proyecto → Firewall → regla → Delete (o `rules.r
 
 - El tope de leads sin verificar es en memoria por instancia: frena ráfagas, no es un límite global.
 - Un lead sin token que se reenvía con otro email no se agrega al tope de contactos nuevos más allá del WAF.
+- En recupera-landing el formulario guarda también en el backend: si /api/lead responde 403 o 429 el visitante ve éxito y el lead llega solo al backend (sin HubSpot ni aviso).
 - El WAF responde 403 (no 429) al superar el tope; el formulario muestra el mensaje genérico de reintento.

@@ -105,8 +105,9 @@ export const ContactForm = () => {
     const eventId = newEventId()
     rememberLeadEventId(eventId)
 
-    // Fire-and-forget HubSpot sync. El token de Turnstile se espera un instante sin bloquear el envío al backend.
-    void turnstile.getToken(800).then((turnstileToken) =>
+    // Fire-and-forget HubSpot sync. Se espera el token de Turnstile sin bloquear el envío al backend, y se pide
+    // uno nuevo después: el token es de un solo uso y un reintento del formulario no debe reutilizarlo.
+    void turnstile.getToken().then((turnstileToken) =>
       fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -123,7 +124,9 @@ export const ContactForm = () => {
           'cf-turnstile-response': turnstileToken,
           eventId,
         }),
-      }).catch(() => {})
+      })
+        .catch(() => {})
+        .finally(() => turnstile.reset())
     )
     const contactPayload: ContactFormRequest = {
       nombre: data.nombre,

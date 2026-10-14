@@ -102,3 +102,14 @@ for (const ruta of ['/recupera', '/opera', '/contactanos']) {
     )
   })
 }
+
+test('con Cloudflare bloqueado el envío sale de inmediato, sin esperar el token', async ({ page }) => {
+  await page.route('**/challenges.cloudflare.com/**', (route) => route.abort())
+  const captured = await interceptLead(page, [{ status: 200, json: { ok: true } }])
+  const form = await fillForm(page)
+  const t0 = Date.now()
+  await submit(form)
+  await expect.poll(() => captured.length, { timeout: 3_000 }).toBe(1)
+  // Sin la corrección esperaba el tope de 4 s del token antes de enviar.
+  expect(Date.now() - t0).toBeLessThan(3_000)
+})
