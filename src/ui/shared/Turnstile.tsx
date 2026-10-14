@@ -116,7 +116,8 @@ export function useTurnstile(action = 'lead'): TurnstileControl {
   return { attach: setEl, getToken, reset }
 }
 
-export function TurnstileWidget({ turnstile }: { turnstile: TurnstileControl }) {
+// attach es un callback ref (setState), no un ref de React: se desestructura para no leerlo como ref en el render.
+export function TurnstileWidget({ turnstile: { attach } }: { turnstile: TurnstileControl }) {
   if (!SITE_KEY) return null
-  return <div ref={turnstile.attach} data-testid="turnstile-widget" />
+  return <div ref={attach} data-testid="turnstile-widget" />
 }
