@@ -356,6 +356,43 @@ Marcar el work-item con label `review` y quitar `in-progress`:
 gh issue edit $PARENT_N --add-label "review" --remove-label "in-progress"
 ```
 
+### 6.5.1. Asignar revisores y avisar quién debe aprobar
+
+Inmediatamente después de abrir el PR (o al llegar a 6.6 con un PR preexistente), asignar como reviewers a los code owners de la rama destino **excepto al autor**, y decirle al dev quién tiene que aprobar. No se pregunta: es parte de abrir el PR.
+
+```bash
+BASE=$(gh pr view "$PR_NUMBER" --json baseRefName --jq .baseRefName)
+AUTHOR=$(gh pr view "$PR_NUMBER" --json author --jq .author.login)
+
+# Code owners de la regla "*" en la rama destino (GitHub usa el CODEOWNERS del base).
+OWNERS=$(gh api "repos/{owner}/{repo}/contents/.github/CODEOWNERS?ref=$BASE" --jq .content 2>/dev/null \
+  | base64 -d 2>/dev/null | awk '$1=="*"{for(i=2;i<=NF;i++) print $i}' | tr -d '@' | grep -vxF "$AUTHOR")
+
+# Fallback si el base aún no tiene CODEOWNERS: colaboradores con push, menos el autor.
+if [ -z "$OWNERS" ]; then
+  OWNERS=$(gh api "repos/{owner}/{repo}/collaborators" \
+    --jq '.[] | select(.permissions.push) | .login' | grep -vxF "$AUTHOR")
+fi
+
+REQUIRED=$(gh api "repos/{owner}/{repo}/branches/$BASE/protection/required_pull_request_reviews" \
+  --jq .required_approving_review_count 2>/dev/null || echo "?")
+
+for u in $OWNERS; do gh pr edit "$PR_NUMBER" --add-reviewer "$u" >/dev/null; done
+```
+
+Reportar al dev (formato fijo):
+
+```
+PR #19 abierto → feature/12-... → dev
+Necesita 1 aprobación de: @nicoariffo o @sagajardo   (ya asignados como reviewers)
+Tú (@RenildoChavezFlujolink) no puedes aprobar tu propio PR.
+Checks requeridos: Commit Lint
+```
+
+- `REQUIRED == "?"` (el dev no es admin y no puede leer la protección): decir "requiere aprobación de un code owner" sin número.
+- Si `gh pr edit --add-reviewer` falla para un usuario (p. ej. sin acceso), reportarlo y seguir con los demás.
+- Aplica igual a PRs `dev → main`.
+
 **Multi-repo:** si el work-item afecta varios repos, abrir un PR por repo (nunca consolidar repos distintos en un solo PR). Cada PR cierra las tasks que le corresponden a ese repo.
 
 ### 6.6. Elegir el camino de review/merge
@@ -413,7 +450,7 @@ esac
 **Reglas:**
 
 - **Default = opción 1 (dejar para review humano).** No es deuda técnica esperar review — es el workflow correcto en equipos.
-- **Opción 2 (self-merge) solo tiene sentido para solo-devs** o repos donde el dev tiene permisos de merge directo. Si la rama protegida `dev` requiere review, esto fallará y se reporta el error sin reintentos creativos.
+- **Opción 2 (self-merge) solo tiene sentido para solo-devs** o repos donde el dev tiene permisos de merge directo. Si la rama destino requiere review (`REQUIRED` de 6.5.1 ≥ 1), **no ofrecer la opción 2**: mostrar solo 1, 3 y 4. Nunca usar `--admin` para saltarse la review.
 - **Opción 3 (auto-merge) requiere "Allow auto-merge" habilitado** en Settings del repo. Si no está, sugerir habilitarlo y caer a opción 1 o 4.
 - **Nunca mergear sin que el dev pida explícitamente la opción 2 o 3.** Si el dev solo dijo "abre el PR", el default es **dejarlo abierto**.
 
