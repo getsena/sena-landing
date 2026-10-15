@@ -6,7 +6,7 @@ Guía para Claude Code en este repositorio.
 
 Plataforma de cobranza
 
-**Repo:** `flujopay/sena-landing`
+**Repo:** `getsena/sena-landing`
 **Stack:** Next.js / React
 **Puerto local:** N/A
 
@@ -105,6 +105,15 @@ en el cuerpo de un commit no detiene un merge. Una salida distinta de cero sí.
 - **Los hechos de Sena no se inventan acá.** ICP, precios, planes y casos tienen
   fuente en `sena-brain`. Este repo es **público**: no escribir nombres de
   cuentas ni pricing que no esté ya publicado.
+
+## Revisión de PRs
+
+- PRs hacia `dev` y `main` requieren 1 aprobación (ruleset `aprobacion-externos`),
+  **excepto** si el autor está en `.github/REVIEWERS` (los expertos, que son admin
+  y tienen bypass).
+- Si el autor no es experto, `.github/workflows/pr-reviewers.yml` asigna a todos
+  los expertos como reviewers, y `/build` le dice al dev quién debe aprobar.
+- Agregar un experto = agregarlo a `.github/REVIEWERS` **y** darle rol admin.
 
 ## Context policy
 

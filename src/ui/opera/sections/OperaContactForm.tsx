@@ -9,6 +9,7 @@ import {
   rememberLeadEventId,
 } from '@/lib/lead/clientAttribution'
 import Button from '@/ui/shared/Button'
+import { TurnstileWidget, useTurnstile } from '@/ui/shared/Turnstile'
 import { Input } from '@/ui/shared/Input'
 import SimpleCountrySelect, { OptionSelect } from '@/ui/shared/SimpleCountrySelect'
 import Link from 'next/link'
@@ -36,6 +37,7 @@ type FormData = {
 export const OperaContactForm = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const turnstile = useTurnstile()
   const { data: countries = [] } = useCountries()
   const { ipCurrency } = useCurrencyStore()
   const router = useRouter()
@@ -93,6 +95,7 @@ export const OperaContactForm = () => {
     const eventId = newEventId()
     const telefono = (countrySelect || '') + data.whatsapp
     try {
+      const turnstileToken = await turnstile.getToken()
       const res = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -107,12 +110,19 @@ export const OperaContactForm = () => {
           producto: 'Opera',
           ...getAttributionPayload(),
           landingPage: landingPageUrl(),
+          'cf-turnstile-response': turnstileToken,
           eventId,
         }),
       })
       const json = await res.json().catch(() => ({ ok: false }))
       if (!res.ok || !json.ok) {
-        setSubmitError('No pudimos registrar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.')
+        // 403 y 429 traen un mensaje pensado para el visitante; el token se gastó, hay que pedir otro.
+        turnstile.reset()
+        setSubmitError(
+          (res.status === 403 || res.status === 429) && typeof json.error === 'string'
+            ? json.error
+            : 'No pudimos registrar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.'
+        )
         setIsLoading(false)
         return
       }
@@ -125,6 +135,7 @@ export const OperaContactForm = () => {
 
       router.push('/opera/gracias')
     } catch {
+      turnstile.reset()
       setSubmitError('No pudimos registrar tu solicitud. Intenta de nuevo o escríbenos por WhatsApp.')
       setIsLoading(false)
     }
@@ -307,6 +318,8 @@ export const OperaContactForm = () => {
         </Link>
         .
       </p>
+
+      <TurnstileWidget turnstile={turnstile} />
 
       {submitError && <p className="text-red-500 text-sm mb-4">{submitError}</p>}
 
