@@ -89,7 +89,7 @@ export const RecuperaPage = () => {
         <section className="max-w-[1280px] mx-auto px-4 py-12 md:py-20">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-brand-primary/10 text-brand-primary-dark text-xs font-bold px-3 py-1.5 rounded-full mb-6">
-              Empresa de cobranza B2B con publicación DICOM en Chile
+              Cobranza B2B de cartera vencida en Chile y Perú
             </div>
 
             <h1 className="font-canaro text-brand-primary-dark text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-4">
@@ -171,7 +171,7 @@ export const RecuperaPage = () => {
                 {
                   icon: <MessageCircleOff className="h-6 w-6 text-brand-primary" />,
                   title: 'Deudores que no responden',
-                  desc: 'Clientes que dejaron de responder. La publicación en DICOM reactiva la conversación.',
+                  desc: 'Clientes que dejaron de responder. Escalamos con gestión profesional y, cuando corresponde, publicación en DICOM.',
                 },
                 {
                   icon: <DollarSign className="h-6 w-6 text-brand-primary" />,
@@ -203,13 +203,13 @@ export const RecuperaPage = () => {
                   icon: <FileSearch className="h-6 w-6 text-brand-primary" />,
                   step: '01',
                   title: 'Evaluación Gratuita',
-                  desc: 'Analizamos tu cartera y priorizamos casos según probabilidad de recuperación. Resultado en 24-48 horas.',
+                  desc: 'Analizamos tu cartera y priorizamos casos según probabilidad de recuperación. Te respondemos en 24 horas.',
                 },
                 {
                   icon: <Users className="h-6 w-6 text-brand-primary" />,
                   step: '02',
                   title: 'Gestión Humana + IA',
-                  desc: 'Contactamos a tus deudores, con publicación DICOM cuando corresponde. Preservamos la relación donde es posible.',
+                  desc: 'Contactamos a tus deudores cuidando la relación donde todavía se puede sostener. Cuando no responden, la publicación en DICOM es el respaldo.',
                 },
                 {
                   icon: <TrendingUp className="h-6 w-6 text-brand-primary" />,
@@ -257,7 +257,7 @@ export const RecuperaPage = () => {
                 <h2 className="text-brand-primary-dark text-2xl md:text-4xl font-extrabold mb-3">
                   Evalúa tu cartera <span className="text-brand-primary">gratis</span>
                 </h2>
-                <p className="text-text-secondary">Sin compromiso. Resultado en 24-48 horas.</p>
+                <p className="text-text-secondary">Sin compromiso. Te respondemos en 24 horas.</p>
               </div>
               <Suspense>
                 <RecuperaContactForm />

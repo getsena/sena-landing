@@ -117,24 +117,26 @@ export const OperaPage = () => {
               />
             </div>
 
-            {/* Stats bar */}
-            <div className="grid grid-cols-3 gap-4 bg-white rounded-2xl shadow-lg p-6 max-w-2xl mx-auto">
+            {/* Stats bar — reemplaza las cifras de escala heredadas (146M gestiones,
+                40+ años, 15 países) retiradas el 2026-10-09. No eran volumen de Sena.
+                La prueba social la carga el logo wall, que va inmediatamente debajo. */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white rounded-2xl shadow-lg p-6 max-w-2xl mx-auto">
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">146M</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">US$50</div>
                 <div className="text-text-secondary text-xs md:text-sm font-medium leading-tight">
-                  Gestiones / mes
+                  Al mes, desde — carteras de menos de 10 relaciones
                 </div>
               </div>
-              <div className="text-center border-x border-border-default">
-                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">40+</div>
+              <div className="text-center sm:border-x border-border-default">
+                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">A medida</div>
                 <div className="text-text-secondary text-xs md:text-sm font-medium leading-tight">
-                  Años de experiencia
+                  Diseñamos la estrategia sobre tu industria y tu cartera
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">15</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-brand-primary mb-1">2 semanas</div>
                 <div className="text-text-secondary text-xs md:text-sm font-medium leading-tight">
-                  Países en LATAM
+                  Operando, desde que firmamos
                 </div>
               </div>
             </div>
@@ -238,6 +240,41 @@ export const OperaPage = () => {
           </div>
         </section>
 
+        {/* Precio — Ópera no publicaba el suyo y es su mejor argumento: casi ningún
+            competidor chileno publica tarifa. Medido en la corrida AEO del 2026-10-08.
+            Los dos tramos salen de 02_Producto/planes_y_precios.md del vault.
+            El tramo de 10 a 50 relaciones NO tiene precio publicable: se cotiza. */}
+        <section id="precio" className="py-12 md:py-20 bg-white">
+          <div className="max-w-[1280px] mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-brand-primary-dark text-2xl md:text-4xl font-extrabold mb-8 text-center">
+                Cuánto cuesta
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="rounded-2xl border border-border-default p-6">
+                  <div className="text-3xl font-extrabold text-brand-primary mb-2">
+                    US$50<span className="text-base font-medium text-text-secondary">/mes</span>
+                  </div>
+                  <p className="text-text-secondary text-sm">
+                    Si tienes menos de 10 clientes activos en cartera.
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-border-default p-6">
+                  <div className="text-3xl font-extrabold text-brand-primary mb-2">
+                    US$300<span className="text-base font-medium text-text-secondary">/mes</span>
+                  </div>
+                  <p className="text-text-secondary text-sm">
+                    Desde 50 clientes activos, con la configuración estándar.
+                  </p>
+                </div>
+              </div>
+              <p className="text-text-secondary text-sm mt-6 text-center">
+                ¿Entre 10 y 50? Depende de tu cartera — te lo cotizamos en el análisis inicial, que es gratis.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Contact form — inline */}
         <section id="contacto" className="py-12 md:py-20">
           <div className="max-w-[1280px] mx-auto px-4">
@@ -246,7 +283,7 @@ export const OperaPage = () => {
                 <h2 className="text-brand-primary-dark text-2xl md:text-4xl font-extrabold mb-3">
                   ¿Cuánto tienes por <span className="text-brand-primary">cobrar?</span>
                 </h2>
-                <p className="text-text-secondary">Cuéntanos tu caso. Te respondemos en 48 horas.</p>
+                <p className="text-text-secondary">Cuéntanos tu caso. Te respondemos en 24 horas.</p>
               </div>
               <Suspense>
                 <OperaContactForm />

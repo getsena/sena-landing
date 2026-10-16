@@ -43,6 +43,7 @@ import blog_27_main from '@/public/images/Blog/blog_27_main.webp'
 import blog_28_main from '@/public/images/Blog/blog_28_main.webp'
 import blog_29_main from '@/public/images/Blog/blog_29_main.webp'
 import blog_30_main from '@/public/images/Blog/blog_30_main.webp'
+import blog_31_main from '@/public/images/Blog/blog_31_main.webp'
 
 import blog_no_image from '@/public/images/Blog/blog_no_image.webp'
 
@@ -92,6 +93,7 @@ export class AssetImageBlog {
   static blog_28_main = blog_28_main
   static blog_29_main = blog_29_main
   static blog_30_main = blog_30_main
+  static blog_31_main = blog_31_main
 
   static blog_no_image = blog_no_image
 }

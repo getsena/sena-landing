@@ -5,7 +5,9 @@ import { useState } from 'react'
 import { TitleDescripction } from '../../../shared/TitleDescripction'
 import { PlanCard, TPlan } from './PlanCard'
 
-/** Modalidades que no se cotizan por plan fijo: Ópera (fee mensual) y Recupera (success fee). */
+/** Ópera y Recupera no tienen plan fijo, pero sí precio publicable desde el 2026-10-09:
+ *  Ópera desde US$50/mes (bajo 10 relaciones) y US$300/mes (sobre 50); Recupera 15% de lo
+ *  recuperado. El tramo de 10 a 50 relaciones se cotiza — no inventar un intermedio. */
 const ServiceCard = ({
   name,
   eyebrow,
@@ -121,7 +123,7 @@ export const PricingPlans = () => {
           <TitleDescripction
             title="Planes diseñados"
             subtitle="para tu empresa"
-            description="Los planes de la Plataforma son públicos. Ópera y Recupera se cotizan según el tamaño y la complejidad de tu cartera."
+            description="Todos los precios son públicos. La Plataforma parte en USD 39 al mes, Ópera desde US$50 al mes y Recupera cobra 15% de lo que recupera. El análisis de tu cartera es gratis, y de ahí sale cuál te conviene."
           />
         </div>
       </div>

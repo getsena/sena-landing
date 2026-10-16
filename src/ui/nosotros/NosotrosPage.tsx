@@ -2,8 +2,9 @@ import { Footer } from '@/ui/layout/Footer'
 import { Header } from '@/ui/layout/Header'
 import { Hero } from './sections/Hero'
 import { OurInspiration } from './sections/OurInspiration'
-import { OurTeamRecsa } from './sections/OurTeamRecsa'
+import { OurTeamIntro } from './sections/OurTeamIntro'
 import { SenaRecovery } from './sections/SenaRecovery'
+import { WhoWeAre } from './sections/WhoWeAre'
 
 export const NosotrosPage = () => {
   return (
@@ -16,7 +17,8 @@ export const NosotrosPage = () => {
           </div>
         </div>
         <OurInspiration />
-        <OurTeamRecsa />
+        <WhoWeAre />
+        <OurTeamIntro />
         <SenaRecovery />
       </div>
       <Footer />

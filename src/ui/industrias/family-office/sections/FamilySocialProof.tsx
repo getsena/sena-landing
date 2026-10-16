@@ -8,9 +8,13 @@ export const FamilySocialProof = () => {
     'Sociedades de inversión',
     'Vehículos de renta y leasing',
   ]
+  // Las dos primeras métricas eran resultados sin fuente ("40% reducción de atrasos",
+  // "30 días de mejora en el DSO"). Sena no los ha medido: Ópera tiene un piloto que
+  // todavía no produce resultado. Retiradas el 2026-10-09, misma regla que el claim del
+  // 33% de DSO. Lo que queda describe capacidades verificables del producto.
   const metrics = [
-    { value: '40%', label: 'Reducción de atrasos recurrentes en clientes clave' },
-    { value: '30 días', label: 'Mejora en el DSO consolidado del grupo' },
+    { value: 'Una vista', label: 'Cartera consolidada de todas las empresas del grupo' },
+    { value: '3 canales', label: 'WhatsApp, email y SMS, con historial por contacto' },
     { value: '100%', label: 'Trazabilidad de gestión por empresa y responsable' },
   ]
 

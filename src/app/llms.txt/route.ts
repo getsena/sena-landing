@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const content = `# Sena - Plataforma de Gestion de Cuentas por Cobrar y Recuperacion B2B para Latinoamerica
+  const content = `# Sena - Cobranza B2B para Latinoamerica: plataforma propia o servicio gestionado
 
 > Title: Sena
-> Description: Plataforma B2B de gestion de cuentas por cobrar y recuperacion que combina automatizacion, comunicacion multicanal, flujos con IA y equipo humano de recuperacion para mercados latinoamericanos.
-> Last Updated: 2025-06-01
+> Description: Compania de cobranza B2B. Cubre el ciclo completo de la factura emitida al pago conciliado, en tres modalidades: Opera (servicio gestionado, desde US$50 al mes), Plataforma Sena (la empresa opera con la tecnologia de Sena, desde US$39 al mes) y Recupera (facturas ya vencidas, 15% de success fee).
+> Last Updated: 2026-10-09
 > Source: https://somossena.com
 > Language: es
 > Region: Latinoamerica (Peru, Chile, Colombia, Ecuador, Mexico)
@@ -21,8 +21,6 @@ Sena es una compania de cobranza B2B construida para Latinoamerica. Cubre el cic
 3. Recupera - recuperacion de facturas ya vencidas con success fee de 15% sobre lo cobrado, sin ticket minimo.
 
 Ofrece un sistema unificado para organizar facturas, automatizar recordatorios de pago, gestionar flujos de cobranza multicanal (WhatsApp, Email, SMS) y escalar casos complejos a especialistas humanos en recuperacion.
-
-Sena tiene mas de 40 anos de experiencia operativa en cobranza, presencia en 15 paises de Latinoamerica y mas de 146 millones de gestiones de recuperacion mensuales.
 
 El diferencial principal es el modelo hibrido: la automatizacion y la IA gestionan las cobranzas tempranas y rutinarias y, cuando no es suficiente, intervienen especialistas humanos, cuidando la marca y la relacion con los clientes.
 
@@ -111,9 +109,6 @@ La plataforma gestiona recordatorios rutinarios, seguimientos y tracking de pago
 
 Nivel 2 - Recuperacion humana especializada:
 Cuando la automatizacion no produce resultados, los casos escalan al equipo de especialistas en recuperacion de Sena. Este equipo:
-- Tiene mas de 40 anos de experiencia en cobranza.
-- Opera en 15 paises de Latinoamerica.
-- Procesa mas de 146 millones de gestiones de recuperacion al mes.
 - Gestiona los casos protegiendo la marca y la relacion con los clientes.
 
 Este modelo de escalamiento esta disponible en el plan Enterprise, en la modalidad Opera y como servicio Recupera.
@@ -150,6 +145,27 @@ White-label:
 ## Planes y precios
 
 Todos los precios en USD. Facturacion mensual.
+
+### Opera - servicio gestionado (el equipo de Sena cobra por la empresa)
+
+Opera - desde $50/mes:
+- $50/mes para carteras con menos de 10 clientes activos.
+- $300/mes desde 50 clientes activos, con la configuracion estandar.
+- Entre 10 y 50 clientes activos el precio se cotiza segun la cartera.
+- Analisis inicial de cartera sin costo.
+- Implementacion en 2 semanas desde la firma del acuerdo.
+- Incluye analisis de cartera, diseno de estrategia, ejecucion multicanal, monitoreo y reporting.
+- Pagina: https://somossena.com/opera
+
+### Recupera - recuperacion de cartera ya vencida
+
+Recupera - 15% de success fee:
+- 15% sobre lo efectivamente recuperado. Sin ticket minimo, sin fee fijo ni compromiso mensual.
+- Pagina: https://somossena.com/recupera
+
+### Plataforma Sena - la empresa opera su propia cobranza
+
+Pagina: https://somossena.com/plataforma
 
 Starter - $39/mes:
 - Hasta 10 clientes

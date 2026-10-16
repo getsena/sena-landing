@@ -7,7 +7,7 @@ export const Clients = () => {
     <div className="bg-surface-secondary py-12 md:py-16 overflow-hidden">
       <div className="mx-auto max-w-[1280px] flex flex-col items-center gap-8 px-4">
         <p className="text-brand-primary-dark font-extrabold text-xl sm:text-4xl text-center">
-          Nuestra trayectoria y nuestros clientes nos avalan
+          Empresas que ya cobran con Sena
         </p>
 
         <div className="relative w-full overflow-hidden">
