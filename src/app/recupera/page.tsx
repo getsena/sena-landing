@@ -4,15 +4,15 @@ import { RecuperaPage } from '@/ui/recupera/RecuperaPage'
 export const metadata: Metadata = {
   title: 'Recupera tu Cartera Vencida — Pagas Solo si Recuperamos | Sena',
   description:
-    'Empresa de cobranza B2B con publicación DICOM en Chile. Sin costo fijo, sin riesgo. Modelo 100% contingente: pagas solo si recuperamos tu dinero.',
+    'Recuperamos las facturas que tu empresa ya no pudo cobrar, cuidando la relación donde todavía se puede. Pagas 15% solo sobre lo que recuperamos, sin costo fijo ni ticket mínimo.',
   keywords:
-    'recuperar cartera vencida, cobranza contingente, publicacion dicom chile, empresa de cobranza b2b, recuperar facturas impagas',
+    'recuperar cartera vencida, cobranza contingente, empresa de cobranza b2b, recuperar facturas impagas, cobranza sin costo fijo, publicacion dicom chile',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.somossena.com/recupera' },
   openGraph: {
     title: 'Recupera tu Cartera Vencida — Pagas Solo si Recuperamos | Sena',
     description:
-      'Cobranza B2B con publicación DICOM en Chile. Sin costo fijo, sin riesgo. Pagas solo si recuperamos.',
+      'Recuperamos las facturas que ya no pudiste cobrar, cuidando la relación donde todavía se puede. Pagas 15% solo sobre lo recuperado.',
     url: 'https://www.somossena.com/recupera',
     type: 'website',
     images: ['https://somossena.com/sena-crm-lite.jpg'],
@@ -28,7 +28,7 @@ const SCHEMA = {
       '@type': 'Service',
       name: 'Sena Recupera',
       description:
-        'Servicio de cobranza B2B contingente con publicación DICOM en Chile. Recuperación de cartera vencida sin costo fijo.',
+        'Servicio de cobranza B2B contingente en Chile y Perú: recuperación de cartera vencida sin costo fijo, 15% sobre lo recuperado. Incluye publicación en DICOM cuando corresponde.',
       url: 'https://www.somossena.com/recupera',
       areaServed: 'CL',
       provider: { '@type': 'Organization', name: 'Sena', url: 'https://www.somossena.com' },

@@ -4,7 +4,7 @@ import { OperaPage } from '@/ui/opera/OperaPage'
 export const metadata: Metadata = {
   title: 'Tu Equipo de Cobranza Externo | Sena Opera',
   description:
-    'Sena combina tecnología, agentes de IA y especialistas humanos para recuperar lo que te deben, sin que tengas que dedicarle un minuto. 40+ años de experiencia en 15 países de LATAM.',
+    'Ópera es el equipo de cobranza B2B que tu empresa no tiene: nosotros cobramos, tú ves los resultados. Desde US$50 al mes, con análisis de cartera sin costo. Chile y Perú.',
   keywords:
     'equipo de cobranza externo, outsourcing de cobranza, servicio de cobranza b2b, agentes de ia para cobranza, cobranza latam',
   robots: { index: true, follow: true },

@@ -11,11 +11,27 @@ export async function generateStaticParams() {
   }))
 }
 
+// Los posts salen de blogPosts.ts, así que publicar uno nuevo ya exige build.
+// Con dynamicParams en false, cualquier slug fuera de esa lista responde 404 de
+// verdad en vez de 200 con la página de error: antes, /blog/<lo-que-sea>
+// devolvía 200 y Google podía indexarlo.
+export const dynamicParams = false
+
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params
   const post = blogPosts.find((p) => p.slug === slug)
 
-  if (!post) return {}
+  // Devolver {} hacía que la metadata cayera al layout raíz, que declara
+  // canonical hacia la home. Cada URL inexistente del blog se declaraba
+  // duplicada de la home — el mismo problema que arreglamos para los posts
+  // reales. Acá se corta explícitamente.
+  if (!post) {
+    return {
+      title: 'Página no encontrada',
+      robots: { index: false, follow: false },
+      alternates: { canonical: null },
+    }
+  }
 
   return {
     title: post.title,
