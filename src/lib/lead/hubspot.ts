@@ -91,7 +91,6 @@ const RECOVERABLE_ERRORS = /INVALID_OPTION|PROPERTY_DOESNT_EXIST/
 // Identificadores de clic de iOS: sirven para auditar y atribuir, pero si HubSpot aún no tiene la propiedad
 // se descartan solas, sin tocar la clasificación ni el resto del lead.
 export const CLICK_ID_PROPS = ['gbraid', 'wbraid']
-const MENTIONS_CLICK_ID = /\b(gbraid|wbraid)\b/
 
 // Resume un error de HubSpot sin datos personales: su cuerpo puede traer el valor rechazado
 // (email, teléfono, nombre). Solo se conserva estado, códigos y nombres de propiedad.
@@ -130,14 +129,18 @@ export async function writeContact(
     .clone()
     .json()
     .catch(() => ({}))
-  if (!RECOVERABLE_ERRORS.test(JSON.stringify(err))) return res
 
-  // gbraid/wbraid sin crear en HubSpot: se reintenta quitando solo esas dos propiedades.
+  // gbraid/wbraid: si HubSpot rechaza un identificador de clic (propiedad inexistente o de otro tipo; el código
+  // del error no importa) se reintenta quitando solo ese identificador. Nunca debe costar el lead ni la clasificación.
   let current = properties
-  if (CLICK_ID_PROPS.some((key) => key in properties) && MENTIONS_CLICK_ID.test(JSON.stringify(err))) {
-    current = Object.fromEntries(Object.entries(properties).filter(([key]) => !CLICK_ID_PROPS.includes(key)))
+  const rejectedClickIds =
+    res.status === 400
+      ? CLICK_ID_PROPS.filter((key) => key in properties && JSON.stringify(err).includes(key))
+      : []
+  if (rejectedClickIds.length > 0) {
+    current = Object.fromEntries(Object.entries(properties).filter(([key]) => !rejectedClickIds.includes(key)))
     console.error(
-      `[HubSpot] gbraid/wbraid rechazados, reintentando sin ellos: ${describeHubspotError(res.status, err)}`
+      `[HubSpot] ${rejectedClickIds.join('/')} rechazado(s), reintentando sin ellos: ${describeHubspotError(res.status, err)}`
     )
     const sinClickIds = await send(current)
     if (sinClickIds.ok) return sinClickIds
@@ -147,6 +150,8 @@ export async function writeContact(
       .json()
       .catch(() => ({}))
     if (!RECOVERABLE_ERRORS.test(JSON.stringify(err))) return sinClickIds
+  } else if (!RECOVERABLE_ERRORS.test(JSON.stringify(err))) {
+    return res
   }
 
   const safe = Object.fromEntries(
