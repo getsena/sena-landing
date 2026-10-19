@@ -9,6 +9,7 @@ import {
   rememberLeadEventId,
 } from '@/lib/lead/clientAttribution'
 import Button from '@/ui/shared/Button'
+import { trackLeadConversion } from '@/lib/tracking/leadConversion'
 import { TurnstileWidget, useTurnstile } from '@/ui/shared/Turnstile'
 import { Input } from '@/ui/shared/Input'
 import SimpleCountrySelect, { OptionSelect } from '@/ui/shared/SimpleCountrySelect'
@@ -127,9 +128,7 @@ export const RecuperaContactForm = () => {
         return
       }
 
-      if (window.gtag) {
-        window.gtag('event', 'conversion', { send_to: 'AW-17962976949/sCCeCNfunKccELWNtfVC' })
-      }
+      trackLeadConversion('recupera', { eventId })
       rememberLeadEventId(eventId)
       if (window.fbq) window.fbq('track', 'Lead', { content_name: 'recupera' }, { eventID: eventId })
 
