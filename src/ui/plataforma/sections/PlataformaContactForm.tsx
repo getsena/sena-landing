@@ -9,6 +9,7 @@ import {
   rememberLeadEventId,
 } from '@/lib/lead/clientAttribution'
 import Button from '@/ui/shared/Button'
+import { trackLeadConversion } from '@/lib/tracking/leadConversion'
 import { TurnstileWidget, useTurnstile } from '@/ui/shared/Turnstile'
 import { Input } from '@/ui/shared/Input'
 import SimpleCountrySelect, { OptionSelect } from '@/ui/shared/SimpleCountrySelect'
@@ -126,9 +127,7 @@ export const PlataformaContactForm = () => {
         return
       }
 
-      if (window.gtag) {
-        window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
-      }
+      trackLeadConversion('plataforma', { eventId, email: data.email, telefono })
       rememberLeadEventId(eventId)
       if (window.fbq) window.fbq('track', 'Lead', { content_name: 'plataforma' }, { eventID: eventId })
 
