@@ -358,3 +358,41 @@ test.describe('createDeal: la asociación deal-contacto no puede fallar en silen
     }
   })
 })
+
+test.describe('writeContact: gbraid y wbraid aún no creados no cuestan ni la clasificación ni el resto del lead', () => {
+  const CON_BRAID: Record<string, string> = { ...PROPS, gclid: 'g1', gbraid: 'gb1', wbraid: 'wb1' }
+
+  test('si HubSpot no tiene gbraid/wbraid, reintenta quitando solo esas dos y conserva todo lo demás', async () => {
+    const m = mockFetch([
+      { status: 400, json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]' } },
+      { status: 201, json: { id: '9' } },
+    ])
+    try {
+      const res = await writeContact('tok', 'POST', '/crm/v3/objects/contacts', CON_BRAID)
+      expect(res.ok).toBe(true)
+      expect(m.calls).toHaveLength(2)
+      const retry = m.calls[1].body.properties
+      expect(retry).not.toHaveProperty('gbraid')
+      expect(retry).not.toHaveProperty('wbraid')
+      // la clasificación y el gclid se conservan: el reintento no cae a "solo campos núcleo"
+      expect(retry).toEqual({ ...PROPS, gclid: 'g1' })
+    } finally {
+      m.restore()
+    }
+  })
+
+  test('un error de clasificación sin relación con gbraid/wbraid sigue su camino de siempre', async () => {
+    const m = mockFetch([
+      { status: 400, json: { errors: [{ code: 'INVALID_OPTION', message: 'fuente_del_lead' }] } },
+      { status: 201, json: { id: '10' } },
+    ])
+    try {
+      const res = await writeContact('tok', 'POST', '/crm/v3/objects/contacts', CON_BRAID)
+      expect(res.ok).toBe(true)
+      expect(m.calls).toHaveLength(2)
+      expect(m.calls[1].body.properties).not.toHaveProperty('fuente_del_lead')
+    } finally {
+      m.restore()
+    }
+  })
+})

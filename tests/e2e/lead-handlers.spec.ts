@@ -304,3 +304,38 @@ test.describe('smoke tests: los emails +smoke no se reportan a Meta', () => {
   }
 })
 
+
+test.describe('gbraid y wbraid (clics de iOS) se guardan en el contacto', () => {
+  for (const [nombre, run, base] of [
+    ['/api/lead', (p: object) => postLead(req('/api/lead', p)), leadPayload],
+    ['/api/lead-analyzer', (p: object) => postAnalyzer(req('/api/lead-analyzer', p)), analyzerPayload],
+  ] as const) {
+    test(`${nombre}: un lead con gbraid y wbraid los envía a HubSpot`, async () => {
+      const m = mockHubspot()
+      try {
+        const res = await run({ ...base, gbraid: 'GB-abc_123', wbraid: 'WB-xyz_456' })
+        expect(res.status).toBe(200)
+        const props = (contactWrites(m.calls)[0].body as { properties: Record<string, string> }).properties
+        expect(props.gbraid).toBe('GB-abc_123')
+        expect(props.wbraid).toBe('WB-xyz_456')
+        expect(props.fuente_del_lead).toBe('Ads')
+      } finally {
+        m.restore()
+      }
+    })
+
+    test(`${nombre}: un lead sin gbraid ni wbraid no envía esas propiedades`, async () => {
+      const m = mockHubspot()
+      try {
+        const res = await run({ ...base, gclid: 'abc' })
+        expect(res.status).toBe(200)
+        const props = (contactWrites(m.calls)[0].body as { properties: Record<string, string> }).properties
+        expect(props).not.toHaveProperty('gbraid')
+        expect(props).not.toHaveProperty('wbraid')
+        expect(props.gclid).toBe('abc')
+      } finally {
+        m.restore()
+      }
+    })
+  }
+})
