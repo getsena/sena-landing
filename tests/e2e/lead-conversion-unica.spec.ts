@@ -44,6 +44,13 @@ test.describe('trackLeadConversion', () => {
     })
   })
 
+  test('un teléfono sin código de país (no E.164) se omite; el email se envía igual', () => {
+    conGtag((calls) => {
+      trackLeadConversion('plataforma', { eventId: 'ev-5', email: 'x@y.cl', telefono: '9 1234 5678' })
+      expect(calls[0]).toEqual(['set', 'user_data', { email: 'x@y.cl' }])
+    })
+  })
+
   test('sin email ni teléfono no envía user_data pero sí la conversión', () => {
     conGtag((calls) => {
       trackLeadConversion('opera', { eventId: 'ev-3' })
