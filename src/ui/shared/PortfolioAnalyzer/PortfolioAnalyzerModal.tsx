@@ -4,6 +4,7 @@ import { Button } from '@/ui/shared/Button'
 import { TurnstileWidget, useTurnstile } from '@/ui/shared/Turnstile'
 import { Input } from '@/ui/shared/Input'
 import { useModalStore } from '@/lib/store/modalStore'
+import { trackLeadConversion } from '@/lib/tracking/leadConversion'
 import { useEffect, useRef, useState } from 'react'
 import { getAttributionPayload, landingPageUrl, newEventId } from '@/lib/lead/clientAttribution'
 import {
@@ -115,7 +116,8 @@ export function PortfolioAnalyzerModal() {
 
     try {
       const turnstileToken = await turnstile.getToken()
-      await fetch('/api/lead-analyzer', {
+      const eventId = newEventId()
+      const res = await fetch('/api/lead-analyzer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -131,9 +133,16 @@ export function PortfolioAnalyzerModal() {
           ...getAttributionPayload(),
           landingPage: landingPageUrl(),
           'cf-turnstile-response': turnstileToken,
-          eventId: newEventId(),
+          eventId,
         }),
       })
+      const json = await res.json().catch(() => ({ ok: false }))
+      // La conversión se emite solo si el servidor confirma el lead (res.ok && json.ok), igual que los formularios.
+      if (res.ok && json.ok) {
+        trackLeadConversion('plataforma', { eventId })
+        if (!window.dataLayer) window.dataLayer = []
+        window.dataLayer.push({ event: 'conversion_event_signup_2', origin: 'plataforma' })
+      }
     } catch {
       // fire-and-forget — siempre avanzamos a confirmación
     } finally {
