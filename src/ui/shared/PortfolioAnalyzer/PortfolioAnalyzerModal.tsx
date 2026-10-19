@@ -139,7 +139,7 @@ export function PortfolioAnalyzerModal() {
       const json = await res.json().catch(() => ({ ok: false }))
       // La conversión se emite solo si el servidor confirma el lead (res.ok && json.ok), igual que los formularios.
       if (res.ok && json.ok) {
-        trackLeadConversion('plataforma', { eventId, email: email.trim(), telefono: telefono.trim() })
+        trackLeadConversion('plataforma', { eventId })
         if (!window.dataLayer) window.dataLayer = []
         window.dataLayer.push({ event: 'conversion_event_signup_2', origin: 'plataforma' })
       }

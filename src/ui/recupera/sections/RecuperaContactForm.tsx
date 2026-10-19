@@ -128,7 +128,7 @@ export const RecuperaContactForm = () => {
         return
       }
 
-      trackLeadConversion('recupera', { eventId, email: data.email, telefono })
+      trackLeadConversion('recupera', { eventId })
       rememberLeadEventId(eventId)
       if (window.fbq) window.fbq('track', 'Lead', { content_name: 'recupera' }, { eventID: eventId })
 

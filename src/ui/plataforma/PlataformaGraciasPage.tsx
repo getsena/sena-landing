@@ -10,6 +10,7 @@ import { pixelEventOptions } from '@/lib/lead/clientAttribution'
 
 declare global {
   interface Window {
+    gtag?: (...args: unknown[]) => void
     fbq?: (...args: unknown[]) => void
   }
 }
@@ -20,6 +21,9 @@ export const PlataformaGraciasPage = () => {
   useEffect(() => {
     if (!window.dataLayer) window.dataLayer = []
     window.dataLayer.push({ event: 'conversion_event_signup_2', origin: 'plataforma' })
+    if (window.gtag) {
+      window.gtag('event', 'conversion', { send_to: 'AW-17962976949/JNP9CMq42ZgcELWNtfVC' })
+    }
     if (window.fbq) window.fbq('track', 'Lead', { content_name: 'plataforma' }, ...pixelEventOptions())
   }, [])
 

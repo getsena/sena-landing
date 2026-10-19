@@ -127,7 +127,7 @@ export const PlataformaContactForm = () => {
         return
       }
 
-      trackLeadConversion('plataforma', { eventId, email: data.email, telefono })
+      trackLeadConversion('plataforma', { eventId })
       rememberLeadEventId(eventId)
       if (window.fbq) window.fbq('track', 'Lead', { content_name: 'plataforma' }, { eventID: eventId })
 

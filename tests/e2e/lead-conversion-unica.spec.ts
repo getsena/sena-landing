@@ -4,8 +4,9 @@ import { test, expect } from '@playwright/test'
 
 import { ADS_CONVERSION_LABEL, trackLeadConversion } from '@/lib/tracking/leadConversion'
 
-// Una conversión de Google Ads por lead, emitida desde el origen (el formulario o el analizador) solo cuando
-// el servidor confirma el lead. Las páginas de gracias no emiten conversión: contaban recargas y visitas directas.
+// El formulario (o el analizador) emite la conversión de Google Ads con transaction_id = eventId, solo cuando
+// el servidor confirma el lead. Las páginas de gracias siguen emitiéndola (redundancia actual): unificar las
+// fuentes queda para un PR correctivo.
 
 const src = (path: string) => readFileSync(path, 'utf8')
 
@@ -25,37 +26,21 @@ function conGtag(fn: (calls: Call[]) => void) {
 test.describe('trackLeadConversion', () => {
   test('emite una conversión con la etiqueta del producto y transaction_id igual al eventId', () => {
     conGtag((calls) => {
-      const ok = trackLeadConversion('recupera', { eventId: 'ev-1', email: 'A@B.cl', telefono: '+56 9 1234 5678' })
+      const ok = trackLeadConversion('recupera', { eventId: 'ev-1' })
       expect(ok).toBe(true)
-      const conversiones = calls.filter((c) => c[0] === 'event' && c[1] === 'conversion')
-      expect(conversiones).toHaveLength(1)
-      expect(conversiones[0][2]).toEqual({
-        send_to: `AW-17962976949/${ADS_CONVERSION_LABEL.recupera}`,
-        transaction_id: 'ev-1',
-      })
+      expect(calls).toHaveLength(1)
+      expect(calls[0]).toEqual([
+        'event',
+        'conversion',
+        { send_to: `AW-17962976949/${ADS_CONVERSION_LABEL.recupera}`, transaction_id: 'ev-1' },
+      ])
     })
   })
 
-  test('envía email y teléfono normalizados (conversiones mejoradas) antes de la conversión', () => {
+  test('no envía datos personales del cliente a Google', () => {
     conGtag((calls) => {
-      trackLeadConversion('plataforma', { eventId: 'ev-2', email: '  Persona@Empresa.CL ', telefono: '+56 9 1234-5678' })
-      expect(calls[0]).toEqual(['set', 'user_data', { email: 'persona@empresa.cl', phone_number: '+56912345678' }])
-      expect(calls[1][1]).toBe('conversion')
-    })
-  })
-
-  test('un teléfono sin código de país (no E.164) se omite; el email se envía igual', () => {
-    conGtag((calls) => {
-      trackLeadConversion('plataforma', { eventId: 'ev-5', email: 'x@y.cl', telefono: '9 1234 5678' })
-      expect(calls[0]).toEqual(['set', 'user_data', { email: 'x@y.cl' }])
-    })
-  })
-
-  test('sin email ni teléfono no envía user_data pero sí la conversión', () => {
-    conGtag((calls) => {
-      trackLeadConversion('opera', { eventId: 'ev-3' })
-      expect(calls.some((c) => c[1] === 'user_data')).toBe(false)
-      expect(calls.filter((c) => c[1] === 'conversion')).toHaveLength(1)
+      trackLeadConversion('plataforma', { eventId: 'ev-2' })
+      expect(calls.some((c) => c[1] === 'user_data' || c[0] === 'set')).toBe(false)
     })
   })
 
@@ -80,7 +65,7 @@ test.describe('trackLeadConversion', () => {
   })
 })
 
-test.describe('origen único de la conversión', () => {
+test.describe('origen de la conversión', () => {
   const formularios = [
     { producto: 'plataforma', path: 'src/ui/plataforma/sections/PlataformaContactForm.tsx' },
     { producto: 'recupera', path: 'src/ui/recupera/sections/RecuperaContactForm.tsx' },
@@ -89,8 +74,7 @@ test.describe('origen único de la conversión', () => {
   for (const f of formularios) {
     test(`${f.producto}: el formulario emite la conversión con el eventId del lead, tras la confirmación`, () => {
       const t = src(f.path)
-      expect(t).toContain(`trackLeadConversion('${f.producto}'`)
-      expect(t).toContain('eventId')
+      expect(t).toContain(`trackLeadConversion('${f.producto}', { eventId })`)
       expect(t).not.toContain("'conversion'")
       // la conversión va después de la validación de la respuesta del servidor
       expect(t.indexOf('trackLeadConversion(')).toBeGreaterThan(t.indexOf('!json.ok'))
@@ -98,16 +82,15 @@ test.describe('origen único de la conversión', () => {
   }
 
   const gracias = [
-    'src/ui/plataforma/PlataformaGraciasPage.tsx',
-    'src/ui/recupera/RecuperaGraciasPage.tsx',
-    'src/ui/opera/OperaGraciasPage.tsx',
+    { producto: 'plataforma', path: 'src/ui/plataforma/PlataformaGraciasPage.tsx' },
+    { producto: 'recupera', path: 'src/ui/recupera/RecuperaGraciasPage.tsx' },
+    { producto: 'opera', path: 'src/ui/opera/OperaGraciasPage.tsx' },
   ]
-  for (const path of gracias) {
-    test(`${path} no emite conversión de Ads`, () => {
-      const t = src(path)
-      expect(t).not.toContain("'conversion'")
-      expect(t).not.toContain('AW-17962976949')
-      // el evento de GA4 (vía GTM) sigue en la página de gracias
+  for (const g of gracias) {
+    test(`${g.producto}: la página de gracias conserva su emisión (no se pierde lo que funciona hoy)`, () => {
+      const t = src(g.path)
+      expect(t).toContain("'conversion'")
+      expect(t).toContain(ADS_CONVERSION_LABEL[g.producto as keyof typeof ADS_CONVERSION_LABEL])
       expect(t).toContain('conversion_event_signup_2')
     })
   }
@@ -119,8 +102,8 @@ test.describe('origen único de la conversión', () => {
     expect(t.indexOf('trackLeadConversion(')).toBeGreaterThan(t.indexOf('res.ok'))
   })
 
-  test('las etiquetas de conversión viven solo en el helper', () => {
-    for (const path of [...formularios.map((f) => f.path), ...gracias, 'src/ui/shared/PortfolioAnalyzer/PortfolioAnalyzerModal.tsx']) {
+  test('los formularios y el analizador no escriben etiquetas de conversión a mano', () => {
+    for (const path of [...formularios.map((f) => f.path), 'src/ui/shared/PortfolioAnalyzer/PortfolioAnalyzerModal.tsx']) {
       expect(src(path), path).not.toMatch(/AW-17962976949\/\w+/)
     }
   })

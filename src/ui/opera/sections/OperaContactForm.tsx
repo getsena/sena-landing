@@ -128,7 +128,7 @@ export const OperaContactForm = () => {
         return
       }
 
-      trackLeadConversion('opera', { eventId, email: data.email, telefono })
+      trackLeadConversion('opera', { eventId })
       rememberLeadEventId(eventId)
       if (window.fbq) window.fbq('track', 'Lead', { content_name: 'opera' }, { eventID: eventId })
 
