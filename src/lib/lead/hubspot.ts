@@ -88,6 +88,10 @@ export const CLASSIFICATION_PROPS = [
 
 const RECOVERABLE_ERRORS = /INVALID_OPTION|PROPERTY_DOESNT_EXIST/
 
+// Identificadores de clic de iOS: sirven para auditar y atribuir, pero si HubSpot aún no tiene la propiedad
+// se descartan solas, sin tocar la clasificación ni el resto del lead.
+export const CLICK_ID_PROPS = ['gbraid', 'wbraid']
+
 // Resume un error de HubSpot sin datos personales: su cuerpo puede traer el valor rechazado
 // (email, teléfono, nombre). Solo se conserva estado, códigos y nombres de propiedad.
 export function describeHubspotError(status: number, err: unknown): string {
@@ -120,17 +124,41 @@ export async function writeContact(
   const res = await send(properties)
   if (res.ok) return res
 
-  const err = await res
+  let failed = res
+  let err = await res
     .clone()
     .json()
     .catch(() => ({}))
-  if (!RECOVERABLE_ERRORS.test(JSON.stringify(err))) return res
+
+  // gbraid/wbraid: si HubSpot rechaza un identificador de clic (propiedad inexistente o de otro tipo; el código
+  // del error no importa) se reintenta quitando solo ese identificador. Nunca debe costar el lead ni la clasificación.
+  let current = properties
+  const rejectedClickIds =
+    res.status === 400
+      ? CLICK_ID_PROPS.filter((key) => key in properties && JSON.stringify(err).includes(key))
+      : []
+  if (rejectedClickIds.length > 0) {
+    current = Object.fromEntries(Object.entries(properties).filter(([key]) => !rejectedClickIds.includes(key)))
+    console.error(
+      `[HubSpot] ${rejectedClickIds.join('/')} rechazado(s), reintentando sin ellos: ${describeHubspotError(res.status, err)}`
+    )
+    const sinClickIds = await send(current)
+    if (sinClickIds.ok) return sinClickIds
+    failed = sinClickIds
+    err = await sinClickIds
+      .clone()
+      .json()
+      .catch(() => ({}))
+    if (!RECOVERABLE_ERRORS.test(JSON.stringify(err))) return sinClickIds
+  } else if (!RECOVERABLE_ERRORS.test(JSON.stringify(err))) {
+    return res
+  }
 
   const safe = Object.fromEntries(
-    Object.entries(properties).filter(([key]) => !CLASSIFICATION_PROPS.includes(key))
+    Object.entries(current).filter(([key]) => !CLASSIFICATION_PROPS.includes(key))
   )
   console.error(
-    `[HubSpot] propiedad de clasificación rechazada, reintentando sin ellas: ${describeHubspotError(res.status, err)}`
+    `[HubSpot] propiedad de clasificación rechazada, reintentando sin ellas: ${describeHubspotError(failed.status, err)}`
   )
   const retry = await send(safe)
   if (retry.ok) return retry

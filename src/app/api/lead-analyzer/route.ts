@@ -92,6 +92,8 @@ function buildContactProperties(body: AnalyzerLeadPayload): Record<string, strin
   if (clasificacion.origen) properties.origen = clasificacion.origen
   if (body.telefono) properties.phone = body.telefono
   if (body.gclid) properties.gclid = body.gclid
+  if (body.gbraid) properties.gbraid = body.gbraid
+  if (body.wbraid) properties.wbraid = body.wbraid
   if (body.fbclid) properties.fbclid = body.fbclid
   if (body.landingPage) properties.landing_page = body.landingPage
 

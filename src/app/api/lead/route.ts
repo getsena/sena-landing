@@ -118,6 +118,8 @@ function buildContactProperties(body: LeadPayload): Record<string, string> {
   if (clasificacion.origen) properties.origen = clasificacion.origen
 
   if (body.gclid) properties.gclid = body.gclid
+  if (body.gbraid) properties.gbraid = body.gbraid
+  if (body.wbraid) properties.wbraid = body.wbraid
   if (body.fbclid) properties.fbclid = body.fbclid
   if (body.landingPage) properties.landing_page = body.landingPage
   if (body.utmCampaign) properties.utm_campaign = body.utmCampaign
