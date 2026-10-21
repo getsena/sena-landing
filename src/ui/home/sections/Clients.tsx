@@ -1,31 +1,31 @@
 import { clients } from '@/lib/data/clients'
+import { Container } from './shared'
 
-const track = [...clients, ...clients]
-
-export const Clients = () => {
-  return (
-    <div className="bg-surface-secondary py-12 md:py-16 overflow-hidden">
-      <div className="mx-auto max-w-[1280px] flex flex-col items-center gap-8 px-4">
-        <p className="text-brand-primary-dark font-extrabold text-xl sm:text-4xl text-center">
-          Empresas que ya cobran con Sena
-        </p>
-
-        <div className="relative w-full overflow-hidden">
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-surface-secondary to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-surface-secondary to-transparent z-10" />
-
-          <div className="flex items-center gap-16 w-max animate-logo-marquee">
-            {track.map((client, index) => (
-              <img
-                key={`${client.name}-${index}`}
-                src={client.logo}
-                alt={client.name}
-                className="h-10 md:h-12 w-auto object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300 flex-shrink-0"
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+// Alto de cada logo para que pesen parecido en el muro (las proporciones de los archivos difieren).
+const LOGO_HEIGHT: Record<number, string> = {
+  0: 'h-[22px]',
+  1: 'h-[34px]',
+  6: 'h-[52px]',
+  7: 'h-[26px]',
+  8: 'h-[34px]',
 }
+
+export const Clients = () => (
+  <section aria-labelledby="logos-titulo" className="border-b border-border-default">
+    <Container className="py-10 flex flex-wrap items-center justify-between gap-x-10 gap-y-6">
+      <h2 id="logos-titulo" className="m-0 text-[15px] font-bold">
+        Empresas que ya cobran con Sena
+      </h2>
+      <div className="flex flex-wrap items-center gap-x-11 gap-y-6 flex-[1_1_560px] justify-start md:justify-end">
+        {clients.map((client) => (
+          <img
+            key={client.id}
+            src={client.logo}
+            alt={client.name}
+            className={`${LOGO_HEIGHT[client.id] ?? 'h-[34px]'} w-auto grayscale opacity-75`}
+          />
+        ))}
+      </div>
+    </Container>
+  </section>
+)

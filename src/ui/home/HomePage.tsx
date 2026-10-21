@@ -1,51 +1,35 @@
-'use client'
-
-import { useEffect } from 'react'
-import { Footer } from '../layout/Footer'
 import { Header } from '../layout/Header'
-import { CallToAction } from './sections/CallToAction/CallToAction'
+import { homeFaqJsonLd } from './data/faqs'
+import { CaseSection } from './sections/CaseForm/CaseSection'
 import { Clients } from './sections/Clients'
+import { DirectCollection } from './sections/DirectCollection'
+import { Faq } from './sections/Faq'
 import { Hero } from './sections/Hero'
-import { HowItWorks } from './sections/HowItWorks'
-import { KeyFeatures } from './sections/KeyFeatures/KeyFeatures'
-import { PricingPlans } from './sections/PricingPlans/PricingPlans'
-import { PortfolioAnalyzerCTA } from './sections/PortfolioAnalyzerCTA'
-import { Products } from './sections/Products'
+import { HomeFooter } from './sections/HomeFooter'
+import { Modalities } from './sections/Modalities'
+import { Pricing } from './sections/Pricing'
+import { RecuperaBand } from './sections/RecuperaBand'
+import { Service } from './sections/Service'
+import { ServiceDemo } from './sections/ServiceDemo'
 
-export const HomePage = () => {
-  useEffect(() => {
-    // Cuando la página carga, verificar si hay un hash en la URL
-    const hash = window.location.hash
-    if (hash) {
-      const sectionId = hash.replace('#', '')
-      // Pequeño delay para asegurar que el DOM esté completamente cargado
-      setTimeout(() => {
-        const element = document.getElementById(sectionId)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }
-      }, 100)
-    }
-  }, [])
-
-  return (
-    <div className="min-h-screen flex flex-col ">
-      <Header variant="primary" />
-      <div className="grow">
-        <div className="bg-surface-secondary">
-          <div className="max-w-[1280px] mx-auto">
-            <Hero />
-          </div>
-        </div>
-        <Clients />
-        <Products />
-        <KeyFeatures />
-        <HowItWorks />
-        <PortfolioAnalyzerCTA />
-        <PricingPlans />
-        <CallToAction />
-        <Footer />
-      </div>
-    </div>
-  )
-}
+// Componente de servidor: todo el contenido (las tres etapas de la demo y las respuestas de la FAQ) va en el
+// HTML inicial. Solo la demo y el formulario se hidratan.
+export const HomePage = () => (
+  <div className="min-h-screen flex flex-col font-adobe text-brand-primary-dark text-[17px] leading-[1.55]">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqJsonLd) }} />
+    <Header variant="primary" />
+    <main className="grow">
+      <Hero />
+      <Clients />
+      <Service />
+      <Modalities />
+      <RecuperaBand />
+      <ServiceDemo />
+      <DirectCollection />
+      <Pricing />
+      <Faq />
+      <CaseSection />
+    </main>
+    <HomeFooter />
+  </div>
+)
