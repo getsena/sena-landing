@@ -20,7 +20,7 @@ const HUBSPOT_PORTAL_ID = '48812457'
 const TIMEOUT_MS = 3000
 const MAX_VALUE = 200
 
-export type NotifySource = 'plataforma' | 'recupera' | 'opera' | 'analizador' | 'contactanos'
+export type NotifySource = 'plataforma' | 'recupera' | 'opera' | 'analizador' | 'contactanos' | 'home'
 
 const SOURCE_LABEL: Record<NotifySource, string> = {
   plataforma: 'Plataforma',
@@ -28,6 +28,7 @@ const SOURCE_LABEL: Record<NotifySource, string> = {
   opera: 'Opera',
   analizador: 'Analizador de cartera',
   contactanos: 'Contáctanos',
+  home: 'Home',
 }
 
 export type NotifyLeadInput = {
