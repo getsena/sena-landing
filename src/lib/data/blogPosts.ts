@@ -4518,7 +4518,10 @@ export const blogPosts: BlogPost[] = [
     date: '24 de marzo 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_28_main.src,
-    lector: 'pyme-que-cobra',
+    // El cuerpo dice "pyme en crecimiento", pero el lector no es ese: el ICP de pyme opera su
+    // cobranza sin ERP robusto, así que no tiene el problema que el post describe. La tesis del
+    // artículo —complementar el ERP en vez de reemplazarlo— es la del ICP enterprise.
+    lector: 'enterprise-con-erp',
     faq: [
       {
         question: '¿Cómo sé que mi ERP se queda corto en cobranza?',
