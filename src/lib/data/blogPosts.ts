@@ -136,6 +136,29 @@ export const blogPosts: BlogPost[] = [
     date: '02 de diciembre 2025',
     tags: ['Cobranza', 'Educación Financiera'],
     image: AssetImageBlog.blog_5_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Cómo calculo lo que me cuesta la cobranza manual?',
+        answer:
+          'Suma las horas que tu equipo dedica a revisar planillas, redactar correos uno por uno, hacer llamadas sin registro y cruzar información entre WhatsApp y Excel. Ese costo no aparece en el estado de resultados, pero es real y medible.',
+      },
+      {
+        question: '¿Qué tareas de cobranza se pueden automatizar?',
+        answer:
+          'Las repetibles y predecibles: recordatorios antes del vencimiento, seguimientos a los 3, 7 y 15 días, y notificaciones por WhatsApp o email según el comportamiento de pago del cliente.',
+      },
+      {
+        question: '¿Automatizar significa sacar a las personas de la cobranza?',
+        answer:
+          'No. Cuando la tecnología se hace cargo de lo rutinario, el equipo queda libre para lo que requiere criterio humano: negociar acuerdos, gestionar casos complejos y cuidar las relaciones estratégicas.',
+      },
+      {
+        question: 'Si el proceso manual funciona hoy, ¿por qué cambiarlo?',
+        answer:
+          'Porque no escala. Cuando la cobranza depende de la memoria de alguien se olvidan facturas y se pierde el historial de conversaciones, y al crecer el equipo el desorden crece con él.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -214,6 +237,23 @@ export const blogPosts: BlogPost[] = [
     date: '05 de diciembre 2025',
     tags: ['Cobranza', 'Sena'],
     image: AssetImageBlog.blog_6_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: '¿Qué diferencia hay entre factoring y recuperación?',
+        answer:
+          'En el factoring cedes tu documento y recibes un porcentaje adelantado, o sea pierdes parte de lo que te deben. En la recuperación la factura sigue siendo tuya: no cedes derechos y el pago se gestiona directamente con tu cliente.',
+      },
+      {
+        question: '¿Tengo que pagar algo por adelantado?',
+        answer: 'No. Recupera solo cobra si logra que te paguen. Si no hay recuperación, no hay cobro.',
+      },
+      {
+        question: '¿Gestionar una factura vencida me va a costar el cliente?',
+        answer:
+          'Ese es justamente el criterio del equipo que gestiona: saber cómo hablar con quien no paga sin romper la relación comercial.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -317,6 +357,28 @@ export const blogPosts: BlogPost[] = [
     date: '09 de diciembre 2025',
     tags: ['Sena', 'Cobranza', 'Educación Financiera'],
     image: AssetImageBlog.blog_7_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué diferencia hay entre política de crédito y política de cobranza?',
+        answer:
+          'La de crédito define a quién le vendes y en qué condiciones. La de cobranza define qué pasa después de emitida la factura. La mayoría de las empresas tiene la primera, aunque sea informal, y no tiene la segunda.',
+      },
+      {
+        question: '¿Qué debería tener una política de cobranza?',
+        answer:
+          'Tres cosas: cuándo se envía el primer recordatorio, que debe ser antes del vencimiento y no después; por qué canal se contacta a cada tipo de cliente; y qué pasa si no hay respuesta a los 15, 30 o 60 días.',
+      },
+      {
+        question: '¿Necesito un manual extenso?',
+        answer: 'No. Esos tres puntos, aplicados con consistencia, cambian completamente el resultado.',
+      },
+      {
+        question: '¿Y si mi cartera ya está vencida?',
+        answer:
+          'Cuando la política no existió desde el principio, la deuda se acumula y el equipo interno rara vez tiene el tiempo, el proceso o la experiencia para recuperarla sin poner en riesgo la relación comercial. Ahí conviene escalar a gestión especializada.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -5574,6 +5636,24 @@ export const blogPosts: BlogPost[] = [
     date: '10 de abril 2026',
     tags: ['Sena', 'Blog'],
     image: AssetImageBlog.blog_29_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: '¿Por qué cobrar se volvió un problema de mi negocio?',
+        answer:
+          'Porque hay plata que ya ganaste y todavía no está en tu cuenta. Mecanismos de pago ineficientes, ventas a crédito sin seguimiento y contrapartes que no priorizan pagar acumulan deuda en la calle y presión en tu caja.',
+      },
+      {
+        question: '¿Cobrar mal también tiene costo?',
+        answer:
+          'Sí. La deuda que no se gestiona mata empresas, pero hacerlo mal también: una cobranza hostil o ineficiente puede costarte el cliente que más trabajo te costó conseguir.',
+      },
+      {
+        question: '¿Es solo un problema de pymes?',
+        answer:
+          'No. La cobranza cruza emprendedores, pymes y política económica por igual: apareció en el caso CAE, en el sistema único de cobranza de cotizaciones, en la Ley de prefijos telefónicos y en el debate sobre el pago a 30 días.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -5658,6 +5738,24 @@ export const blogPosts: BlogPost[] = [
     date: '14 de abril 2026',
     tags: ['Sena', 'Educación Financiera'],
     image: AssetImageBlog.blog_30_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: '¿Qué es el vibecoding?',
+        answer:
+          'La práctica de crear software con ayuda de inteligencia artificial, sin necesitar un equipo técnico completo. Permite que emprendedores casi solos construyan soluciones digitales y las vendan a grandes empresas.',
+      },
+      {
+        question: '¿Qué riesgo corre una empresa chica cuando un cliente grande no paga?',
+        answer:
+          'El del caso que cuenta este artículo: más de $8 millones en facturas impagas con más de 60 días de atraso obligaron a seguir operando con recursos propios, hasta que una demanda por no pago de cotizaciones terminó en una multa de casi $20 millones.',
+      },
+      {
+        question: '¿Qué tan común es?',
+        answer:
+          'Según la última encuesta de Propyme, más del 60% de las mipymes cerró el primer trimestre de 2026 con inyección de recursos personales, cerca del 27% solicitó un crédito bancario y el 22% no pudo pagar sus obligaciones laborales.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -5980,6 +6078,24 @@ export const blogPosts: BlogPost[] = [
     date: '17 de abril 2026',
     tags: ['Sena', 'Cobranza', 'Blog'],
     image: AssetImageBlog.blog_28_main.src,
+    lector: 'distribuidora-con-fuerza-de-venta',
+    faq: [
+      {
+        question: '¿Por qué chocan el equipo comercial y el financiero?',
+        answer:
+          'Porque los primeros quieren vender más, abrir nuevos clientes y extender crédito, y los segundos quieren ver los ingresos en la caja y restringir la cartera morosa. Ninguno está equivocado, pero tampoco se ponen de acuerdo.',
+      },
+      {
+        question: '¿Dónde se nota más este conflicto?',
+        answer:
+          'En empresas con venta en terreno —distribuidoras de alimentos, bebidas, ropa o insumos—, donde un equipo de vendedores recorre el país entregando productos a crédito, con cobertura regional y ciclos de pago largos.',
+      },
+      {
+        question: '¿La inteligencia artificial reemplaza al equipo de cobranza?',
+        answer:
+          'No. En B2B cobrar bien requiere entender el contexto del cliente, saber cuándo insistir y cuándo esperar, y hablar con la persona indicada. Eso no se automatiza del todo, y por eso el equipo sigue siendo central.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
