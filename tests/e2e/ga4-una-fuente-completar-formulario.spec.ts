@@ -9,15 +9,26 @@ import { test, expect } from '@playwright/test'
 function sources(dir: string): { path: string; text: string }[] {
   return readdirSync(dir).flatMap((name) => {
     const p = join(dir, name)
-    return statSync(p).isDirectory() ? sources(p) : /\.(ts|tsx)$/.test(name) ? [{ path: p, text: readFileSync(p, 'utf8') }] : []
+    return statSync(p).isDirectory()
+      ? sources(p)
+      : /\.(ts|tsx)$/.test(name)
+        ? [{ path: p, text: readFileSync(p, 'utf8') }]
+        : []
   })
 }
 
-const GRACIAS: [string, string][] = [['src/ui/plataforma/PlataformaGraciasPage.tsx','plataforma'],['src/ui/recupera/RecuperaGraciasPage.tsx','recupera'],['src/ui/opera/OperaGraciasPage.tsx','opera'],['src/ui/thankyou/ThankyouPage.tsx','plataforma']]
+const GRACIAS: [string, string][] = [
+  ['src/ui/plataforma/PlataformaGraciasPage.tsx', 'plataforma'],
+  ['src/ui/recupera/RecuperaGraciasPage.tsx', 'recupera'],
+  ['src/ui/opera/OperaGraciasPage.tsx', 'opera'],
+  ['src/ui/thankyou/ThankyouPage.tsx', 'plataforma'],
+]
 
 test.describe('completar_formulario de GA4: una sola fuente', () => {
   test('el código no emite completar_formulario con gtag', () => {
-    const emite = sources('src').filter((f) => /gtag\(\s*['"]event['"]\s*,\s*['"]completar_formulario['"]/.test(f.text))
+    const emite = sources('src').filter((f) =>
+      /gtag\(\s*['"]event['"]\s*,\s*['"]completar_formulario['"]/.test(f.text)
+    )
     expect(emite.map((f) => f.path)).toEqual([])
   })
 

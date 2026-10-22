@@ -1,0 +1,40 @@
+# Puerta de formato: prettier opina igual en CI que en la máquina de quien escribe.
+#
+# El repo ya corre prettier en `lint-staged`, pero solo sobre los archivos que cada
+# commit toca. Eso deja archivos que ningún commit reciente tocó fuera de formato, y
+# el drift se acumula en silencio hasta que alguien corre `yarn prettier` (que es
+# `--write .`) y se lleva encima archivos ajenos a su cambio. Este check corre sobre
+# el repo entero en cada PR: si algo quedó sin formatear, se ve acá y no en el PR
+# siguiente de otra persona.
+#
+# Es `--check`, no `--write`: no modifica nada, solo falla. El arreglo es local,
+# `yarn prettier`, y entra en el mismo PR.
+name: Formato
+
+on:
+  pull_request:
+    branches: [dev, staging, main]
+
+permissions:
+  contents: read
+
+jobs:
+  prettier:
+    name: prettier --check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - run: corepack enable
+
+      # Hace falta instalar: prettier es una dependencia del repo y la versión que
+      # opina acá tiene que ser la misma del lockfile, no la última del registro.
+      - run: yarn install --immutable
+
+      - name: Revisar el formato
+        run: yarn format:check

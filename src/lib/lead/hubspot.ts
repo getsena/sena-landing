@@ -138,7 +138,9 @@ export async function writeContact(
       ? CLICK_ID_PROPS.filter((key) => key in properties && JSON.stringify(err).includes(key))
       : []
   if (rejectedClickIds.length > 0) {
-    current = Object.fromEntries(Object.entries(properties).filter(([key]) => !rejectedClickIds.includes(key)))
+    current = Object.fromEntries(
+      Object.entries(properties).filter(([key]) => !rejectedClickIds.includes(key))
+    )
     console.error(
       `[HubSpot] ${rejectedClickIds.join('/')} rechazado(s), reintentando sin ellos: ${describeHubspotError(res.status, err)}`
     )

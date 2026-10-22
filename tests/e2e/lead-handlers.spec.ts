@@ -60,7 +60,9 @@ test.describe('/api/lead-analyzer: atribución', () => {
   test('lead con gclid manda fuente_del_lead válida, origen Google y origen_detalle', async () => {
     const m = mockHubspot()
     try {
-      const res = await postAnalyzer(req('/api/lead-analyzer', { ...analyzerPayload, gclid: 'abc', utmCampaign: '23588970667' }))
+      const res = await postAnalyzer(
+        req('/api/lead-analyzer', { ...analyzerPayload, gclid: 'abc', utmCampaign: '23588970667' })
+      )
       expect(res.status).toBe(200)
       const props = (contactWrites(m.calls)[0].body as { properties: Record<string, string> }).properties
       expect(FUENTES_VALIDAS).toContain(props.fuente_del_lead)
@@ -179,7 +181,9 @@ test.describe('Meta CAPI: solo se reporta lo que el CRM guardó', () => {
         expect(evento.event_name).toBe('Lead')
         expect(evento.event_id).toBe('123e4567-e89b-42d3-a456-426614174000')
         // el evento sale después de crear el contacto, no antes
-        const iContacto = m.calls.findIndex((c) => c.method === 'POST' && c.url.endsWith('/crm/v3/objects/contacts'))
+        const iContacto = m.calls.findIndex(
+          (c) => c.method === 'POST' && c.url.endsWith('/crm/v3/objects/contacts')
+        )
         expect(m.calls.indexOf(capi[0])).toBeGreaterThan(iContacto)
       } finally {
         m.restore()
@@ -243,7 +247,10 @@ test.describe('rutas de lead: un campo de clasificación rechazado no pierde el 
         contactPost: [
           {
             status: 400,
-            json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"origen_detalle"}]' },
+            json: {
+              message:
+                'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"origen_detalle"}]',
+            },
           },
           { status: 201, json: { id: '78' } },
         ],
@@ -303,7 +310,6 @@ test.describe('smoke tests: los emails +smoke no se reportan a Meta', () => {
     })
   }
 })
-
 
 test.describe('gbraid y wbraid (clics de iOS) se guardan en el contacto', () => {
   for (const [nombre, run, base] of [
