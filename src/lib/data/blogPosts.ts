@@ -1905,6 +1905,28 @@ export const blogPosts: BlogPost[] = [
     date: '03 de marzo 2026',
     tags: ['Blog', 'Visión Financiera', 'Educación Financiera'],
     image: AssetImageBlog.blog_22_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué es el ROI aplicado a la cobranza?',
+        answer:
+          'La métrica que responde si la automatización genera más valor que el costo del software, con números en vez de percepciones.',
+      },
+      {
+        question: '¿Cómo se calcula el ROI?',
+        answer:
+          'La fórmula es ROI = (Beneficio − Inversión) / Inversión × 100. Con una inversión de 1.000 y un beneficio de 3.500, el ROI es 250%: por cada dólar invertido la empresa recupera 2,5 adicionales.',
+      },
+      {
+        question: '¿Qué beneficios entran en el cálculo?',
+        answer: 'El ahorro en horas de trabajo, la reducción de la morosidad y el incremento en liquidez.',
+      },
+      {
+        question: '¿Por qué dicen que toma 15 minutos?',
+        answer:
+          'Porque con las métricas a mano basta con identificar la inversión, medir esos beneficios y aplicar la fórmula.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -2748,6 +2770,29 @@ export const blogPosts: BlogPost[] = [
     date: '10 de marzo 2026',
     tags: ['Blog', 'Visión Financiera', 'Educación Financiera'],
     image: AssetImageBlog.blog_24_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué KPIs de cobranza debo revisar?',
+        answer:
+          'Cinco: DSO, aging de cartera, tasa de recuperación, promedio de días de mora y eficiencia operativa en cobranza.',
+      },
+      {
+        question: '¿Qué mide el aging de cartera?',
+        answer:
+          'Clasifica las cuentas por cobrar según su antigüedad —30, 60, 90 días o más— para priorizar las facturas más críticas y ver qué parte de la cartera corre mayor riesgo de incobrabilidad.',
+      },
+      {
+        question: '¿Existe un DSO bueno?',
+        answer:
+          'Depende de la industria. Un DSO de 40 días puede ser excelente para una empresa industrial y preocupante para un negocio de servicios con plazos más cortos.',
+      },
+      {
+        question: '¿Basta con cobrar?',
+        answer:
+          'No, también importa cuánto cuesta hacerlo. La eficiencia operativa compara los recursos invertidos en cobranza, tiempo y personal, contra los montos recuperados.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -3012,6 +3057,24 @@ export const blogPosts: BlogPost[] = [
     date: '13 de marzo 2026',
     tags: ['Blog', 'Visión Financiera', 'Educación Financiera'],
     image: AssetImageBlog.blog_25_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Cómo se mide si una automatización de cobranza está funcionando?',
+        answer:
+          'No por la cantidad de correos enviados, sino por cómo se mueven el DSO, el aging de cartera y la tasa de recuperación.',
+      },
+      {
+        question: '¿Qué KPIs vigila Sena?',
+        answer:
+          'DSO, aging de cartera, tasa de recuperación, flujo de caja proyectado y eficiencia operativa.',
+      },
+      {
+        question: '¿Cómo se conecta un flujo automatizado con un KPI?',
+        answer:
+          'Cada flujo queda vinculado a un indicador: si los pagos llegan más rápido baja el DSO, si se reducen las facturas de más de 90 días mejora el aging de cartera, y si aumentan los montos recuperados sube la tasa de recuperación.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -3250,6 +3313,28 @@ export const blogPosts: BlogPost[] = [
     tags: ['Blog', 'Cobranza'],
     image: AssetImageBlog.blog_26_main.src,
     lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué es el DSO?',
+        answer:
+          'Days Sales Outstanding, o días de venta pendientes de cobro: el promedio de días que tarda tu empresa en recuperar el dinero de sus ventas a crédito, desde que emites la factura hasta que recibes el pago.',
+      },
+      {
+        question: '¿Cómo se calcula el DSO?',
+        answer:
+          'DSO = (Cuentas por cobrar / Ventas a crédito) × número de días. Con $150.000 en cuentas por cobrar y ventas a crédito de $450.000 en un trimestre de 90 días, el DSO es de 30 días.',
+      },
+      {
+        question: '¿Por qué un DSO alto es un problema?',
+        answer:
+          'Porque tus recursos quedan atrapados en cuentas por cobrar: aumenta la dependencia del crédito externo, baja la capacidad de inversión y se tensan las relaciones con proveedores a los que no puedes pagar a tiempo.',
+      },
+      {
+        question: '¿Cómo reduzco el DSO?',
+        answer:
+          'Automatizar los recordatorios, definir políticas de crédito diferenciadas por cliente, ofrecer incentivos por pronto pago, segmentar la cartera y centralizar la información de cobranza en un solo lugar.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -3793,6 +3878,28 @@ export const blogPosts: BlogPost[] = [
     tags: ['Blog', 'Producto', 'Servicio'],
     image: AssetImageBlog.blog_27_main.src,
     lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué diferencia hay entre un CRM, un ERP y un SaaS de cobranza?',
+        answer:
+          'El CRM administra la relación con el cliente y organiza las interacciones; el ERP centraliza procesos administrativos y financieros; el SaaS especializado está diseñado para digitalizar la cobranza de extremo a extremo.',
+      },
+      {
+        question: '¿Por qué un CRM se queda corto para cobrar?',
+        answer:
+          'Porque su alcance es limitado cuando la empresa busca métricas avanzadas como DSO, aging de cartera o proyecciones de flujo de caja.',
+      },
+      {
+        question: '¿Y el módulo de cuentas por cobrar de mi ERP?',
+        answer:
+          'Suele carecer de segmentación de clientes morosos, reportes específicos de recuperación y flujos de recordatorios automatizados, y eso termina empujando al equipo de vuelta a Excel para las tareas críticas.',
+      },
+      {
+        question: '¿Cuál me conviene?',
+        answer:
+          'Si buscas un sistema de relación, el CRM es un primer paso. Si priorizas la integración administrativa, el ERP puede servir. Si lo que necesitas es control, liquidez y eficiencia, el camino es un SaaS especializado en cobranza.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -4294,6 +4401,24 @@ export const blogPosts: BlogPost[] = [
     date: '24 de marzo 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_28_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Cómo sé que mi ERP se queda corto en cobranza?',
+        answer:
+          'Hay siete señales: dependes de Excel para seguir los atrasos, no tienes KPIs como DSO o aging de cartera, el equipo gasta más tiempo en tareas manuales que en análisis, no puedes segmentar clientes morosos, no hay recordatorios multicanal, no se proyecta el flujo de caja y los reportes son rígidos.',
+      },
+      {
+        question: '¿Por qué un ERP no resuelve la cobranza?',
+        answer:
+          'Porque fue diseñado como herramienta administrativa global, no como un sistema de cobranza especializado.',
+      },
+      {
+        question: '¿Tengo que reemplazar mi ERP?',
+        answer:
+          'No. Una plataforma dedicada no lo reemplaza: lo complementa en todo lo relacionado con cobranza y deja el ERP en su rol.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
