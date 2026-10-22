@@ -452,6 +452,24 @@ export const blogPosts: BlogPost[] = [
     date: '12 de diciembre 2025',
     tags: ['Sena', 'Blog'],
     image: AssetImageBlog.blog_11_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué problema resuelve Sena?',
+        answer:
+          'El de empresas B2B que ya vendieron y entregaron el servicio y siguen esperando el pago, sin visibilidad de su cartera, sin proceso y sin tiempo para perseguir a cada cliente.',
+      },
+      {
+        question: '¿Cobrar bien significa ser más agresivo?',
+        answer:
+          'No. Significa tener un proceso profesional que transmite orden y respeto, tanto para quien cobra como para quien paga.',
+      },
+      {
+        question: '¿Sena es software o equipo humano?',
+        answer:
+          'Las dos cosas. Una plataforma de automatización multicanal por WhatsApp, email y SMS, con el respaldo de un equipo humano que entra cuando la tecnología no es suficiente.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -749,6 +767,29 @@ export const blogPosts: BlogPost[] = [
     date: '19 de diciembre 2025',
     tags: ['Blog'],
     image: AssetImageBlog.blog_14_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué es la morosidad silenciosa?',
+        answer:
+          'Clientes que postergan pagos, olvidan sus compromisos o simplemente no responden, mientras tu empresa sigue operando con ingresos pendientes que nunca llegan.',
+      },
+      {
+        question: '¿Cómo sé si mi gestión de cuentas por cobrar es reactiva?',
+        answer:
+          'Si todavía dependes de Excel, de recordatorios manuales o de correos improvisados, es reactiva.',
+      },
+      {
+        question: '¿Todos los clientes deberían recibir el mismo seguimiento?',
+        answer:
+          'No. Los flujos se activan según el comportamiento de pago de cada cliente, por WhatsApp, email o SMS. No todos pagan igual.',
+      },
+      {
+        question: '¿Necesito armar un área de cobranza para recuperar lo que ya está vencido?',
+        answer:
+          'No. La recuperación de deuda activa se puede delegar en un servicio especializado, sin construir el área desde cero.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -1075,6 +1116,24 @@ export const blogPosts: BlogPost[] = [
     date: '09 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_16_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué tiene que ver la educación financiera con cobrar mejor?',
+        answer:
+          'Cuando una empresa entiende cómo fluye su dinero y cómo se comportan sus cuentas por cobrar, deja de sobrevivir mes a mes esperando que el cliente pague y pasa a proyectar su crecimiento con data, procesos y control.',
+      },
+      {
+        question: 'Facturo bien pero no tengo liquidez. ¿Qué está fallando?',
+        answer:
+          'Casi siempre la estructura del seguimiento: recordatorios manuales, Excel compartidos entre áreas y correos sin respuesta. No es casualidad que el dinero no llegue, es el sistema.',
+      },
+      {
+        question: '¿Digitalizar la cobranza significa perder el trato humano?',
+        answer:
+          'Al contrario. Al automatizar las tareas operativas, el equipo queda libre para enfocarse en las relaciones estratégicas y en los casos complejos.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -1186,6 +1245,24 @@ export const blogPosts: BlogPost[] = [
     date: '13 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_17_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Profesionalizar la cobranza es insistir más?',
+        answer:
+          'No, es hacerlo mejor. Seguimiento automatizado antes de que el problema escale, y gestión especializada cuando ya existe deuda activa que no logras resolver por tu cuenta.',
+      },
+      {
+        question: '¿Por qué Excel deja de servir?',
+        answer:
+          'Porque a medida que crece tu base de clientes aumenta el riesgo de olvido, duplicidad y error humano. Lo que falta es trazabilidad, alertas automatizadas y seguimiento.',
+      },
+      {
+        question: '¿El cliente se siente presionado cuando automatizo la cobranza?',
+        answer:
+          'Bien hecho, pasa lo contrario: el cliente se siente acompañado y no presionado, porque recibe comunicaciones oportunas por el canal adecuado en vez de reclamos a destiempo.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -1390,6 +1467,24 @@ export const blogPosts: BlogPost[] = [
     date: '16 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_18_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: 'Ya sé cuánto me deben. ¿Cuál es el siguiente paso?',
+        answer:
+          'El seguimiento. Saber el monto no recupera nada: hace falta un sistema donde cada cliente moroso reciba la comunicación oportuna, por el canal adecuado, con el mensaje correcto y la frecuencia ideal.',
+      },
+      {
+        question: '¿Hacer seguimiento es perseguir al cliente?',
+        answer:
+          'No. Perseguir es insistir sin estructura. El seguimiento es un proceso donde cada acción queda registrada y cada avance se reporta.',
+      },
+      {
+        question: '¿Qué pasa si no hago nada?',
+        answer:
+          'Lo que pasa todos los meses: ese dinero sigue fuera de tu caja. En la práctica estás financiando a clientes que no respondieron a tiempo y a los que nadie les volvió a escribir.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -2195,6 +2290,28 @@ export const blogPosts: BlogPost[] = [
     tags: ['Blog', 'Producto', 'Servicio'],
     image: AssetImageBlog.blog_23_main.src,
     lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Por qué Excel se queda corto para la cobranza?',
+        answer:
+          'Cuando una pyme maneja cientos de facturas al mes aparecen la falta de trazabilidad, los errores al copiar datos del ERP a la planilla, las horas perdidas en tareas repetitivas y un DSO que se eleva.',
+      },
+      {
+        question: '¿Qué es un software de cobranza?',
+        answer:
+          'Una plataforma digital, en general en la nube, que centraliza, automatiza y monitorea los procesos de recuperación de pagos, con recordatorios automáticos, dashboards en tiempo real e integración con el ERP o el CRM.',
+      },
+      {
+        question: '¿Qué funciones debe tener?',
+        answer:
+          'Automatización de recordatorios, dashboards en tiempo real, segmentación de clientes morosos, reportes exportables e historial de interacciones.',
+      },
+      {
+        question: '¿Cómo elijo entre varias opciones?',
+        answer:
+          'Evalúa escalabilidad, facilidad de integración con tus sistemas, facilidad de uso, soporte y seguridad, y la relación costo-beneficio frente a contratar más personal o mantener el proceso manual.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
