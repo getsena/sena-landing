@@ -552,6 +552,29 @@ export const blogPosts: BlogPost[] = [
     date: '16 de diciembre 2025',
     tags: ['Prensa'],
     image: AssetImageBlog.blog_13_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué tan grave es la morosidad para las pymes en Perú?',
+        answer:
+          'Las pymes son más del 99% del tejido empresarial peruano. En construcción la morosidad supera el 13% y en comercio el 8%, según el Instituto de Economía y Desarrollo Empresarial de la Cámara de Comercio de Lima.',
+      },
+      {
+        question: '¿Cuántas pymes cierran por problemas de flujo de caja?',
+        answer:
+          'Más de 100.000 pymes cierran cada año en Perú, y hasta el 40% de esos cierres está vinculado a problemas de flujo de caja.',
+      },
+      {
+        question: '¿Sirve la vía judicial para una pyme?',
+        answer:
+          'Existen mecanismos como la cobranza judicial o coactiva, pero son procesos costosos, lentos y poco accesibles para una pyme.',
+      },
+      {
+        question: '¿Existe una Ley de Pronto Pago en Perú?',
+        answer:
+          'A la fecha de este artículo sigue en discusión y sin avances concretos, a diferencia de la implementada en Chile.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -840,6 +863,24 @@ export const blogPosts: BlogPost[] = [
     date: '06 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_15_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Por qué un cliente no paga a tiempo?',
+        answer:
+          'No siempre es falta de dinero. Las tres causas más frecuentes son la desorganización del cliente, la falta de seguimiento de tu parte y la falta de estructura en la cobranza.',
+      },
+      {
+        question: '¿Qué impacto tiene la morosidad más allá del flujo de caja?',
+        answer:
+          'Un efecto dominó en toda la operación: retrasas pagos a proveedores, reduces inversiones, pierdes oportunidades comerciales y tu equipo gasta tiempo persiguiendo deudas en lugar de vender.',
+      },
+      {
+        question: 'Ya tengo clientes morosos y no tengo equipo para cobrar. ¿Qué hago?',
+        answer:
+          'Delegar la gestión antes de que la deuda siga creciendo. Lo peor que puedes hacer cuando ningún área interna puede tomar acción es dejar que el problema crezca.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -1541,6 +1582,7 @@ export const blogPosts: BlogPost[] = [
           'Que se pidan garantías depende de la industria. Lo que sí conviene es acortar los plazos cuando un cliente no está respetando los plazos de pago acordados.',
       },
     ],
+    lector: 'distribuidora-con-fuerza-de-venta',
     content: [
       {
         type: 'paragraph',
@@ -1739,6 +1781,7 @@ export const blogPosts: BlogPost[] = [
           'No se le notifica: consultar un score no genera ningún aviso a tu cliente. En Sena cuidamos la relación comercial de nuestros clientes con sus clientes, y el score sirve para decidir mejor, no para presionar.',
       },
     ],
+    lector: 'pyme-que-cobra',
     content: [
       {
         type: 'paragraph',
@@ -4799,6 +4842,29 @@ export const blogPosts: BlogPost[] = [
     date: '27 de marzo 2026',
     tags: ['Producto', 'Servicio'],
     image: AssetImageBlog.blog_29_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Cómo cobro una factura vencida sin dañar la relación?',
+        answer:
+          'Con comunicación proactiva y empática. Un recordatorio amable antes del vencimiento evita buena parte de los retrasos, y si la fecha ya pasó conviene mantener un tono cordial.',
+      },
+      {
+        question: '¿Qué hago si el cliente no tiene liquidez?',
+        answer:
+          'Formalizar un plan de pagos. Proponer cuotas o renegociar plazos suele ser más efectivo que insistir en un único cobro inmediato.',
+      },
+      {
+        question: '¿Cuándo escalo el caso a un tercero?',
+        answer:
+          'Cuando el cliente no responde después de varios intentos. La decisión debe basarse en un análisis costo-beneficio.',
+      },
+      {
+        question: '¿Sirve dejarlo por escrito desde el principio?',
+        answer:
+          'Sí. Cuando los contratos especifican las consecuencias por atraso la gestión se simplifica, y la transparencia genera confianza y reduce conflictos.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -5064,6 +5130,29 @@ export const blogPosts: BlogPost[] = [
     date: '31 de marzo 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_30_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué pasa si dejo pasar una factura vencida?',
+        answer:
+          'Se instala un efecto dominó: la liquidez se reduce, las obligaciones internas se complican y la empresa empieza a depender de créditos externos que encarecen la operación.',
+      },
+      {
+        question: '¿Una deuda antigua se recupera igual que una reciente?',
+        answer:
+          'No. Mientras más tiempo transcurre, menor es la probabilidad de recuperación, y después de los 90 días esas probabilidades caen de forma significativa.',
+      },
+      {
+        question: '¿Qué riesgos hay además de la plata que no entra?',
+        answer:
+          'Mayor riesgo de impago definitivo, más costos administrativos por perseguir pagos y desconfianza del mercado: proveedores y entidades financieras perciben más riesgo en una empresa con alta morosidad.',
+      },
+      {
+        question: '¿Cómo lo prevengo?',
+        answer:
+          'Políticas de crédito claras desde el inicio, recordatorios preventivos antes del vencimiento, planes de pago flexibles, indicadores como el aging de cartera y el DSO, y automatización del proceso.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
