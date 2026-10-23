@@ -222,6 +222,9 @@ export const CaseForm = () => {
         return
       }
 
+      // GTM emite completar_formulario a GA4 con este evento; el filtro de origin es en minúscula.
+      if (!window.dataLayer) window.dataLayer = []
+      window.dataLayer.push({ event: 'conversion_event_signup_2', origin: CONVERSION[producto] })
       trackLeadConversion(CONVERSION[producto], { eventId })
       rememberLeadEventId(eventId)
       if (window.fbq)

@@ -150,6 +150,15 @@ test.describe('formulario de la home', () => {
     expect(t).not.toMatch(/AW-17962976949\/\w+/)
   })
 
+  test('avisa a GTM una sola vez con conversion_event_signup_2 y el origin del producto en minúscula', () => {
+    expect(t.match(/event: 'conversion_event_signup_2'/g)).toHaveLength(1)
+    expect(t).toContain('origin: CONVERSION[producto]')
+    expect(t.indexOf("event: 'conversion_event_signup_2'")).toBeGreaterThan(t.indexOf('!json.ok'))
+    // GTM filtra por origin con `equals`: 'Recupera' no coincidiría y el lead se perdería en GA4.
+    const origenes = [...t.matchAll(/^\s+(?:Plataforma|Opera|Recupera): '(\w+)',$/gm)].map((m) => m[1])
+    expect(origenes.sort()).toEqual(['opera', 'plataforma', 'recupera'])
+  })
+
   test('envía a /api/lead con Turnstile y el teléfono con prefijo de país', () => {
     expect(t).toContain("fetch('/api/lead'")
     expect(t).toContain("'cf-turnstile-response': turnstileToken")
