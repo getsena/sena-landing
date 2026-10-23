@@ -263,7 +263,7 @@ Agendar una demo: https://meetings.hubspot.com/francisco502
 Email: hola@somossena.com
 Telefono: +56 944 489 673
 WhatsApp (Chile): +56 944 489 673
-WhatsApp (Peru): +51 958 969 041
+WhatsApp (Peru): +51 918 272 599
 
 Redes sociales:
 - LinkedIn: https://www.linkedin.com/company/sena-latam/
