@@ -2,6 +2,9 @@
 import { ChevronDown, Search } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
 
+// Prefijo inicial: Chile. La detección por IP lo ajusta después (Perú, Colombia, México, Ecuador).
+export const DEFAULT_PHONE_PREFIX = '+56'
+
 export type OptionSelect = {
   id: string
   label: string
@@ -20,7 +23,7 @@ const SimpleCountrySelect: React.FC<SimpleCountrySelectProps> = ({
   value,
   onChange,
   options = [],
-  placeholder = '+51',
+  placeholder = DEFAULT_PHONE_PREFIX,
 }) => {
   const [open, setOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
