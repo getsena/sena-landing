@@ -1,7 +1,13 @@
 import { test, expect } from '@playwright/test'
 
 import { isSmokeTest } from '@/lib/lead/smoke'
-import { CLASSIFICATION_PROPS, createDeal, describeHubspotError, upsertContact, writeContact } from '@/lib/lead/hubspot'
+import {
+  CLASSIFICATION_PROPS,
+  createDeal,
+  describeHubspotError,
+  upsertContact,
+  writeContact,
+} from '@/lib/lead/hubspot'
 
 type Call = { method: string; url: string; body: { properties: Record<string, string> } }
 
@@ -63,7 +69,8 @@ test.describe('writeContact: un campo de clasificación nunca cuesta el lead', (
         status: 400,
         json: {
           status: 'error',
-          message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"origen_detalle"}]',
+          message:
+            'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"origen_detalle"}]',
         },
       },
       { status: 200, json: { id: '3' } },
@@ -143,7 +150,10 @@ test.describe('los errores de HubSpot no exponen datos personales', () => {
     const original = console.error
     console.error = (...args: unknown[]) => void logs.push(args.join(' '))
     const m = mockFetch([
-      { status: 400, json: { ...errorConPII, errors: [{ code: 'INVALID_OPTION', context: { propertyName: ['origen'] } }] } },
+      {
+        status: 400,
+        json: { ...errorConPII, errors: [{ code: 'INVALID_OPTION', context: { propertyName: ['origen'] } }] },
+      },
       { status: 200, json: { id: '1' } },
     ])
     try {
@@ -193,16 +203,27 @@ test.describe('robustez del guardado de contactos', () => {
   test('si el reintento también falla por una propiedad que no es de clasificación, guarda solo los campos núcleo', async () => {
     const m = mockFetch([
       { status: 400, json: { errors: [{ code: 'INVALID_OPTION' }] } },
-      { status: 400, json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"landing_page"}]' } },
+      {
+        status: 400,
+        json: {
+          message:
+            'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"landing_page"}]',
+        },
+      },
       { status: 201, json: { id: '9' } },
     ])
     try {
       const res = await writeContact('tok', 'POST', '/crm/v3/objects/contacts', props)
       expect(res.ok).toBe(true)
       expect(m.calls).toHaveLength(3)
-      expect(Object.keys(m.calls[2].body.properties).sort()).toEqual(
-        ['company', 'email', 'firstname', 'hubspot_owner_id', 'lastname', 'phone']
-      )
+      expect(Object.keys(m.calls[2].body.properties).sort()).toEqual([
+        'company',
+        'email',
+        'firstname',
+        'hubspot_owner_id',
+        'lastname',
+        'phone',
+      ])
     } finally {
       m.restore()
     }
@@ -211,7 +232,10 @@ test.describe('robustez del guardado de contactos', () => {
   test('un 409 de contacto existente se resuelve actualizando ese contacto sin pisar lo que ya tiene', async () => {
     const m = mockFetch([
       { status: 200, json: { total: 0, results: [] } },
-      { status: 409, json: { status: 'error', message: 'Contact already exists. Existing ID: 4321', category: 'CONFLICT' } },
+      {
+        status: 409,
+        json: { status: 'error', message: 'Contact already exists. Existing ID: 4321', category: 'CONFLICT' },
+      },
       { status: 200, json: { id: '4321' } },
     ])
     try {
@@ -220,7 +244,15 @@ test.describe('robustez del guardado de contactos', () => {
       const patch = m.calls[2]
       expect(patch.method).toBe('PATCH')
       expect(patch.url).toContain('/contacts/4321')
-      for (const k of ['hubspot_owner_id', 'origen', 'origen_detalle', 'fuente_del_lead', 'phone', 'firstname', 'company']) {
+      for (const k of [
+        'hubspot_owner_id',
+        'origen',
+        'origen_detalle',
+        'fuente_del_lead',
+        'phone',
+        'firstname',
+        'company',
+      ]) {
         expect(patch.body.properties).not.toHaveProperty(k)
       }
       expect(patch.body.properties.gclid).toBe('abc')
@@ -364,7 +396,12 @@ test.describe('writeContact: gbraid y wbraid aún no creados no cuestan ni la cl
 
   test('si HubSpot no tiene gbraid, reintenta quitando solo gbraid y conserva todo lo demás', async () => {
     const m = mockFetch([
-      { status: 400, json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]' } },
+      {
+        status: 400,
+        json: {
+          message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]',
+        },
+      },
       { status: 201, json: { id: '9' } },
     ])
     try {
@@ -400,7 +437,12 @@ test.describe('writeContact: gbraid y wbraid aún no creados no cuestan ni la cl
 
   test('si solo falta gbraid, conserva wbraid', async () => {
     const m = mockFetch([
-      { status: 400, json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]' } },
+      {
+        status: 400,
+        json: {
+          message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]',
+        },
+      },
       { status: 201, json: { id: '11' } },
     ])
     try {
@@ -414,7 +456,12 @@ test.describe('writeContact: gbraid y wbraid aún no creados no cuestan ni la cl
 
   test('cascada: gbraid rechazado y luego la clasificación → 3 llamadas y el lead se guarda sin ambos', async () => {
     const m = mockFetch([
-      { status: 400, json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]' } },
+      {
+        status: 400,
+        json: {
+          message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]',
+        },
+      },
       { status: 400, json: { errors: [{ code: 'INVALID_OPTION', message: 'fuente_del_lead' }] } },
       { status: 201, json: { id: '12' } },
     ])
@@ -435,7 +482,12 @@ test.describe('writeContact: gbraid y wbraid aún no creados no cuestan ni la cl
 
   test('si el reintento sin click ids falla con un error no recuperable, se detiene ahí', async () => {
     const m = mockFetch([
-      { status: 400, json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"wbraid"}]' } },
+      {
+        status: 400,
+        json: {
+          message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"wbraid"}]',
+        },
+      },
       { status: 500, json: { message: 'boom' } },
     ])
     try {
@@ -449,7 +501,12 @@ test.describe('writeContact: gbraid y wbraid aún no creados no cuestan ni la cl
 
   test('también aplica al PATCH de un contacto existente', async () => {
     const m = mockFetch([
-      { status: 400, json: { message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]' } },
+      {
+        status: 400,
+        json: {
+          message: 'Property values were not valid: [{"error":"PROPERTY_DOESNT_EXIST","name":"gbraid"}]',
+        },
+      },
       { status: 200, json: { id: '13' } },
     ])
     try {
@@ -468,7 +525,9 @@ test.describe('writeContact: gbraid y wbraid aún no creados no cuestan ni la cl
         status: 400,
         json: {
           status: 'error',
-          errors: [{ code: 'INVALID_INTEGER', context: { propertyName: ['gbraid'] }, message: 'no es un entero' }],
+          errors: [
+            { code: 'INVALID_INTEGER', context: { propertyName: ['gbraid'] }, message: 'no es un entero' },
+          ],
         },
       },
       { status: 201, json: { id: '14' } },

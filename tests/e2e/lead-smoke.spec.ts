@@ -23,7 +23,14 @@ async function findContact(request: APIRequestContext, email: string): Promise<C
       headers: auth,
       data: {
         filterGroups: [{ filters: [{ propertyName: 'email', operator: 'EQ', value: email }] }],
-        properties: ['email', 'fuente_del_lead', 'origen', 'origen_detalle', 'tipo_de_origen', 'hubspot_owner_id'],
+        properties: [
+          'email',
+          'fuente_del_lead',
+          'origen',
+          'origen_detalle',
+          'tipo_de_origen',
+          'hubspot_owner_id',
+        ],
         limit: 1,
       },
     })
@@ -35,7 +42,9 @@ async function findContact(request: APIRequestContext, email: string): Promise<C
 }
 
 async function dealIds(request: APIRequestContext, contactId: string): Promise<string[]> {
-  const res = await request.get(`${HS}/crm/v4/objects/contacts/${contactId}/associations/deals`, { headers: auth })
+  const res = await request.get(`${HS}/crm/v4/objects/contacts/${contactId}/associations/deals`, {
+    headers: auth,
+  })
   const data = await res.json()
   return (data.results ?? []).map((r: { toObjectId: number | string }) => String(r.toObjectId))
 }
@@ -62,7 +71,13 @@ test.describe('smoke post-deploy de /api/lead', () => {
   for (const caso of [
     {
       nombre: 'clic de Google Ads con campaña registrada',
-      extra: { gclid: 'smoke-test', utmSource: 'google', utmMedium: 'cpc', utmCampaign: '23584417865', producto: 'Recupera' },
+      extra: {
+        gclid: 'smoke-test',
+        utmSource: 'google',
+        utmMedium: 'cpc',
+        utmCampaign: '23584417865',
+        producto: 'Recupera',
+      },
       esperado: { fuente_del_lead: 'Ads', origen: 'Google', origen_detalle: 'google_search_recupera' },
     },
     {

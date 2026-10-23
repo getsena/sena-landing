@@ -5,11 +5,11 @@ de recupera-landing y agent-project-landing.
 
 ## Qué hace cada pieza
 
-| Pieza | Dónde | Qué hace |
-|---|---|---|
-| Aviso por correo | `src/lib/lead/notify.ts` | Envía un correo en texto plano a `NOTIFY_LEAD_TO` por SendGrid cuando entra un lead nuevo. Si HubSpot falla, el correo sale igual con asunto `FALLÓ HUBSPOT` y los datos completos del lead. |
-| Turnstile | `src/lib/lead/turnstile.ts`, `src/ui/shared/Turnstile.tsx` | Verifica en el servidor el token del widget de Cloudflare. |
-| Límite por IP | Vercel Firewall (sin código) | 10 solicitudes por minuto por IP en `/api/lead*`; sobre el tope responde 403 el resto del minuto. |
+| Pieza            | Dónde                                                      | Qué hace                                                                                                                                                                                     |
+| ---------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Aviso por correo | `src/lib/lead/notify.ts`                                   | Envía un correo en texto plano a `NOTIFY_LEAD_TO` por SendGrid cuando entra un lead nuevo. Si HubSpot falla, el correo sale igual con asunto `FALLÓ HUBSPOT` y los datos completos del lead. |
+| Turnstile        | `src/lib/lead/turnstile.ts`, `src/ui/shared/Turnstile.tsx` | Verifica en el servidor el token del widget de Cloudflare.                                                                                                                                   |
+| Límite por IP    | Vercel Firewall (sin código)                               | 10 solicitudes por minuto por IP en `/api/lead*`; sobre el tope responde 403 el resto del minuto.                                                                                            |
 
 ## Reglas de seguridad del correo
 
@@ -26,23 +26,23 @@ Los datos del lead los escribe un anónimo y el correo sale desde `hola@somossen
 
 ## Política de Turnstile (híbrida)
 
-| Caso | Resultado |
-|---|---|
-| Token inválido, vencido, repetido, de otro sitio o de otra acción | 403, no se toca HubSpot |
+| Caso                                                               | Resultado                                                                                                                               |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Token inválido, vencido, repetido, de otro sitio o de otra acción  | 403, no se toca HubSpot                                                                                                                 |
 | Sin token (bloqueador, red corporativa) o Cloudflare sin respuesta | Se procesa igual; el aviso lleva `[SIN VERIFICAR]`, no se reporta a Meta CAPI y hay un tope de 3 por IP cada 10 minutos (por instancia) |
-| Sin `TURNSTILE_SECRET_KEY` | Verificación desactivada (permite desplegar antes de crear el widget) |
+| Sin `TURNSTILE_SECRET_KEY`                                         | Verificación desactivada (permite desplegar antes de crear el widget)                                                                   |
 
 La IP se lee de `x-real-ip`; `x-forwarded-for` no es confiable.
 
 ## Variables de entorno (por proyecto de Vercel)
 
-| Variable | Tipo | Nota |
-|---|---|---|
-| `SENDGRID_API_KEY` | sensitive | Clave con solo el permiso Mail Send (no la de 208 permisos de Key Vault) |
-| `NOTIFY_LEAD_TO` | texto | Destinatarios separados por coma |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | texto | Pública; se fija en el build, hay que redesplegar al cambiarla |
-| `TURNSTILE_SECRET_KEY` | sensitive | Nunca con prefijo `NEXT_PUBLIC_` |
-| `TURNSTILE_ALLOWED_HOSTNAMES` | texto, opcional | Hostnames extra permitidos (preview, CI con claves de prueba). Por defecto se aceptan `www.somossena.com`, `somossena.com`, `recupera.somossena.com` y `agente.somossena.com` |
+| Variable                         | Tipo            | Nota                                                                                                                                                                          |
+| -------------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SENDGRID_API_KEY`               | sensitive       | Clave con solo el permiso Mail Send (no la de 208 permisos de Key Vault)                                                                                                      |
+| `NOTIFY_LEAD_TO`                 | texto           | Destinatarios separados por coma                                                                                                                                              |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | texto           | Pública; se fija en el build, hay que redesplegar al cambiarla                                                                                                                |
+| `TURNSTILE_SECRET_KEY`           | sensitive       | Nunca con prefijo `NEXT_PUBLIC_`                                                                                                                                              |
+| `TURNSTILE_ALLOWED_HOSTNAMES`    | texto, opcional | Hostnames extra permitidos (preview, CI con claves de prueba). Por defecto se aceptan `www.somossena.com`, `somossena.com`, `recupera.somossena.com` y `agente.somossena.com` |
 
 ## Orden seguro de despliegue
 
@@ -67,7 +67,7 @@ Para revertir: Vercel → proyecto → Firewall → regla → Delete (o `rules.r
 ## Cómo probar
 
 - Unitarias y de handler (sin navegador): `yarn playwright test tests/e2e/notify.spec.ts tests/e2e/turnstile.spec.ts
-  tests/e2e/lead-notify-handlers.spec.ts tests/e2e/lead-turnstile-handlers.spec.ts`
+tests/e2e/lead-notify-handlers.spec.ts tests/e2e/lead-turnstile-handlers.spec.ts`
 - Navegador real con la clave de prueba de Cloudflare (siempre pasa):
   `NEXT_PUBLIC_TURNSTILE_SITE_KEY=1x00000000000000000000AA yarn build && yarn start -p 39847`, luego
   `E2E_BASE_URL=http://localhost:39847 yarn playwright test tests/e2e/turnstile-form.spec.ts`.
