@@ -1,48 +1,47 @@
 @import 'tailwindcss';
 
 @theme {
-
   /* ─── Tipografía ─────────────────────────────── */
-  --font-canaro:  var(--font-canaro);
-  --font-adobe:   var(--font-adobe);
-  --font-caslon:  var(--font-caslon);
+  --font-canaro: var(--font-canaro);
+  --font-adobe: var(--font-adobe);
+  --font-caslon: var(--font-caslon);
 
   /* ─── Color de marca ─────────────────────────── */
-  --color-brand-primary:            #3771d1;
-  --color-brand-primary-dark:       #1e2c50;
-  --color-brand-secondary:          #f6793a;
-  --color-brand-secondary-dark:     #d95e20;
-  --color-brand-secondary-light:    #f79243;
+  --color-brand-primary: #3771d1;
+  --color-brand-primary-dark: #1e2c50;
+  --color-brand-secondary: #f6793a;
+  --color-brand-secondary-dark: #d95e20;
+  --color-brand-secondary-light: #f79243;
 
   /* ─── Superficies ────────────────────────────── */
-  --color-surface-default:          #ffffff;
-  --color-surface-secondary:        #F9F9F9;
-  --color-surface-blue-soft:        #EEF3FB;
-  --color-border-default:           #EDEDED;
-  --color-border-input:             #d6dae4;
+  --color-surface-default: #ffffff;
+  --color-surface-secondary: #f9f9f9;
+  --color-surface-blue-soft: #eef3fb;
+  --color-border-default: #ededed;
+  --color-border-input: #d6dae4;
 
   /* ─── Texto ──────────────────────────────────── */
-  --color-text-primary:             #1e2c50;
-  --color-text-secondary:           #71717a;
-  --color-text-disabled:            #a1a1aa;
-  --color-text-body:                #3d4766;
-  --color-text-muted:               #5b6685;
-  --color-text-on-dark:             #c9d6f2;
-  --color-text-on-dark-accent:      #9dbbf0;
+  --color-text-primary: #1e2c50;
+  --color-text-secondary: #71717a;
+  --color-text-disabled: #a1a1aa;
+  --color-text-body: #3d4766;
+  --color-text-muted: #5b6685;
+  --color-text-on-dark: #c9d6f2;
+  --color-text-on-dark-accent: #9dbbf0;
 
   /* ─── Semánticos ─────────────────────────────── */
-  --color-success:                  #16a34a;
-  --color-success-soft:             #e7f5ec;
-  --color-error:                    #dc2626;
-  --color-warning:                  #f59e0b;
+  --color-success: #16a34a;
+  --color-success-soft: #e7f5ec;
+  --color-error: #dc2626;
+  --color-warning: #f59e0b;
 
   /* ─── Footer ─────────────────────────────────── */
-  --color-footer-bg:                #2270D0;
+  --color-footer-bg: #2270d0;
 
   /* ─── Sombras ────────────────────────────────── */
-  --shadow-card:           0 8px 32px rgba(30, 44, 80, 0.10);
-  --shadow-card-elevated:  0 20px 60px rgba(30, 44, 80, 0.15);
-  --shadow-dropdown:       0 18px 60px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 8px 32px rgba(30, 44, 80, 0.1);
+  --shadow-card-elevated: 0 20px 60px rgba(30, 44, 80, 0.15);
+  --shadow-dropdown: 0 18px 60px rgba(0, 0, 0, 0.12);
 }
 
 /*

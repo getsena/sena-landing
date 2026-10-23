@@ -136,6 +136,29 @@ export const blogPosts: BlogPost[] = [
     date: '02 de diciembre 2025',
     tags: ['Cobranza', 'Educación Financiera'],
     image: AssetImageBlog.blog_5_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Cómo calculo lo que me cuesta la cobranza manual?',
+        answer:
+          'Suma las horas que tu equipo dedica a revisar planillas, redactar correos uno por uno, hacer llamadas sin registro y cruzar información entre WhatsApp y Excel. Ese costo no aparece en el estado de resultados, pero es real y medible.',
+      },
+      {
+        question: '¿Qué tareas de cobranza se pueden automatizar?',
+        answer:
+          'Las repetibles y predecibles: recordatorios antes del vencimiento, seguimientos a los 3, 7 y 15 días, y notificaciones por WhatsApp o email según el comportamiento de pago del cliente.',
+      },
+      {
+        question: '¿Automatizar significa sacar a las personas de la cobranza?',
+        answer:
+          'No. Cuando la tecnología se hace cargo de lo rutinario, el equipo queda libre para lo que requiere criterio humano: negociar acuerdos, gestionar casos complejos y cuidar las relaciones estratégicas.',
+      },
+      {
+        question: 'Si el proceso manual funciona hoy, ¿por qué cambiarlo?',
+        answer:
+          'Porque no escala. Cuando la cobranza depende de la memoria de alguien se olvidan facturas y se pierde el historial de conversaciones, y al crecer el equipo el desorden crece con él.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -214,6 +237,23 @@ export const blogPosts: BlogPost[] = [
     date: '05 de diciembre 2025',
     tags: ['Cobranza', 'Sena'],
     image: AssetImageBlog.blog_6_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: '¿Qué diferencia hay entre factoring y recuperación?',
+        answer:
+          'En el factoring cedes tu documento y recibes un porcentaje adelantado, o sea pierdes parte de lo que te deben. En la recuperación la factura sigue siendo tuya: no cedes derechos y el pago se gestiona directamente con tu cliente.',
+      },
+      {
+        question: '¿Tengo que pagar algo por adelantado?',
+        answer: 'No. Recupera solo cobra si logra que te paguen. Si no hay recuperación, no hay cobro.',
+      },
+      {
+        question: '¿Gestionar una factura vencida me va a costar el cliente?',
+        answer:
+          'Ese es justamente el criterio del equipo que gestiona: saber cómo hablar con quien no paga sin romper la relación comercial.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -317,6 +357,28 @@ export const blogPosts: BlogPost[] = [
     date: '09 de diciembre 2025',
     tags: ['Sena', 'Cobranza', 'Educación Financiera'],
     image: AssetImageBlog.blog_7_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué diferencia hay entre política de crédito y política de cobranza?',
+        answer:
+          'La de crédito define a quién le vendes y en qué condiciones. La de cobranza define qué pasa después de emitida la factura. La mayoría de las empresas tiene la primera, aunque sea informal, y no tiene la segunda.',
+      },
+      {
+        question: '¿Qué debería tener una política de cobranza?',
+        answer:
+          'Tres cosas: cuándo se envía el primer recordatorio, que debe ser antes del vencimiento y no después; por qué canal se contacta a cada tipo de cliente; y qué pasa si no hay respuesta a los 15, 30 o 60 días.',
+      },
+      {
+        question: '¿Necesito un manual extenso?',
+        answer: 'No. Esos tres puntos, aplicados con consistencia, cambian completamente el resultado.',
+      },
+      {
+        question: '¿Y si mi cartera ya está vencida?',
+        answer:
+          'Cuando la política no existió desde el principio, la deuda se acumula y el equipo interno rara vez tiene el tiempo, el proceso o la experiencia para recuperarla sin poner en riesgo la relación comercial. Ahí conviene escalar a gestión especializada.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -390,6 +452,24 @@ export const blogPosts: BlogPost[] = [
     date: '12 de diciembre 2025',
     tags: ['Sena', 'Blog'],
     image: AssetImageBlog.blog_11_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué problema resuelve Sena?',
+        answer:
+          'El de empresas B2B que ya vendieron y entregaron el servicio y siguen esperando el pago, sin visibilidad de su cartera, sin proceso y sin tiempo para perseguir a cada cliente.',
+      },
+      {
+        question: '¿Cobrar bien significa ser más agresivo?',
+        answer:
+          'No. Significa tener un proceso profesional que transmite orden y respeto, tanto para quien cobra como para quien paga.',
+      },
+      {
+        question: '¿Sena es software o equipo humano?',
+        answer:
+          'Las dos cosas. Una plataforma de automatización multicanal por WhatsApp, email y SMS, con el respaldo de un equipo humano que entra cuando la tecnología no es suficiente.',
+      },
+    ],
     content: [
       {
         type: 'title',
@@ -490,6 +570,29 @@ export const blogPosts: BlogPost[] = [
     date: '16 de diciembre 2025',
     tags: ['Prensa'],
     image: AssetImageBlog.blog_13_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué tan grave es la morosidad para las pymes en Perú?',
+        answer:
+          'Las pymes son más del 99% del tejido empresarial peruano. En construcción la morosidad supera el 13% y en comercio el 8%, según el Instituto de Economía y Desarrollo Empresarial de la Cámara de Comercio de Lima.',
+      },
+      {
+        question: '¿Cuántas pymes cierran por problemas de flujo de caja?',
+        answer:
+          'Más de 100.000 pymes cierran cada año en Perú, y hasta el 40% de esos cierres está vinculado a problemas de flujo de caja.',
+      },
+      {
+        question: '¿Sirve la vía judicial para una pyme?',
+        answer:
+          'Existen mecanismos como la cobranza judicial o coactiva, pero son procesos costosos, lentos y poco accesibles para una pyme.',
+      },
+      {
+        question: '¿Existe una Ley de Pronto Pago en Perú?',
+        answer:
+          'A la fecha de este artículo sigue en discusión y sin avances concretos, a diferencia de la implementada en Chile.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -664,6 +767,29 @@ export const blogPosts: BlogPost[] = [
     date: '19 de diciembre 2025',
     tags: ['Blog'],
     image: AssetImageBlog.blog_14_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué es la morosidad silenciosa?',
+        answer:
+          'Clientes que postergan pagos, olvidan sus compromisos o simplemente no responden, mientras tu empresa sigue operando con ingresos pendientes que nunca llegan.',
+      },
+      {
+        question: '¿Cómo sé si mi gestión de cuentas por cobrar es reactiva?',
+        answer:
+          'Si todavía dependes de Excel, de recordatorios manuales o de correos improvisados, es reactiva.',
+      },
+      {
+        question: '¿Todos los clientes deberían recibir el mismo seguimiento?',
+        answer:
+          'No. Los flujos se activan según el comportamiento de pago de cada cliente, por WhatsApp, email o SMS. No todos pagan igual.',
+      },
+      {
+        question: '¿Necesito armar un área de cobranza para recuperar lo que ya está vencido?',
+        answer:
+          'No. La recuperación de deuda activa se puede delegar en un servicio especializado, sin construir el área desde cero.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -778,6 +904,24 @@ export const blogPosts: BlogPost[] = [
     date: '06 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_15_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Por qué un cliente no paga a tiempo?',
+        answer:
+          'No siempre es falta de dinero. Las tres causas más frecuentes son la desorganización del cliente, la falta de seguimiento de tu parte y la falta de estructura en la cobranza.',
+      },
+      {
+        question: '¿Qué impacto tiene la morosidad más allá del flujo de caja?',
+        answer:
+          'Un efecto dominó en toda la operación: retrasas pagos a proveedores, reduces inversiones, pierdes oportunidades comerciales y tu equipo gasta tiempo persiguiendo deudas en lugar de vender.',
+      },
+      {
+        question: 'Ya tengo clientes morosos y no tengo equipo para cobrar. ¿Qué hago?',
+        answer:
+          'Delegar la gestión antes de que la deuda siga creciendo. Lo peor que puedes hacer cuando ningún área interna puede tomar acción es dejar que el problema crezca.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -972,6 +1116,24 @@ export const blogPosts: BlogPost[] = [
     date: '09 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_16_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué tiene que ver la educación financiera con cobrar mejor?',
+        answer:
+          'Cuando una empresa entiende cómo fluye su dinero y cómo se comportan sus cuentas por cobrar, deja de sobrevivir mes a mes esperando que el cliente pague y pasa a proyectar su crecimiento con data, procesos y control.',
+      },
+      {
+        question: 'Facturo bien pero no tengo liquidez. ¿Qué está fallando?',
+        answer:
+          'Casi siempre la estructura del seguimiento: recordatorios manuales, Excel compartidos entre áreas y correos sin respuesta. No es casualidad que el dinero no llegue, es el sistema.',
+      },
+      {
+        question: '¿Digitalizar la cobranza significa perder el trato humano?',
+        answer:
+          'Al contrario. Al automatizar las tareas operativas, el equipo queda libre para enfocarse en las relaciones estratégicas y en los casos complejos.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -1083,6 +1245,24 @@ export const blogPosts: BlogPost[] = [
     date: '13 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_17_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Profesionalizar la cobranza es insistir más?',
+        answer:
+          'No, es hacerlo mejor. Seguimiento automatizado antes de que el problema escale, y gestión especializada cuando ya existe deuda activa que no logras resolver por tu cuenta.',
+      },
+      {
+        question: '¿Por qué Excel deja de servir?',
+        answer:
+          'Porque a medida que crece tu base de clientes aumenta el riesgo de olvido, duplicidad y error humano. Lo que falta es trazabilidad, alertas automatizadas y seguimiento.',
+      },
+      {
+        question: '¿El cliente se siente presionado cuando automatizo la cobranza?',
+        answer:
+          'Bien hecho, pasa lo contrario: el cliente se siente acompañado y no presionado, porque recibe comunicaciones oportunas por el canal adecuado en vez de reclamos a destiempo.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -1287,6 +1467,24 @@ export const blogPosts: BlogPost[] = [
     date: '16 de enero 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_18_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: 'Ya sé cuánto me deben. ¿Cuál es el siguiente paso?',
+        answer:
+          'El seguimiento. Saber el monto no recupera nada: hace falta un sistema donde cada cliente moroso reciba la comunicación oportuna, por el canal adecuado, con el mensaje correcto y la frecuencia ideal.',
+      },
+      {
+        question: '¿Hacer seguimiento es perseguir al cliente?',
+        answer:
+          'No. Perseguir es insistir sin estructura. El seguimiento es un proceso donde cada acción queda registrada y cada avance se reporta.',
+      },
+      {
+        question: '¿Qué pasa si no hago nada?',
+        answer:
+          'Lo que pasa todos los meses: ese dinero sigue fuera de tu caja. En la práctica estás financiando a clientes que no respondieron a tiempo y a los que nadie les volvió a escribir.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -1479,6 +1677,7 @@ export const blogPosts: BlogPost[] = [
           'Que se pidan garantías depende de la industria. Lo que sí conviene es acortar los plazos cuando un cliente no está respetando los plazos de pago acordados.',
       },
     ],
+    lector: 'distribuidora-con-fuerza-de-venta',
     content: [
       {
         type: 'paragraph',
@@ -1677,6 +1876,7 @@ export const blogPosts: BlogPost[] = [
           'No se le notifica: consultar un score no genera ningún aviso a tu cliente. En Sena cuidamos la relación comercial de nuestros clientes con sus clientes, y el score sirve para decidir mejor, no para presionar.',
       },
     ],
+    lector: 'pyme-que-cobra',
     content: [
       {
         type: 'paragraph',
@@ -1800,6 +2000,28 @@ export const blogPosts: BlogPost[] = [
     date: '03 de marzo 2026',
     tags: ['Blog', 'Visión Financiera', 'Educación Financiera'],
     image: AssetImageBlog.blog_22_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué es el ROI aplicado a la cobranza?',
+        answer:
+          'La métrica que responde si la automatización genera más valor que el costo del software, con números en vez de percepciones.',
+      },
+      {
+        question: '¿Cómo se calcula el ROI?',
+        answer:
+          'La fórmula es ROI = (Beneficio − Inversión) / Inversión × 100. Con una inversión de 1.000 y un beneficio de 3.500, el ROI es 250%: por cada dólar invertido la empresa recupera 2,5 adicionales.',
+      },
+      {
+        question: '¿Qué beneficios entran en el cálculo?',
+        answer: 'El ahorro en horas de trabajo, la reducción de la morosidad y el incremento en liquidez.',
+      },
+      {
+        question: '¿Por qué dicen que toma 15 minutos?',
+        answer:
+          'Porque con las métricas a mano basta con identificar la inversión, medir esos beneficios y aplicar la fórmula.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -2068,6 +2290,28 @@ export const blogPosts: BlogPost[] = [
     tags: ['Blog', 'Producto', 'Servicio'],
     image: AssetImageBlog.blog_23_main.src,
     lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Por qué Excel se queda corto para la cobranza?',
+        answer:
+          'Cuando una pyme maneja cientos de facturas al mes aparecen la falta de trazabilidad, los errores al copiar datos del ERP a la planilla, las horas perdidas en tareas repetitivas y un DSO que se eleva.',
+      },
+      {
+        question: '¿Qué es un software de cobranza?',
+        answer:
+          'Una plataforma digital, en general en la nube, que centraliza, automatiza y monitorea los procesos de recuperación de pagos, con recordatorios automáticos, dashboards en tiempo real e integración con el ERP o el CRM.',
+      },
+      {
+        question: '¿Qué funciones debe tener?',
+        answer:
+          'Automatización de recordatorios, dashboards en tiempo real, segmentación de clientes morosos, reportes exportables e historial de interacciones.',
+      },
+      {
+        question: '¿Cómo elijo entre varias opciones?',
+        answer:
+          'Evalúa escalabilidad, facilidad de integración con tus sistemas, facilidad de uso, soporte y seguridad, y la relación costo-beneficio frente a contratar más personal o mantener el proceso manual.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -2643,6 +2887,29 @@ export const blogPosts: BlogPost[] = [
     date: '10 de marzo 2026',
     tags: ['Blog', 'Visión Financiera', 'Educación Financiera'],
     image: AssetImageBlog.blog_24_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué KPIs de cobranza debo revisar?',
+        answer:
+          'Cinco: DSO, aging de cartera, tasa de recuperación, promedio de días de mora y eficiencia operativa en cobranza.',
+      },
+      {
+        question: '¿Qué mide el aging de cartera?',
+        answer:
+          'Clasifica las cuentas por cobrar según su antigüedad —30, 60, 90 días o más— para priorizar las facturas más críticas y ver qué parte de la cartera corre mayor riesgo de incobrabilidad.',
+      },
+      {
+        question: '¿Existe un DSO bueno?',
+        answer:
+          'Depende de la industria. Un DSO de 40 días puede ser excelente para una empresa industrial y preocupante para un negocio de servicios con plazos más cortos.',
+      },
+      {
+        question: '¿Basta con cobrar?',
+        answer:
+          'No, también importa cuánto cuesta hacerlo. La eficiencia operativa compara los recursos invertidos en cobranza, tiempo y personal, contra los montos recuperados.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -2907,6 +3174,24 @@ export const blogPosts: BlogPost[] = [
     date: '13 de marzo 2026',
     tags: ['Blog', 'Visión Financiera', 'Educación Financiera'],
     image: AssetImageBlog.blog_25_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Cómo se mide si una automatización de cobranza está funcionando?',
+        answer:
+          'No por la cantidad de correos enviados, sino por cómo se mueven el DSO, el aging de cartera y la tasa de recuperación.',
+      },
+      {
+        question: '¿Qué KPIs vigila Sena?',
+        answer:
+          'DSO, aging de cartera, tasa de recuperación, flujo de caja proyectado y eficiencia operativa.',
+      },
+      {
+        question: '¿Cómo se conecta un flujo automatizado con un KPI?',
+        answer:
+          'Cada flujo queda vinculado a un indicador: si los pagos llegan más rápido baja el DSO, si se reducen las facturas de más de 90 días mejora el aging de cartera, y si aumentan los montos recuperados sube la tasa de recuperación.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -3145,6 +3430,28 @@ export const blogPosts: BlogPost[] = [
     tags: ['Blog', 'Cobranza'],
     image: AssetImageBlog.blog_26_main.src,
     lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué es el DSO?',
+        answer:
+          'Days Sales Outstanding, o días de venta pendientes de cobro: el promedio de días que tarda tu empresa en recuperar el dinero de sus ventas a crédito, desde que emites la factura hasta que recibes el pago.',
+      },
+      {
+        question: '¿Cómo se calcula el DSO?',
+        answer:
+          'DSO = (Cuentas por cobrar / Ventas a crédito) × número de días. Con $150.000 en cuentas por cobrar y ventas a crédito de $450.000 en un trimestre de 90 días, el DSO es de 30 días.',
+      },
+      {
+        question: '¿Por qué un DSO alto es un problema?',
+        answer:
+          'Porque tus recursos quedan atrapados en cuentas por cobrar: aumenta la dependencia del crédito externo, baja la capacidad de inversión y se tensan las relaciones con proveedores a los que no puedes pagar a tiempo.',
+      },
+      {
+        question: '¿Cómo reduzco el DSO?',
+        answer:
+          'Automatizar los recordatorios, definir políticas de crédito diferenciadas por cliente, ofrecer incentivos por pronto pago, segmentar la cartera y centralizar la información de cobranza en un solo lugar.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -3688,6 +3995,28 @@ export const blogPosts: BlogPost[] = [
     tags: ['Blog', 'Producto', 'Servicio'],
     image: AssetImageBlog.blog_27_main.src,
     lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué diferencia hay entre un CRM, un ERP y un SaaS de cobranza?',
+        answer:
+          'El CRM administra la relación con el cliente y organiza las interacciones; el ERP centraliza procesos administrativos y financieros; el SaaS especializado está diseñado para digitalizar la cobranza de extremo a extremo.',
+      },
+      {
+        question: '¿Por qué un CRM se queda corto para cobrar?',
+        answer:
+          'Porque su alcance es limitado cuando la empresa busca métricas avanzadas como DSO, aging de cartera o proyecciones de flujo de caja.',
+      },
+      {
+        question: '¿Y el módulo de cuentas por cobrar de mi ERP?',
+        answer:
+          'Suele carecer de segmentación de clientes morosos, reportes específicos de recuperación y flujos de recordatorios automatizados, y eso termina empujando al equipo de vuelta a Excel para las tareas críticas.',
+      },
+      {
+        question: '¿Cuál me conviene?',
+        answer:
+          'Si buscas un sistema de relación, el CRM es un primer paso. Si priorizas la integración administrativa, el ERP puede servir. Si lo que necesitas es control, liquidez y eficiencia, el camino es un SaaS especializado en cobranza.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -4189,6 +4518,27 @@ export const blogPosts: BlogPost[] = [
     date: '24 de marzo 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_28_main.src,
+    // El cuerpo dice "pyme en crecimiento", pero el lector no es ese: el ICP de pyme opera su
+    // cobranza sin ERP robusto, así que no tiene el problema que el post describe. La tesis del
+    // artículo —complementar el ERP en vez de reemplazarlo— es la del ICP enterprise.
+    lector: 'enterprise-con-erp',
+    faq: [
+      {
+        question: '¿Cómo sé que mi ERP se queda corto en cobranza?',
+        answer:
+          'Hay siete señales: dependes de Excel para seguir los atrasos, no tienes KPIs como DSO o aging de cartera, el equipo gasta más tiempo en tareas manuales que en análisis, no puedes segmentar clientes morosos, no hay recordatorios multicanal, no se proyecta el flujo de caja y los reportes son rígidos.',
+      },
+      {
+        question: '¿Por qué un ERP no resuelve la cobranza?',
+        answer:
+          'Porque fue diseñado como herramienta administrativa global, no como un sistema de cobranza especializado.',
+      },
+      {
+        question: '¿Tengo que reemplazar mi ERP?',
+        answer:
+          'No. Una plataforma dedicada no lo reemplaza: lo complementa en todo lo relacionado con cobranza y deja el ERP en su rol.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -4737,6 +5087,29 @@ export const blogPosts: BlogPost[] = [
     date: '27 de marzo 2026',
     tags: ['Producto', 'Servicio'],
     image: AssetImageBlog.blog_29_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Cómo cobro una factura vencida sin dañar la relación?',
+        answer:
+          'Con comunicación proactiva y empática. Un recordatorio amable antes del vencimiento evita buena parte de los retrasos, y si la fecha ya pasó conviene mantener un tono cordial.',
+      },
+      {
+        question: '¿Qué hago si el cliente no tiene liquidez?',
+        answer:
+          'Formalizar un plan de pagos. Proponer cuotas o renegociar plazos suele ser más efectivo que insistir en un único cobro inmediato.',
+      },
+      {
+        question: '¿Cuándo escalo el caso a un tercero?',
+        answer:
+          'Cuando el cliente no responde después de varios intentos. La decisión debe basarse en un análisis costo-beneficio.',
+      },
+      {
+        question: '¿Sirve dejarlo por escrito desde el principio?',
+        answer:
+          'Sí. Cuando los contratos especifican las consecuencias por atraso la gestión se simplifica, y la transparencia genera confianza y reduce conflictos.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -5002,6 +5375,29 @@ export const blogPosts: BlogPost[] = [
     date: '31 de marzo 2026',
     tags: ['Blog'],
     image: AssetImageBlog.blog_30_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿Qué pasa si dejo pasar una factura vencida?',
+        answer:
+          'Se instala un efecto dominó: la liquidez se reduce, las obligaciones internas se complican y la empresa empieza a depender de créditos externos que encarecen la operación.',
+      },
+      {
+        question: '¿Una deuda antigua se recupera igual que una reciente?',
+        answer:
+          'No. Mientras más tiempo transcurre, menor es la probabilidad de recuperación, y después de los 90 días esas probabilidades caen de forma significativa.',
+      },
+      {
+        question: '¿Qué riesgos hay además de la plata que no entra?',
+        answer:
+          'Mayor riesgo de impago definitivo, más costos administrativos por perseguir pagos y desconfianza del mercado: proveedores y entidades financieras perciben más riesgo en una empresa con alta morosidad.',
+      },
+      {
+        question: '¿Cómo lo prevengo?',
+        answer:
+          'Políticas de crédito claras desde el inicio, recordatorios preventivos antes del vencimiento, planes de pago flexibles, indicadores como el aging de cartera y el DSO, y automatización del proceso.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -5574,6 +5970,24 @@ export const blogPosts: BlogPost[] = [
     date: '10 de abril 2026',
     tags: ['Sena', 'Blog'],
     image: AssetImageBlog.blog_29_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: '¿Por qué cobrar se volvió un problema de mi negocio?',
+        answer:
+          'Porque hay plata que ya ganaste y todavía no está en tu cuenta. Mecanismos de pago ineficientes, ventas a crédito sin seguimiento y contrapartes que no priorizan pagar acumulan deuda en la calle y presión en tu caja.',
+      },
+      {
+        question: '¿Cobrar mal también tiene costo?',
+        answer:
+          'Sí. La deuda que no se gestiona mata empresas, pero hacerlo mal también: una cobranza hostil o ineficiente puede costarte el cliente que más trabajo te costó conseguir.',
+      },
+      {
+        question: '¿Es solo un problema de pymes?',
+        answer:
+          'No. La cobranza cruza emprendedores, pymes y política económica por igual: apareció en el caso CAE, en el sistema único de cobranza de cotizaciones, en la Ley de prefijos telefónicos y en el debate sobre el pago a 30 días.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -5658,6 +6072,24 @@ export const blogPosts: BlogPost[] = [
     date: '14 de abril 2026',
     tags: ['Sena', 'Educación Financiera'],
     image: AssetImageBlog.blog_30_main.src,
+    lector: 'micro-empresa-sin-equipo',
+    faq: [
+      {
+        question: '¿Qué es el vibecoding?',
+        answer:
+          'La práctica de crear software con ayuda de inteligencia artificial, sin necesitar un equipo técnico completo. Permite que emprendedores casi solos construyan soluciones digitales y las vendan a grandes empresas.',
+      },
+      {
+        question: '¿Qué riesgo corre una empresa chica cuando un cliente grande no paga?',
+        answer:
+          'El del caso que cuenta este artículo: más de $8 millones en facturas impagas con más de 60 días de atraso obligaron a seguir operando con recursos propios, hasta que una demanda por no pago de cotizaciones terminó en una multa de casi $20 millones.',
+      },
+      {
+        question: '¿Qué tan común es?',
+        answer:
+          'Según la última encuesta de Propyme, más del 60% de las mipymes cerró el primer trimestre de 2026 con inyección de recursos personales, cerca del 27% solicitó un crédito bancario y el 22% no pudo pagar sus obligaciones laborales.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',
@@ -5980,6 +6412,24 @@ export const blogPosts: BlogPost[] = [
     date: '17 de abril 2026',
     tags: ['Sena', 'Cobranza', 'Blog'],
     image: AssetImageBlog.blog_28_main.src,
+    lector: 'distribuidora-con-fuerza-de-venta',
+    faq: [
+      {
+        question: '¿Por qué chocan el equipo comercial y el financiero?',
+        answer:
+          'Porque los primeros quieren vender más, abrir nuevos clientes y extender crédito, y los segundos quieren ver los ingresos en la caja y restringir la cartera morosa. Ninguno está equivocado, pero tampoco se ponen de acuerdo.',
+      },
+      {
+        question: '¿Dónde se nota más este conflicto?',
+        answer:
+          'En empresas con venta en terreno —distribuidoras de alimentos, bebidas, ropa o insumos—, donde un equipo de vendedores recorre el país entregando productos a crédito, con cobertura regional y ciclos de pago largos.',
+      },
+      {
+        question: '¿La inteligencia artificial reemplaza al equipo de cobranza?',
+        answer:
+          'No. En B2B cobrar bien requiere entender el contexto del cliente, saber cuándo insistir y cuándo esperar, y hablar con la persona indicada. Eso no se automatiza del todo, y por eso el equipo sigue siendo central.',
+      },
+    ],
     content: [
       {
         type: 'paragraph',

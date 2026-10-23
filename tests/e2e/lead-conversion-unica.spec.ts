@@ -103,7 +103,10 @@ test.describe('origen de la conversión', () => {
   })
 
   test('los formularios y el analizador no escriben etiquetas de conversión a mano', () => {
-    for (const path of [...formularios.map((f) => f.path), 'src/ui/shared/PortfolioAnalyzer/PortfolioAnalyzerModal.tsx']) {
+    for (const path of [
+      ...formularios.map((f) => f.path),
+      'src/ui/shared/PortfolioAnalyzer/PortfolioAnalyzerModal.tsx',
+    ]) {
       expect(src(path), path).not.toMatch(/AW-17962976949\/\w+/)
     }
   })

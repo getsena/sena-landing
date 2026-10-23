@@ -43,7 +43,15 @@ test.describe('validateLead', () => {
   })
 
   test('rechaza campos que no son string (arrays, objetos, números)', () => {
-    for (const campo of ['nombre', 'apellido', 'empresa', 'email', 'telefono', 'facturas_pendientes', 'alguien_cobrando']) {
+    for (const campo of [
+      'nombre',
+      'apellido',
+      'empresa',
+      'email',
+      'telefono',
+      'facturas_pendientes',
+      'alguien_cobrando',
+    ]) {
       for (const malo of [['a@b.cl'], { a: 1 }, 123, true, null]) {
         expect(okLead({ [campo]: malo }).ok, `${campo}=${JSON.stringify(malo)}`).toBe(false)
       }
@@ -141,8 +149,12 @@ test.describe('validateAnalyzerLead', () => {
 
   test('rechaza montos no numéricos, negativos, infinitos y enormes', () => {
     for (const malo of ['abc', -1, Infinity, NaN, 1e16, null, {}]) {
-      expect(validateAnalyzerLead({ ...analyzer, cartera_total_riesgo_clp: malo }).ok, String(malo)).toBe(false)
-      expect(validateAnalyzerLead({ ...analyzer, cartera_recuperable_clp: malo }).ok, String(malo)).toBe(false)
+      expect(validateAnalyzerLead({ ...analyzer, cartera_total_riesgo_clp: malo }).ok, String(malo)).toBe(
+        false
+      )
+      expect(validateAnalyzerLead({ ...analyzer, cartera_recuperable_clp: malo }).ok, String(malo)).toBe(
+        false
+      )
     }
   })
 

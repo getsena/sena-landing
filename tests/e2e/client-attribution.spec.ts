@@ -61,8 +61,28 @@ test.describe('mergeAttribution (first-touch con clic pagado nuevo)', () => {
 test.describe('toPayload', () => {
   test('mapea a los nombres que esperan las rutas de lead', () => {
     expect(
-      toPayload({ gclid: 'g', gbraid: 'b', wbraid: 'w', fbclid: 'f', utm_source: 's', utm_medium: 'm', utm_campaign: 'c', utm_content: 'o', utm_term: 't' })
-    ).toEqual({ gclid: 'g', gbraid: 'b', wbraid: 'w', fbclid: 'f', utmSource: 's', utmMedium: 'm', utmCampaign: 'c', utmContent: 'o', utmTerm: 't' })
+      toPayload({
+        gclid: 'g',
+        gbraid: 'b',
+        wbraid: 'w',
+        fbclid: 'f',
+        utm_source: 's',
+        utm_medium: 'm',
+        utm_campaign: 'c',
+        utm_content: 'o',
+        utm_term: 't',
+      })
+    ).toEqual({
+      gclid: 'g',
+      gbraid: 'b',
+      wbraid: 'w',
+      fbclid: 'f',
+      utmSource: 's',
+      utmMedium: 'm',
+      utmCampaign: 'c',
+      utmContent: 'o',
+      utmTerm: 't',
+    })
   })
 
   test('sin datos devuelve todo indefinido', () => {
