@@ -229,7 +229,7 @@ Sena tiene landings especificas para las siguientes industrias:
 | -------------- | --------------------------------- |
 | Email          | hola@somossena.com                |
 | Telefono       | +569 4448 9673                    |
-| WhatsApp Peru  | +51 958 969 041                   |
+| WhatsApp Peru  | +51 918 272 599                   |
 | WhatsApp Chile | +56 944 489 673                   |
 | Agendar demo   | meetings.hubspot.com/francisco502 |
 

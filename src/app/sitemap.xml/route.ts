@@ -1,9 +1,12 @@
 import { blogPosts } from '@/lib/data/blogPosts'
+import { SITE_URL } from '@/lib/seo/site'
 import { parseSpanishDate } from '@/lib/utils/blog'
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const baseUrl = 'https://somossena.com'
+  // El apex redirige 308 a www, que es el host de todos los canonical: listar el apex acá
+  // entregaba un sitemap entero de URLs que redirigen.
+  const baseUrl = SITE_URL
 
   const pages = [
     { path: '', priority: '1.0' },

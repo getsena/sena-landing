@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       'Tecnología, agentes de IA y especialistas humanos trabajando en conjunto para cobrar por ti.',
     url: 'https://www.somossena.com/opera',
     type: 'website',
-    images: ['https://somossena.com/sena-crm-lite.jpg'],
+    images: ['https://www.somossena.com/sena-crm-lite.jpg'],
     siteName: 'Sena',
     locale: 'es_CL',
   },

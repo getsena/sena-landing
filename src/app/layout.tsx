@@ -30,15 +30,15 @@ export const metadata: Metadata = {
     title: 'Sena - El arte de cobrar bien',
     description:
       'Todo el ciclo de cobranza B2B: opéralo tú en la plataforma, delégalo en nuestro equipo o recupera lo vencido.',
-    images: ['https://somossena.com/sena-crm-lite.jpg'],
+    images: ['https://www.somossena.com/sena-crm-lite.jpg'],
   },
   openGraph: {
     title: 'Sena - El arte de cobrar bien',
     description:
       'Sena cubre el ciclo completo de cobranza B2B, de la factura emitida al pago conciliado. En una sola plataforma o como servicio gestionado.',
     type: 'website',
-    url: 'https://somossena.com',
-    images: ['https://somossena.com/sena-crm-lite.jpg'],
+    url: 'https://www.somossena.com',
+    images: ['https://www.somossena.com/sena-crm-lite.jpg'],
     siteName: 'Sena',
     locale: 'es_CL',
   },

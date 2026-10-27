@@ -2,6 +2,7 @@
   "name": "sena-landing",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "yarn@4.18.1",
   "engines": {
     "node": "24.x",
     "yarn": ">=1.22.19",
@@ -16,6 +17,7 @@
     "tsc": "tsc",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx --fix .",
     "prettier": "prettier --write .",
+    "format:check": "prettier --check .",
     "lint-staged": "lint-staged --no-stash",
     "test:e2e": "playwright test --reporter=line",
     "blog:gate": "node scripts/blog-gate.mjs"
