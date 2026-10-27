@@ -5,7 +5,7 @@ export default defineConfig({
   timeout: 30_000,
   reporter: 'line',
   use: {
-    baseURL: 'https://somossena.com',
+    baseURL: process.env.E2E_BASE_URL ?? 'https://www.somossena.com',
     headless: true,
   },
 })

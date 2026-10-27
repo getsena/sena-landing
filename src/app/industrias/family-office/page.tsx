@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: 'Sena',
     locale: 'es_PE',
     url: 'https://www.somossena.com/industrias/family-office',
-    images: ['https://somossena.com/sena-crm-lite.jpg'],
+    images: ['https://www.somossena.com/sena-crm-lite.jpg'],
   },
 }
 

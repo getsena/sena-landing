@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       'Automatiza tu cobranza B2B. Visibilidad total, recordatorios automáticos y conciliación sin cambiar tu stack.',
     url: 'https://www.somossena.com/plataforma',
     type: 'website',
-    images: ['https://somossena.com/sena-crm-lite.jpg'],
+    images: ['https://www.somossena.com/sena-crm-lite.jpg'],
     siteName: 'Sena',
     locale: 'es_CL',
   },
