@@ -9,8 +9,8 @@ const columnas: Columna[] = [
     titulo: 'Modalidades',
     enlaces: [
       { label: 'Plataforma Sena', href: '/plataforma' },
-      { label: 'Ópera', href: '/opera' },
-      { label: 'Recupera', href: '/recupera' },
+      { label: 'Ópera', href: 'https://agente.somossena.com' },
+      { label: 'Recupera', href: 'https://recupera.somossena.com' },
     ],
   },
   // «Por país» vuelve cuando existan las dos landings por país (rutas por definir):
