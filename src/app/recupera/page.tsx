@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       'Recuperamos las facturas que ya no pudiste cobrar, cuidando la relación donde todavía se puede. Pagas 15% solo sobre lo recuperado.',
     url: 'https://www.somossena.com/recupera',
     type: 'website',
-    images: ['https://somossena.com/sena-crm-lite.jpg'],
+    images: ['https://www.somossena.com/sena-crm-lite.jpg'],
     siteName: 'Sena',
     locale: 'es_CL',
   },

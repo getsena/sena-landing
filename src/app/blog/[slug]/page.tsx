@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: Params }) {
       description: post.intro,
       images: [{ url: post.image }],
       type: 'article',
-      url: `https://somossena.com/blog/${post.slug}`,
+      url: `https://www.somossena.com/blog/${post.slug}`,
     },
   }
 }
