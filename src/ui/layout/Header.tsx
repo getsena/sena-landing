@@ -15,6 +15,8 @@ type Props = {
 }
 
 const SENA_BASE_URL = 'https://www.somossena.com'
+const RECUPERA_URL = 'https://recupera.somossena.com'
+const OPERA_URL = 'https://agente.somossena.com'
 
 type NavItem =
   | { id: number; name: string; type: 'scroll'; href: string }
@@ -483,12 +485,12 @@ export const Header = ({ variant }: Props) => {
     setOpenProducts(false)
 
     if (tab === 'recuperacion') {
-      router.push('/recupera')
+      window.location.href = RECUPERA_URL
       return
     }
 
     if (tab === 'opera') {
-      router.push('/opera')
+      window.location.href = OPERA_URL
       return
     }
 
