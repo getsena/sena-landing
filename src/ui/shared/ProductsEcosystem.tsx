@@ -19,7 +19,7 @@ const PRODUCTS = [
     tag: 'Operamos por ti',
     desc: 'El equipo de cobranza que tu empresa no tiene. Nosotros operamos, tú ves los resultados.',
     cta: 'Ver Ópera',
-    href: '/opera',
+    href: 'https://agente.somossena.com',
     color: 'bg-violet-50 text-violet-800',
   },
   {
@@ -28,7 +28,7 @@ const PRODUCTS = [
     tag: 'Solo lo vencido',
     desc: 'Facturas vencidas que no has podido cobrar. Pagas solo si recuperamos, sin ticket mínimo.',
     cta: 'Ver Recupera',
-    href: '/recupera',
+    href: 'https://recupera.somossena.com',
     color: 'bg-emerald-50 text-emerald-800',
   },
 ]
