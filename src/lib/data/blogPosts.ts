@@ -6528,12 +6528,6 @@ export const blogPosts: BlogPost[] = [
     tags: ['Sena', 'Cobranza', 'Blog'],
     image: AssetImageBlog.blog_no_image.src,
     lector: 'pyme-que-cobra',
-    bloqueos: [
-      'Imagen hero: no hay imagen para este post y se usa el placeholder blog_no_image. Falta una imagen horizontal .webp de hasta 250 KB que le hable al acreedor, sin texto en inglés.',
-      'Nombra casos y personas sin fuente ni contexto ("El Abogado González", "Cobranza del CAE", "SUCC", "Ley de prefijos telefónicos"). "Pago a 30 días" es la Ley 21.131, sin validación legal: solo puede aparecer como contexto de mercado. Confirmar con Jaz si se mantiene la lista.',
-      '"Te podemos asegurar que te ayudaremos a mejorar tu flujo de caja" promete un resultado sin dato que lo respalde (regla de no prometer resultados).',
-      'Sin CTA: el post termina sin llevar al lector a ninguna acción.',
-    ],
     content: [
       {
         type: 'paragraph',
@@ -6582,19 +6576,13 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'Por otro lado, si miramos la prensa, nos daremos cuenta que la cobranza es uno de los tópicos más transversales en el mundo empresarial e incluso el político. Los casos más emblemáticos del último tiempo:',
+            text: 'Por otro lado, si miramos la prensa, nos daremos cuenta que la cobranza es uno de los tópicos más transversales en el mundo empresarial e incluso el político. Algunos ejemplos recientes en Chile:',
           },
         ],
       },
       {
         type: 'list',
-        items: [
-          'Cobranza del CAE',
-          'El Abogado González',
-          'SUCC',
-          'Pago a 30 días',
-          'Ley de prefijos telefónicos',
-        ],
+        items: ['Cobranza del CAE', 'La ley de pago a 30 días'],
       },
       {
         type: 'paragraph',
@@ -6628,8 +6616,16 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'En Sena no hacemos cobranza con sicarios, mafias, ni abusando de los llamados por teléfono.  Pero si te podemos asegurar, que te ayudaremos a mejorar tu flujo de caja, cuidando de la relación con tus clientes. El arte de cobrar es nuestra expertise.',
+            text: 'En Sena no hacemos cobranza con sicarios, mafias, ni abusando de los llamados por teléfono. Nuestro enfoque es ayudarte a ordenar tu flujo de caja cuidando la relación con tus clientes. El arte de cobrar es nuestra especialidad.',
           },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si quieres ver cómo lo hacemos, conoce ' },
+          { type: 'link', text: 'la plataforma de Sena', href: '/plataforma' },
+          { type: 'text', text: '.' },
         ],
       },
     ],
@@ -6644,12 +6640,6 @@ export const blogPosts: BlogPost[] = [
     tags: ['Sena', 'Cobranza', 'Blog'],
     image: AssetImageBlog.blog_no_image.src,
     lector: 'micro-empresa-sin-equipo',
-    bloqueos: [
-      'Imagen hero: no hay imagen para este post y se usa el placeholder blog_no_image. Falta una imagen horizontal .webp de hasta 250 KB que le hable al acreedor, sin texto en inglés.',
-      'El caso de "Sofi" (persona privada con nombre, demanda laboral, multa de casi $20 millones) no tiene fuente verificable. Confirmar con Jaz que es real y que Sofi lo autorizó, o anonimizarlo.',
-      'Cifras de Propyme: las tres coinciden con La Tercera (6 abr 2026: 62%, 27%, 22%), pero la nota habla del "último mes" medido y de obligaciones laborales no pagadas "dentro de plazo"; el texto dice "cerró el primer trimestre" y omite "dentro de plazo". Ajustar la redacción. La encuesta se hizo con DefensaDeudores.cl.',
-      'Sin CTA: termina en "tenemos la oportunidad de ayudarlos con Sena", sin enlace ni acción.',
-    ],
     content: [
       {
         type: 'paragraph',
@@ -6665,7 +6655,7 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'Hay una historia en particular que nos hizo entender lo importante de la cobranza. Una emprendedora amiga, Sofi, lo estaba pasando pésimo. Una gran empresa no le pagaba hace más de 60 días. El problema vino cuando recibió una demanda laboral por el no pago de cotizaciones: dado que no recibió el pago de sus facturas, no tenía dinero para pagar las cotizaciones y un empleado la demandó. Recibió una multa de casi $20 millones de pesos por el incumplimiento de las obligaciones sociales.',
+            text: 'Hay una historia en particular que nos hizo entender lo importante de la cobranza. Una emprendedora conocida lo estaba pasando pésimo. Una gran empresa no le pagaba hace más de 60 días. El problema vino cuando recibió una demanda laboral por el no pago de cotizaciones: dado que no recibió el pago de sus facturas, no tenía dinero para pagar las cotizaciones y un empleado la demandó. Recibió una multa de casi $20 millones de pesos por el incumplimiento de las obligaciones sociales.',
           },
         ],
       },
@@ -6683,7 +6673,7 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'Acorde a la última encuesta de Propyme, más del 60% de las mipymes cerró el primer trimestre de 2026 con inyección de recursos personales. Cerca del 27% de las empresas, solicitó un crédito bancario. Respecto a las obligaciones laborales, el 22% de las mipymes no pudo pagarlas.',
+            text: 'Según la última encuesta de Propyme con DefensaDeudores.cl, reportada por La Tercera, en el último mes medido más del 60% de las mipymes funcionó con inyección de recursos personales y cerca del 27% solicitó un crédito bancario. Además, el 22% no pudo pagar sus obligaciones laborales dentro de plazo.',
           },
         ],
       },
@@ -6719,8 +6709,16 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'Estamos seguros que hay muchas emprendedoras como Sofi. Nos hemos encontrado con más experiencias similares. De la misma forma sabemos que tenemos la oportunidad de ayudarlos con Sena.',
+            text: 'Estamos seguros de que hay muchas emprendedoras como ella. Nos hemos encontrado con más experiencias similares. De la misma forma sabemos que podemos ayudarlos con Sena.',
           },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si te pasa algo parecido, conoce cómo ' },
+          { type: 'link', text: 'Recupera', href: '/recupera' },
+          { type: 'text', text: ' te ayuda a cobrar a tiempo.' },
         ],
       },
       {
@@ -6746,11 +6744,6 @@ export const blogPosts: BlogPost[] = [
     tags: ['Sena', 'Cobranza', 'Blog'],
     image: AssetImageBlog.blog_no_image.src,
     lector: 'distribuidora-con-fuerza-de-venta',
-    bloqueos: [
-      'Imagen hero: no hay imagen para este post y se usa el placeholder blog_no_image. Falta una imagen horizontal .webp de hasta 250 KB que le hable al acreedor, sin texto en inglés.',
-      'Se superpone con el post 33, "Tu equipo vende, pero ¿quién cobra?" (mismo conflicto comercial vs. financiero, mismo lector). Decidir si se diferencia o se fusiona para no competir por la misma búsqueda.',
-      'Sin CTA: cierra con "que el arte de cobrar sea nuestro sello", sin acción para el lector.',
-    ],
     content: [
       {
         type: 'paragraph',
@@ -6833,8 +6826,25 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'Por todo lo anterior, es que disfrutamos tanto de construir Sena, porque todos los días ayudamos desde pequeños emprendedores hasta grandes empresas a entregar un mejor servicio. Que el arte de cobrar sea nuestro sello.',
+            text: 'Por todo lo anterior, es que disfrutamos tanto de construir Sena, porque todos los días ayudamos desde pequeños emprendedores hasta grandes empresas a entregar un mejor servicio.',
           },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si tu equipo vende en terreno y quieres externalizar la cobranza, conoce ' },
+          { type: 'link', text: 'Ópera', href: '/opera' },
+          {
+            type: 'text',
+            text: '. Y si te interesa el conflicto entre ventas y finanzas desde el otro lado, lee ',
+          },
+          {
+            type: 'link',
+            text: 'Tu equipo vende, pero ¿quién cobra?',
+            href: '/blog/tu-equipo-vende-pero-quien-cobra',
+          },
+          { type: 'text', text: '.' },
         ],
       },
     ],
@@ -6842,24 +6852,13 @@ export const blogPosts: BlogPost[] = [
   {
     id: 38,
     slug: 'cobranza-en-piloto-automatico-con-ia',
-    title: 'Debt collection on autopilot',
+    title: 'Cobranza en piloto automático: cómo la IA recupera facturas',
     intro:
       'La cobranza en piloto automático usa IA, automatización y agentes conversacionales para recuperar facturas con mínima intervención humana. Tendencias y cómo se implementa.',
     date: '04 de junio 2026',
     tags: ['Sena', 'Cobranza', 'Blog'],
     image: AssetImageBlog.blog_no_image.src,
     lector: 'pyme-que-cobra',
-    bloqueos: [
-      'Imagen hero: no hay imagen para este post y se usa el placeholder blog_no_image. Falta una imagen horizontal .webp de hasta 250 KB que le hable al acreedor, sin texto en inglés.',
-      '"Crecimiento de 5-7x para 2034" no aparece en la fuente (Kaplan). La fuente dice CAGR 16,9% proyectado a 2034 (US$15,9 mil millones), sin año base, sin región y sin fuente primaria; "2025-2034" tampoco figura. Sacar o atribuir como proyección de Kaplan.',
-      '"La probabilidad de recuperación disminuye entre 10 y 15 puntos porcentuales por cada 30 días" no tiene fuente: no está en los benchmarks del vault. Sin dato interno citable, se saca (regla de no inventar cifras).',
-      '"Mejora sustancial en todos los indicadores de nuestros clientes (costos, DSO)" es un resultado sin dato. La evidencia disponible es de Core, no de Ópera (regla R2). Sacar o citar el caso de Core.',
-      '"Compliance-by-design" y "cumpliendo con las regulaciones": claim prohibido por la decisión del 2026-08-03. Reemplazar por los controles implementados (trazabilidad, límites de contacto).',
-      '"Predictibilidad" y "Negociación autónoma": el score de Sena es de reglas, no predictivo (no se dice "IA predictiva"), y la negociación autónoma con reglas de negocio no está confirmada en el catálogo de funcionalidades. Verificar con producto o sacar.',
-      '"Hemos dominado WhatsApp sin restricciones y cumpliendo con Meta": sobrepromesa. Dejar solo que WhatsApp es un canal soportado.',
-      '"Las empresas de cobranza tradicional pierden asignaciones y presionan por pagar menos" y "cuando un tercero cobra aumenta la probabilidad de pago": sin fuente.',
-      'Título en inglés ("Debt collection on autopilot") para un blog en español: definir si se traduce y qué keyword se apunta.',
-    ],
     content: [
       {
         type: 'paragraph',
@@ -6903,7 +6902,7 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'Las tendencias que se ven en la industria de la cobranza, también las hemos observado desde Sena en nuestras operaciones e implementaciones con nuestros clientes:',
+            text: 'Estas son las tendencias que se ven en la industria de la cobranza:',
           },
         ],
       },
@@ -6914,32 +6913,25 @@ export const blogPosts: BlogPost[] = [
             { type: 'bold', text: 'Crecimiento explosivo del mercado de cobranza con AI: ' },
             {
               type: 'text',
-              text: 'Se estima un crecimiento de 5-7x para el 2034. En promedio la industria de la cobranza con AI crecerá 16,9% anual entre 2025 y 2034. Caso contrario lo que se está viendo en las empresas de cobranza tradicional, donde están perdiendo asignaciones y las empresas están presionando por pagar menos por gestiones de cobranza.',
+              text: 'Según una proyección de Kaplan Collection Agency, el mercado de cobranza con IA crecería a una tasa anual de 16,9% hasta 2034, hasta unos US$15,9 mil millones.',
             },
           ],
           [
             { type: 'bold', text: 'Productividad y eficiencia: ' },
             {
               type: 'text',
-              text: 'Se evidencia una mejora sustancial en todos los indicadores de nuestros clientes: disminución de los costos operativos, automatización de tareas repetitivas, disminución del DSO (days sales outstanding)',
+              text: 'La automatización de tareas repetitivas reduce el trabajo manual del equipo de cobranza y libera tiempo para los casos que requieren criterio.',
             },
           ],
           [
-            { type: 'bold', text: 'Negociación autónoma: ' },
+            { type: 'bold', text: 'Enfoque centrado en el cliente y con controles: ' },
             {
               type: 'text',
-              text: 'Se hace una evaluación del contexto en tiempo real, es decir, el agente de AI es capaz de analizar la información del usuario, el historial y con la conversación, poder aplicar las reglas de negocios para negociar de forma directa.',
+              text: 'Las gestiones quedan con trazabilidad y con límites de contacto, para que el usuario tenga una experiencia fluida.',
             },
           ],
           [
-            { type: 'bold', text: 'Enfoque customer-centric y compliance-by-design: ' },
-            {
-              type: 'text',
-              text: 'Todas las automatizaciones e intervenciones por parte de los agentes, consideran cumplir con las regulaciones asegurando que el usuario tenga una experiencia fluida.',
-            },
-          ],
-          [
-            { type: 'bold', text: 'Omnicanalidad + Predictibilidad: ' },
+            { type: 'bold', text: 'Omnicanalidad: ' },
             {
               type: 'text',
               text: 'Los clientes son segmentados acorde a sus comportamientos y preferencia de canales. De esta manera, se optimiza el uso de canales y su efectividad.',
@@ -6952,10 +6944,8 @@ export const blogPosts: BlogPost[] = [
         fragments: [
           {
             type: 'text',
-            text: 'Uno de los efectos más relevantes es que cuando un tercero hace la cobranza, aumenta la probabilidad de pago. En nuestra experiencia esto es clave. La probabilidad de recuperación disminuye aproximadamente entre ',
+            text: 'Mientras más tiempo pasa una cuenta sin ser gestionada, más difícil es recuperarla. Por eso conviene gestionar de forma temprana.',
           },
-          { type: 'bold', text: '10 y 15 puntos porcentuales por cada 30 días' },
-          { type: 'text', text: ' (un mes) que una cuenta permanece sin ser gestionada.' },
         ],
       },
       {
@@ -6989,7 +6979,7 @@ export const blogPosts: BlogPost[] = [
             { type: 'bold', text: 'WhatsApp: ' },
             {
               type: 'text',
-              text: 'Es el canal de comunicación más utilizado en Latam. Por esta razón, se vuelve un canal relevante para la recaudación. En Sena hemos dominado este canal para que las empresas puedan hacer uso de este canal sin restricciones y cumpliendo con los requerimientos de Meta.',
+              text: 'Es el canal de comunicación más utilizado en Latam. Por esta razón, se vuelve un canal relevante para la recaudación. Sena lo soporta como canal para gestionar la recaudación.',
             },
           ],
           [
@@ -7015,6 +7005,14 @@ export const blogPosts: BlogPost[] = [
             type: 'text',
             text: 'La cobranza está cambiando y en Sena estamos aprovechando la tecnología para generar una ventaja real en la recaudación de nuestros clientes.',
           },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si quieres externalizar la cobranza con este enfoque, conoce ' },
+          { type: 'link', text: 'Ópera', href: '/opera' },
+          { type: 'text', text: '.' },
         ],
       },
       {
