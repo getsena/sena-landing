@@ -10,4 +10,4 @@ export const SITE_URL = 'https://www.somossena.com'
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`
 
 // Mismos países que declara el Organization del layout raíz.
-export const AREA_SERVED = ['Chile', 'Perú', 'Colombia', 'México', 'Ecuador'] as const
+export const AREA_SERVED = ['Chile', 'Perú', 'Colombia'] as const
