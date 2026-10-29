@@ -4,7 +4,7 @@ import { RecuperaPage } from '@/ui/recupera/RecuperaPage'
 export const metadata: Metadata = {
   title: 'Recupera tu Cartera Vencida — Pagas Solo si Recuperamos | Sena',
   description:
-    'Recuperamos las facturas que tu empresa ya no pudo cobrar, cuidando la relación donde todavía se puede. Pagas 15% solo sobre lo que recuperamos, sin costo fijo ni ticket mínimo.',
+    'Recuperamos las facturas que tu empresa no pudo cobrar, cuidando la relación donde se puede. Pagas 15% de lo recuperado, sin costo fijo ni ticket mínimo.',
   keywords:
     'recuperar cartera vencida, cobranza contingente, empresa de cobranza b2b, recuperar facturas impagas, cobranza sin costo fijo, publicacion dicom chile',
   robots: { index: true, follow: true },
@@ -30,7 +30,7 @@ const SCHEMA = {
       description:
         'Servicio de cobranza B2B contingente en Chile y Perú: recuperación de cartera vencida sin costo fijo, 15% sobre lo recuperado. Incluye publicación en DICOM cuando corresponde.',
       url: 'https://www.somossena.com/recupera',
-      areaServed: 'CL',
+      areaServed: ['CL', 'PE'],
       provider: { '@type': 'Organization', name: 'Sena', url: 'https://www.somossena.com' },
     },
     {

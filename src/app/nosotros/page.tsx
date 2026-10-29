@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Quiénes somos — Sena, cobranza B2B en Chile y Perú',
+  title: 'Sobre Sena · Cobranza B2B en Chile, Perú y Colombia',
   description:
-    'Sena es una compañía de cobranza B2B que cubre el ciclo completo, de la factura emitida al pago conciliado. Conoce al equipo, de dónde viene el nombre y cómo trabajamos.',
+    'Sena es una compañía de cobranza B2B con clientes en Chile, Perú y Colombia. Cubrimos el ciclo completo, de la factura emitida al pago conciliado.',
   robots: { index: true, follow: true },
   alternates: { canonical: 'https://www.somossena.com/nosotros' },
 }

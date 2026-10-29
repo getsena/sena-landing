@@ -5,10 +5,10 @@ export async function GET() {
 
 > Title: Sena
 > Description: Compania de cobranza B2B. Cubre el ciclo completo de la factura emitida al pago conciliado, en tres modalidades: Opera (servicio gestionado, desde US$50 al mes), Plataforma Sena (la empresa opera con la tecnologia de Sena, desde US$39 al mes) y Recupera (facturas ya vencidas, 15% de success fee).
-> Last Updated: 2026-10-27
+> Last Updated: 2026-10-29
 > Source: https://www.somossena.com
 > Language: es
-> Region: Latinoamerica (Peru, Chile)
+> Region: Latinoamerica (Chile, Peru, Colombia)
 
 ---
 
@@ -43,7 +43,7 @@ El ciclo de cobranza de Sena tiene 5 pasos:
 - Organizaciones que necesitan comunicacion multicanal (WhatsApp, Email, SMS) para cobranza.
 - Empresas con bajas tasas de recuperacion que necesitan intervencion humana para casos complejos.
 - Negocios que quieren mantener la relacion con sus clientes durante el proceso de cobranza.
-- Startups, pymes y grandes empresas en Peru y Chile.
+- Startups, pymes y grandes empresas en Chile, Peru y Colombia.
 
 Industrias objetivo:
 - Telecomunicaciones
