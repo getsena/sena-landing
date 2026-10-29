@@ -2,8 +2,6 @@ import { BlogPost } from '../types/blog'
 import { AssetImageBlog } from '../utils/assets/imageBlog'
 import { parseSpanishDate, slug } from '../utils/blog'
 
-export const featuredPostId = 33
-
 export const blogPosts: BlogPost[] = [
   // {
   //   id: 4,
@@ -6528,10 +6526,4 @@ export const getBlogPostsSorted = () => {
   })
 }
 
-export const getFeaturedPost = () => {
-  return blogPosts.find((post) => post.id === featuredPostId) || blogPosts[0]
-}
-
-export const getOtherPosts = () => {
-  return blogPosts.filter((post) => post.id !== featuredPostId)
-}
+export const getFeaturedPost = () => getBlogPostsSorted()[0]
