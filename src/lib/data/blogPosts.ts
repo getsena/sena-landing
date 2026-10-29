@@ -6516,6 +6516,516 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    id: 35,
+    slug: 'por-que-sena-cobrar-bien-sin-danar-la-relacion',
+    title: 'Por qué Sena',
+    intro:
+      'La cobranza existe porque hay plata en la calle, y también se hace con arte: cobrar sin dañar la relación con tu cliente. Esto es lo que queremos cambiar con Sena.',
+    date: '10 de abril 2026',
+    tags: ['Sena', 'Cobranza', 'Blog'],
+    image: AssetImageBlog.blog_no_image.src,
+    lector: 'pyme-que-cobra',
+    content: [
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Si le hablo a alguien de cobranza, su expresión facial cambia automáticamente. Probablemente por su mente pasan imágenes de distinta índole: mafia italiana, sicarios, llamadas incansables, hostigamiento, etc.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'La cobranza es una consecuencia de un acto comercial entre 2 partes: Alguien que vende un producto/servicio y alguien que compra. Quien vende, tiene la expectativa de que quien compra, va a pagar en algún momento. Es un acto de confianza entre al menos dos personas (no hablaré de bitcoin esta vez, pero interesante cómo los conceptos se conectan).',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: '¿Qué pasa cuando el que debe pagar no lo hace? ¿Qué mecanismos tiene la persona que prestó un servicio o vendió un producto, para recaudar su ingreso?',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'La cobranza responde a problemas propios del sistema económico o financiero: mecanismos de pagos ineficientes, ventas a crédito sin automatizaciones, falta de capacidad para liquidar garantías y por supuesto, la falta de cumplimiento de alguna de las partes.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'De los problemas más antiguos existentes (sí, sale en la biblia).' },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Por otro lado, si miramos la prensa, nos daremos cuenta que la cobranza es uno de los tópicos más transversales en el mundo empresarial e incluso el político. Algunos ejemplos recientes en Chile:',
+          },
+        ],
+      },
+      {
+        type: 'list',
+        items: ['Cobranza del CAE', 'La ley de pago a 30 días'],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'En el mundo de los negocios es claro: la cobranza existe porque hay "plata en la calle" y eso, puede llevar a la quiebra a una empresa.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'También se debe hacer con cierto arte. Si eres una empresa y tu cliente no te paga a tiempo, es contraproducente dañar esa relación haciendo una cobranza ineficiente o inefectiva.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Es precisamente eso lo que queremos cambiar con Sena. No se trata solo de lograr que los pagos de las facturas ingresen a una cuenta bancaria. Es también de asegurarnos que nuestros clientes sigan creciendo y haciendo fructíferos sus negocios. Y esto solo se logra, tratando bien a los clientes.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'En Sena no hacemos cobranza con sicarios, mafias, ni abusando de los llamados por teléfono. Nuestro enfoque es ayudarte a ordenar tu flujo de caja cuidando la relación con tus clientes. El arte de cobrar es nuestra especialidad.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si quieres ver cómo lo hacemos, conoce ' },
+          { type: 'link', text: 'la plataforma de Sena', href: '/plataforma' },
+          { type: 'text', text: '.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 36,
+    slug: 'que-pasa-cuando-a-un-emprendedor-no-le-pagan-a-tiempo',
+    title: '¿Qué pasa cuando a un emprendedor no le pagan a tiempo?',
+    intro:
+      'Una gran empresa no le pagaba hace más de 60 días a una emprendedora. El resultado fue una demanda laboral, una multa y el cierre. Esto es lo que pasa cuando no te pagan a tiempo.',
+    date: '10 de abril 2026',
+    tags: ['Sena', 'Cobranza', 'Blog'],
+    image: AssetImageBlog.blog_no_image.src,
+    lector: 'micro-empresa-sin-equipo',
+    content: [
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'El vibecoding ha logrado algo que nos encanta: un emprendedor con soluciones ágiles, de bajo costo entregando servicios a grandes empresas. Conocemos a varios de este tipo de emprendedores.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Hay una historia en particular que nos hizo entender lo importante de la cobranza. Una emprendedora conocida lo estaba pasando pésimo. Una gran empresa no le pagaba hace más de 60 días. El problema vino cuando recibió una demanda laboral por el no pago de cotizaciones: dado que no recibió el pago de sus facturas, no tenía dinero para pagar las cotizaciones y un empleado la demandó. Recibió una multa de casi $20 millones de pesos por el incumplimiento de las obligaciones sociales.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Abogados, negociaciones, estrés, conflictos laborales, multas, quiebra. Más o menos así termina la historia.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Según la última encuesta de Propyme con DefensaDeudores.cl, reportada por La Tercera, en el último mes medido más del 60% de las mipymes funcionó con inyección de recursos personales y cerca del 27% solicitó un crédito bancario. Además, el 22% no pudo pagar sus obligaciones laborales dentro de plazo.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'La cobranza en las empresas existe porque hay responsabilidades que cumplir. Si una gran empresa o el Estado no pagan a tiempo, terminan asfixiando a emprendedores que están tratando de crear soluciones que mejoran la productividad, que dan empleo y que generan movilidad. Si no pagan, rompen todo el ciclo de negocios.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Pagar las cuentas debiera ser considerado un deber moral, ya que al no pagar, estamos generando un impacto negativo en terceros. No es solo una empresa o un empresario, son también colaboradores y proveedores. Incluso, afecta el pago de impuestos.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'La cobranza es mucho más que enviar recordatorios o insistir a través de llamados telefónicos. Consiste en mostrar procesos robustos, anticiparse a la mala gestión, análisis de contrapartes, llegar a la persona adecuada. Por sobre todo, consiste en cuidar las relaciones comerciales.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Estamos seguros de que hay muchas emprendedoras como ella. Nos hemos encontrado con más experiencias similares. De la misma forma sabemos que podemos ayudarlos con Sena.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si te pasa algo parecido, conoce cómo ' },
+          { type: 'link', text: 'Recupera', href: '/recupera' },
+          { type: 'text', text: ' te ayuda a cobrar a tiempo.' },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Fuente: ' },
+          {
+            type: 'link',
+            text: 'La Tercera: más del 60% de las mipymes cierra el primer trimestre de 2026 con inyección de recursos personales',
+            href: 'https://www.latercera.com/pulso/noticia/mas-del-60-de-las-mipymes-cierra-el-primer-trimestre-de-2026-con-inyeccion-de-recursos-personales-para-poder-funcionar/',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 37,
+    slug: 'venta-y-cobranza-en-terreno',
+    title: 'Venta y cobranza en terreno',
+    intro:
+      'Los equipos comerciales quieren vender a crédito y los financieros quieren ver la plata en caja. Cómo equilibrar crecer y cobrar en empresas con venta en terreno.',
+    date: '10 de abril 2026',
+    tags: ['Sena', 'Cobranza', 'Blog'],
+    image: AssetImageBlog.blog_no_image.src,
+    lector: 'distribuidora-con-fuerza-de-venta',
+    content: [
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Hay cosas que la IA no puede reemplazar: las relaciones humanas. Esto significa que la venta seguirá teniendo una gran componente humana, especialmente en el mundo B2B, es decir, ventas entre empresas.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Pensemos en diferentes tipos de empresas y rubros mayoristas que deben repartir productos a distribuidores y negocios más pequeños: carne, lácteos, bebidas, ropa, zapatos, etc. Son industrias que tienen las siguientes características:',
+          },
+        ],
+      },
+      {
+        type: 'list',
+        items: ['Equipos de venta en terreno', 'Venta a crédito', 'Cobertura regional o nacional'],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Estas empresas también presentan el eterno conflicto entre las áreas comerciales y financieras: Los comerciales quieren vender, los financieros quieren ver los ingresos en la caja. Los comerciales quieren seguir vendiendo a crédito, sin preocuparse de la cobranza. Los financieros prefieren restringir la venta, con tal de cuidar el inventario.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: '¿Cómo se logra el equilibrio entre crecer y restringir el aumento de los pasivos?',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Profesionalizar la cobranza. Esto se puede lograr por 2 medios: uno, a través de un buen sistema de gestión o CRM y lo segundo, con un buen equipo que gestione la cobranza.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Hay empresas grandes que ya cuentan con equipos de cobranza, pero carecen de soluciones tecnológicas. A este tipo de empresas, nosotros los ayudamos con la plataforma, más agentes personalizados a las necesidades y tamaño de su cartera de clientes.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Cuando las empresas son más pequeñas, nos hemos encontrado con realidades diversas. Desde empresas que quieren un agente específico, como también empresas que simplemente no quieren hacerse cargo de la cobranza en ninguna de sus etapas. Lo que realmente buscan es un equipo en quien externalizar la cobranza. Para esto, el equipo debe ser de alta confianza para que entiendan el tipo de relación, los términos de crédito que entregan, ciclos de negocio, etc.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Todo esto facilita que la situación financiera de las empresas mejore y podamos ver negocios virtuosos. Todos terminamos ganando: los equipos de ventas, los clientes, los equipos financieros y finalmente los usuarios finales.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Por todo lo anterior, es que disfrutamos tanto de construir Sena, porque todos los días ayudamos desde pequeños emprendedores hasta grandes empresas a entregar un mejor servicio.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si tu equipo vende en terreno y quieres externalizar la cobranza, conoce ' },
+          { type: 'link', text: 'Ópera', href: '/opera' },
+          {
+            type: 'text',
+            text: '. Y si te interesa el conflicto entre ventas y finanzas desde el otro lado, lee ',
+          },
+          {
+            type: 'link',
+            text: 'Tu equipo vende, pero ¿quién cobra?',
+            href: '/blog/tu-equipo-vende-pero-quien-cobra',
+          },
+          { type: 'text', text: '.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 38,
+    slug: 'cobranza-en-piloto-automatico-con-ia',
+    title: 'Cobranza en piloto automático: cómo la IA recupera facturas',
+    intro:
+      'La cobranza en piloto automático usa IA, automatización y agentes conversacionales para recuperar facturas con mínima intervención humana. Tendencias y cómo se implementa.',
+    date: '04 de junio 2026',
+    tags: ['Sena', 'Cobranza', 'Blog'],
+    image: AssetImageBlog.blog_no_image.src,
+    lector: 'pyme-que-cobra',
+    content: [
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'El mercado de la cobranza se está transformando. Antes las agencias de cobranza tradicionales se caracterizaban por call centers masivos y planillas excel para controlar y monitorear gestiones.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Hoy la cobranza se caracteriza por variadas automatizaciones y poca intervención humana. Los humanos entran en el loop cuando se debe cuidar la relación comercial, cuando se toman decisiones, donde precisamente pueden agregar valor.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: '"Debt collection on autopilot", cobranza automática o en piloto automático, se refiere al uso de inteligencia artificial (IA), automatización y agentes conversacionales (chatbots, voicebots y agentes agentic) para gestionar la recuperación de deudas con mínima intervención humana. Este sistema de cobranza automatizada envía recordatorios personalizados, negocia pagos, prioriza cuentas, concilia pagos en tiempo real, todo en una operación 24/7 a través de distintos canales como Whatsapp, SMS, email, voz y portales de autoatención.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Este es el nuevo estándar que cuida que no se inflen los costos operacionales.',
+          },
+        ],
+      },
+      { type: 'title', text: 'Tendencias de la cobranza en piloto automático' },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Estas son las tendencias que se ven en la industria de la cobranza:',
+          },
+        ],
+      },
+      {
+        type: 'list',
+        items: [
+          [
+            { type: 'bold', text: 'Crecimiento explosivo del mercado de cobranza con AI: ' },
+            {
+              type: 'text',
+              text: 'Según una proyección de Kaplan Collection Agency, el mercado de cobranza con IA crecería a una tasa anual de 16,9% hasta 2034, hasta unos US$15,9 mil millones.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Productividad y eficiencia: ' },
+            {
+              type: 'text',
+              text: 'La automatización de tareas repetitivas reduce el trabajo manual del equipo de cobranza y libera tiempo para los casos que requieren criterio.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Enfoque centrado en el cliente y con controles: ' },
+            {
+              type: 'text',
+              text: 'Las gestiones quedan con trazabilidad y con límites de contacto, para que el usuario tenga una experiencia fluida.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Omnicanalidad: ' },
+            {
+              type: 'text',
+              text: 'Los clientes son segmentados acorde a sus comportamientos y preferencia de canales. De esta manera, se optimiza el uso de canales y su efectividad.',
+            },
+          ],
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Mientras más tiempo pasa una cuenta sin ser gestionada, más difícil es recuperarla. Por eso conviene gestionar de forma temprana.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Es por esta razón que como Sena, partimos trabajando desde una cobranza preventiva (0-90 días), hasta una cobranza morosa. El objetivo es que en el largo plazo se reduzca al mínimo la deuda mayor a 180 días y todo se concentre en los primeros 90 días de emitida una factura.',
+          },
+        ],
+      },
+      { type: 'title', text: 'Implementación paso a paso' },
+      {
+        type: 'list',
+        items: [
+          [
+            { type: 'bold', text: 'Etapa consultiva: ' },
+            {
+              type: 'text',
+              text: 'En una primera etapa es prioritario conocer al cliente y su negocio. En esta etapa se realiza una análisis de las facturas sin recaudar de tal manera de entender el estado de la cartera. Con esto se establece la implementación ideal para el cliente, considerando las reglas y naturaleza propia del negocio.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Integraciones: ' },
+            {
+              type: 'text',
+              text: 'Nos conectamos con ERP/CRM y sistemas tributarios, asegurando de tener la información en línea de nuestros clientes y sus clientes para poder hacer las gestiones adecuadas.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'WhatsApp: ' },
+            {
+              type: 'text',
+              text: 'Es el canal de comunicación más utilizado en Latam. Por esta razón, se vuelve un canal relevante para la recaudación. Sena lo soporta como canal para gestionar la recaudación.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Dashboard: ' },
+            {
+              type: 'text',
+              text: 'Todos nuestros clientes tienen visibilidad de las gestiones de cobranza que hacemos en conjunto. También pueden acceder a reportes personalizados con la temporalidad que más les acomode.',
+            },
+          ],
+          [
+            { type: 'bold', text: 'Modelo híbrido: ' },
+            {
+              type: 'text',
+              text: 'Muchas tareas se pueden automatizar, pero el arte de cobrar siempre es necesario. El toque personal siempre debe estar disponible para casos más complejos o requerimientos especiales de los clientes.',
+            },
+          ],
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'La cobranza está cambiando y en Sena estamos aprovechando la tecnología para generar una ventaja real en la recaudación de nuestros clientes.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Si quieres externalizar la cobranza con este enfoque, conoce ' },
+          { type: 'link', text: 'Ópera', href: '/opera' },
+          { type: 'text', text: '.' },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          { type: 'text', text: 'Fuente: ' },
+          {
+            type: 'link',
+            text: 'Kaplan Collection Agency: The AI-driven transformation of global debt collection',
+            href: 'https://www.kaplancollectionagency.com/debt-collection-2/the-ai-driven-transformation-of-global-debt-collection/',
+          },
+        ],
+      },
+    ],
+  },
 ]
 
 export const getBlogPostsSorted = () => {
