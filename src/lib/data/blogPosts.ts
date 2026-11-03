@@ -6524,7 +6524,7 @@ export const blogPosts: BlogPost[] = [
       'La cobranza existe porque hay plata en la calle, y también se hace con arte: cobrar sin dañar la relación con tu cliente. Esto es lo que queremos cambiar con Sena.',
     date: '10 de abril 2026',
     tags: ['Sena', 'Cobranza', 'Blog'],
-    image: AssetImageBlog.blog_no_image.src,
+    image: AssetImageBlog.blog_31_main.src,
     lector: 'pyme-que-cobra',
     content: [
       {
@@ -6636,7 +6636,7 @@ export const blogPosts: BlogPost[] = [
       'Una gran empresa no le pagaba hace más de 60 días a una emprendedora. El resultado fue una demanda laboral, una multa y el cierre. Esto es lo que pasa cuando no te pagan a tiempo.',
     date: '10 de abril 2026',
     tags: ['Sena', 'Cobranza', 'Blog'],
-    image: AssetImageBlog.blog_no_image.src,
+    image: AssetImageBlog.blog_31_main.src,
     lector: 'micro-empresa-sin-equipo',
     content: [
       {
@@ -6740,7 +6740,7 @@ export const blogPosts: BlogPost[] = [
       'Los equipos comerciales quieren vender a crédito y los financieros quieren ver la plata en caja. Cómo equilibrar crecer y cobrar en empresas con venta en terreno.',
     date: '10 de abril 2026',
     tags: ['Sena', 'Cobranza', 'Blog'],
-    image: AssetImageBlog.blog_no_image.src,
+    image: AssetImageBlog.blog_31_main.src,
     lector: 'distribuidora-con-fuerza-de-venta',
     content: [
       {
@@ -6855,7 +6855,7 @@ export const blogPosts: BlogPost[] = [
       'La cobranza en piloto automático usa IA, automatización y agentes conversacionales para recuperar facturas con mínima intervención humana. Tendencias y cómo se implementa.',
     date: '04 de junio 2026',
     tags: ['Sena', 'Cobranza', 'Blog'],
-    image: AssetImageBlog.blog_no_image.src,
+    image: AssetImageBlog.blog_31_main.src,
     lector: 'pyme-que-cobra',
     content: [
       {
