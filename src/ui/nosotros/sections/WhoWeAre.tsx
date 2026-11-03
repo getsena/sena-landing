@@ -12,7 +12,7 @@
 //   - Se nombra al grupo con el encuadre de su propio sitio, sin importar sus
 //     cifras de trayectoria: los años son del grupo, no de Sena.
 const PARRAFOS = [
-  'Sena es una compañía de cobranza B2B que opera en Chile y Perú. Cubrimos el ciclo completo, de la factura emitida al pago conciliado, en tres modalidades: la plataforma que opera tu equipo, el servicio gestionado que operamos nosotros, y la recuperación de cartera que ya venció.',
+  'Sena es una compañía de cobranza B2B con clientes en Chile, Perú y Colombia. Cubrimos el ciclo completo, de la factura emitida al pago conciliado, en tres modalidades: la plataforma que opera tu equipo, el servicio gestionado que operamos nosotros, y la recuperación de cartera que ya venció.',
   'Somos parte del Grupo Altas Cumbres, un holding latinoamericano presente en retail, inmobiliario, salud y servicios financieros. Nuestros accionistas son el grupo y Recaudadora S.A., también del grupo.',
   'Ninguna de las dos opera Sena: tenemos equipo, tecnología y operación propios, y los datos de tu cartera los procesamos nosotros.',
 ]
