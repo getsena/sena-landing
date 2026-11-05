@@ -89,8 +89,6 @@ export default async function RootLayout({
                   { '@type': 'Country', name: 'Chile' },
                   { '@type': 'Country', name: 'Perú' },
                   { '@type': 'Country', name: 'Colombia' },
-                  { '@type': 'Country', name: 'México' },
-                  { '@type': 'Country', name: 'Ecuador' },
                 ],
                 knowsAbout: [
                   'cobranza B2B',
@@ -108,7 +106,7 @@ export default async function RootLayout({
                   '@type': 'ContactPoint',
                   contactType: 'sales',
                   email: 'hola@somossena.com',
-                  areaServed: ['CL', 'PE', 'CO', 'MX', 'EC'],
+                  areaServed: ['CL', 'PE', 'CO'],
                   availableLanguage: ['Spanish'],
                 },
               }),
