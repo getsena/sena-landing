@@ -126,6 +126,7 @@ export const CaseForm = () => {
   const { data: countries = [] } = useCountries()
   const { ipCurrency } = useCurrencyStore()
   const [prefijo, setPrefijo] = useState<string | null>('+56')
+  const prefijoElegido = useRef(false)
 
   const countryOptions = useMemo(() => {
     const prioritarios: OptionSelect[] = []
@@ -151,7 +152,8 @@ export const CaseForm = () => {
   }, [paso, enviado])
 
   useEffect(() => {
-    if (ipCurrency && PREFIJO_POR_MONEDA[ipCurrency]) setPrefijo(PREFIJO_POR_MONEDA[ipCurrency])
+    if (!prefijoElegido.current && ipCurrency && PREFIJO_POR_MONEDA[ipCurrency])
+      setPrefijo(PREFIJO_POR_MONEDA[ipCurrency])
   }, [ipCurrency])
 
   const set = (campo: keyof Contacto) => (value: string) => {
@@ -436,7 +438,10 @@ export const CaseForm = () => {
               >
                 <SimpleCountrySelect
                   value={prefijo}
-                  onChange={setPrefijo}
+                  onChange={(value: string) => {
+                    prefijoElegido.current = true
+                    setPrefijo(value)
+                  }}
                   options={countryOptions}
                   placeholder="+56"
                 />

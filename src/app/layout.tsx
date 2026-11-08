@@ -1,5 +1,3 @@
-import { getCountriesServer } from '@/lib/services/countryService.server'
-import { getIpInfoServer } from '@/lib/services/ipConfigService.server'
 import AttributionCapture from '@/ui/shared/AttributionCapture'
 import { ModalRenderer } from '@/ui/shared/ModalRender'
 import { Toast } from '@/ui/shared/Toast'
@@ -12,8 +10,6 @@ import { Suspense } from 'react'
 import { adobeCleanFont, canaroFont, caslonFont } from './fonts'
 import './globals.css'
 import Providers from './providers'
-
-export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Sena - El arte de cobrar bien',
@@ -47,16 +43,13 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const [ipInfo, countries] = await Promise.all([getIpInfoServer(), getCountriesServer()])
-  const country = ipInfo?.country || null
-
   return (
-    <Providers country={country} countries={countries}>
+    <Providers>
       <html lang="es" dir="ltr">
         <GoogleTagManager gtmId="GTM-5W7F9MSP" />
         <head>

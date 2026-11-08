@@ -1,68 +1,35 @@
 'use client'
 
+import { GEO_POR_PAIS } from '@/lib/geo'
 import { useCurrencyStore } from '@/lib/store/useCurrencyStore'
 import { useEffect } from 'react'
 
-type Props = {
-  country: string | null
-}
+const GEO_TIMEOUT_MS = 3000
 
-export const IpConfigInitializer = ({ country }: Props) => {
-  const { setIpCurrency, setWhatsappCountry, setShouldAutoOpenCountrySelect } = useCurrencyStore()
+// El país nunca bloquea el render: la página carga con los valores de Chile y, si llega el país, se ajustan.
+export const IpConfigInitializer = () => {
+  const { setIpCurrency, setWhatsappCountry } = useCurrencyStore()
 
   useEffect(() => {
-    if (!country) {
-      console.log('No se pudo obtener el país, usando fallback')
-      setShouldAutoOpenCountrySelect(true)
-      setIpCurrency('CLP')
-      setWhatsappCountry({
-        phoneNumber: '944489673',
-        countryCode: '+56',
-      })
-      return
-    }
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), GEO_TIMEOUT_MS)
 
-    console.log('País detectado por IP (servidor):', country)
+    fetch('/api/geo', { signal: controller.signal })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data: { country?: string | null } | null) => {
+        const geo = data?.country ? GEO_POR_PAIS[data.country] : undefined
+        if (!geo) return
+        setIpCurrency(geo.currency)
+        setWhatsappCountry(geo.whatsapp)
+      })
+      .catch(() => {})
+      .finally(() => clearTimeout(timer))
 
-    if (country === 'Peru') {
-      setIpCurrency('PEN')
-      setWhatsappCountry({
-        phoneNumber: '918272599',
-        countryCode: '+51',
-      })
-    } else if (country === 'Chile') {
-      setIpCurrency('CLP')
-      setWhatsappCountry({
-        phoneNumber: '944489673',
-        countryCode: '+56',
-      })
-    } else if (country === 'Colombia') {
-      setIpCurrency('COP')
-      setWhatsappCountry({
-        phoneNumber: '944489673',
-        countryCode: '+56',
-      })
-    } else if (country === 'Mexico') {
-      setIpCurrency('MXN')
-      setWhatsappCountry({
-        phoneNumber: '944489673',
-        countryCode: '+56',
-      })
-    } else if (country === 'Ecuador') {
-      setIpCurrency('USD')
-      setWhatsappCountry({
-        phoneNumber: '944489673',
-        countryCode: '+56',
-      })
-    } else {
-      // Default fallback
-      setIpCurrency('CLP')
-      setWhatsappCountry({
-        phoneNumber: '944489673',
-        countryCode: '+56',
-      })
+    return () => {
+      clearTimeout(timer)
+      controller.abort()
     }
-  }, [country, setIpCurrency, setShouldAutoOpenCountrySelect, setWhatsappCountry])
+  }, [setIpCurrency, setWhatsappCountry])
 
   return null
 }

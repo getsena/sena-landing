@@ -17,7 +17,7 @@ import { Input } from '@/ui/shared/Input'
 import SimpleCountrySelect, { OptionSelect } from '@/ui/shared/SimpleCountrySelect'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 declare global {
@@ -43,7 +43,8 @@ export const ContactForm = () => {
   const { ipCurrency } = useCurrencyStore()
   const router = useRouter()
   const { showToast } = useToastStore()
-  const [countrySelect, setCountrySelect] = useState<string | null>(null)
+  const [countrySelect, setCountrySelect] = useState<string | null>('+56')
+  const countryElegido = useRef(false)
   const turnstile = useTurnstile()
 
   const countryOptions = useMemo(() => {
@@ -76,7 +77,7 @@ export const ContactForm = () => {
       MXN: '+52',
       USD: '+593',
     }
-    if (ipCurrency && currencyMap[ipCurrency]) {
+    if (!countryElegido.current && ipCurrency && currencyMap[ipCurrency]) {
       setCountrySelect(currencyMap[ipCurrency])
     }
   }, [ipCurrency])
@@ -269,7 +270,10 @@ export const ContactForm = () => {
                     leftElement={
                       <SimpleCountrySelect
                         value={countrySelect}
-                        onChange={(value: string) => setCountrySelect(value)}
+                        onChange={(value: string) => {
+                          countryElegido.current = true
+                          setCountrySelect(value)
+                        }}
                         options={countryOptions}
                       />
                     }
