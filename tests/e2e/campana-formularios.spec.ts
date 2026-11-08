@@ -111,3 +111,151 @@ test('la atribución sobrevive a navegar a otra página antes de enviar el formu
   await expect(page).toHaveURL(/\/recupera\/gracias/, { timeout: 15_000 })
   expect(leads[0]).toMatchObject({ gclid: 'TESTGCLID123', utmCampaign: 'test-campana-cl' })
 })
+
+const rellenar = async (page: Page) => {
+  await page.getByPlaceholder('Tu nombre').fill('Ana')
+  await page.getByPlaceholder('Tu apellido').fill('Pérez')
+  await page.getByPlaceholder('Nombre de tu empresa').fill('Acme SpA')
+  await page.getByPlaceholder('tu@empresa.com').fill('ana@acme.cl')
+  await page.getByPlaceholder('Número').fill('911112222')
+  const form = page.locator('form').filter({ has: page.getByPlaceholder('Tu nombre') })
+  await form.getByRole('button', { name: '10-50', exact: true }).click()
+  await form.getByRole('button', { name: 'No', exact: true }).click()
+  return form
+}
+
+const capturarLeads = async (page: Page): Promise<Lead[]> => {
+  const leads: Lead[] = []
+  await page.route('**/api/lead', async (route: Route) => {
+    leads.push(JSON.parse(route.request().postData() ?? '{}'))
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true }) })
+  })
+  return leads
+}
+
+const PAISES_LEAD = [
+  { iso: 'PE', prefijo: '+51' },
+  { iso: 'CO', prefijo: '+57' },
+  { iso: 'EC', prefijo: '+593' },
+  { iso: 'MX', prefijo: '+52' },
+]
+
+for (const { ruta } of LANDINGS) {
+  test.describe(`${ruta} con visitantes de otros países`, () => {
+    for (const { iso, prefijo } of PAISES_LEAD) {
+      test(`un visitante de ${iso} envía el lead con ${prefijo} y su atribución`, async ({ page }) => {
+        const leads = await capturarLeads(page)
+        await page.route('**/api/geo', (route) => route.fulfill({ json: { country: iso } }))
+        await page.goto(`${ruta}?${CAMPANA}`)
+        const form = await rellenar(page)
+        await expect(form.getByText(prefijo, { exact: true })).toBeVisible()
+        await form.locator('button[type="submit"]').click()
+        await expect(page).toHaveURL(/\/gracias/, { timeout: 15_000 })
+        expect(leads[0].telefono).toBe(`${prefijo}911112222`)
+        expect(leads[0]).toMatchObject({ gclid: 'TESTGCLID123', utmCampaign: 'test-campana-cl' })
+      })
+    }
+
+    test('si el país llega tarde, no borra lo escrito y el lead sale con el prefijo detectado', async ({
+      page,
+    }) => {
+      const leads = await capturarLeads(page)
+      await page.route('**/api/geo', async (route) => {
+        await new Promise((r) => setTimeout(r, 1500))
+        await route.fulfill({ json: { country: 'PE' } })
+      })
+      await page.goto(`${ruta}?${CAMPANA}`)
+      const form = await rellenar(page)
+      await expect(form.getByText('+51', { exact: true })).toBeVisible({ timeout: 5_000 })
+      await expect(page.getByPlaceholder('Número')).toHaveValue('911112222')
+      await expect(page.getByPlaceholder('Tu nombre')).toHaveValue('Ana')
+      await form.locator('button[type="submit"]').click()
+      await expect(page).toHaveURL(/\/gracias/, { timeout: 15_000 })
+      expect(leads[0].telefono).toBe('+51911112222')
+    })
+
+    test('si /api/geo tarda más que el tope, el lead sale con +56', async ({ page }) => {
+      const leads = await capturarLeads(page)
+      await page.route('**/api/geo', async (route) => {
+        await new Promise((r) => setTimeout(r, 6000))
+        await route.fulfill({ json: { country: 'PE' } }).catch(() => {})
+      })
+      await page.goto(`${ruta}?${CAMPANA}`)
+      const form = await rellenar(page)
+      await form.locator('button[type="submit"]').click()
+      await expect(page).toHaveURL(/\/gracias/, { timeout: 15_000 })
+      expect(leads[0].telefono).toBe('+56911112222')
+    })
+  })
+}
+
+test.describe('formulario «Cuéntanos tu caso» de la home', () => {
+  const enviarCaso = async (page: Page, iso?: string) => {
+    const leads = await capturarLeads(page)
+    await page.route('**/api/geo', (route) =>
+      iso ? route.fulfill({ json: { country: iso } }) : route.abort()
+    )
+    await page.goto(`/?${CAMPANA}`)
+    const form = page.locator('form[aria-label="Cuéntanos tu caso"]')
+    await form.scrollIntoViewIfNeeded()
+    await form.getByRole('button', { name: /continuar/i }).click()
+    await form.locator('#caso-nombre').fill('Ana')
+    await form.getByPlaceholder('Nombre de tu empresa').fill('Acme SpA')
+    await form.getByPlaceholder('nombre@empresa.com').fill('ana@acme.cl')
+    await form.locator('#caso-telefono').fill('911112222')
+    return { form, leads }
+  }
+
+  for (const { iso, prefijo } of [{ iso: undefined, prefijo: '+56' }, ...PAISES_LEAD]) {
+    test(`un visitante ${iso ?? 'sin país'} envía el caso con ${prefijo} y la atribución de la campaña`, async ({
+      page,
+    }) => {
+      const { form, leads } = await enviarCaso(page, iso)
+      await expect(form.getByText(prefijo, { exact: true })).toBeVisible()
+      await form.getByRole('button', { name: 'Enviar', exact: true }).click()
+      await expect.poll(() => leads.length, { timeout: 10_000 }).toBe(1)
+      expect(leads[0].telefono).toBe(`${prefijo}911112222`)
+      expect(leads[0]).toMatchObject({ gclid: 'TESTGCLID123', utmCampaign: 'test-campana-cl' })
+      await expect(page.locator('#caso-gracias')).toBeVisible()
+    })
+  }
+})
+
+test.describe('/contactanos', () => {
+  for (const { iso, prefijo } of [
+    { iso: 'CL', prefijo: '+56' },
+    { iso: 'PE', prefijo: '+51' },
+  ]) {
+    test(`un visitante de ${iso} envía el contacto con ${prefijo} y atribución, sin crear contactos reales`, async ({
+      page,
+    }) => {
+      const leads = await capturarLeads(page)
+      const contactos: Lead[] = []
+      await page.route('**/send_contact_info/**', async (route) => {
+        contactos.push(JSON.parse(route.request().postData() ?? '{}'))
+        await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' })
+      })
+      await page.route('**/api/geo', (route) => route.fulfill({ json: { country: iso } }))
+      await page.goto(`/contactanos?${CAMPANA}`)
+      await page.getByPlaceholder('Tu nombre').fill('Ana')
+      await page.getByPlaceholder('Tu apellido').fill('Pérez')
+      await page.getByPlaceholder('Nombre de tu empresa').fill('Acme SpA')
+      await page.getByPlaceholder('tu@email.com').fill('ana@acme.cl')
+      await page.getByPlaceholder('Número').fill('911112222')
+      const form = page.locator('form').filter({ has: page.getByPlaceholder('Tu nombre') })
+      await expect(form.getByText(prefijo, { exact: true })).toBeVisible()
+      await form.getByText('10-50', { exact: true }).click()
+      await form.getByText('No', { exact: true }).click()
+      await form.locator('button[type="submit"]').click()
+      await expect(page).toHaveURL(/\/thankyou/, { timeout: 15_000 })
+      expect(contactos).toHaveLength(1)
+      expect(contactos[0]).toMatchObject({
+        telefono: `${prefijo}911112222`,
+        utmSource: 'google',
+        utmCampaign: 'test-campana-cl',
+      })
+      await expect.poll(() => leads.length, { timeout: 10_000 }).toBe(1)
+      expect(leads[0]).toMatchObject({ telefono: `${prefijo}911112222`, gclid: 'TESTGCLID123' })
+    })
+  }
+})

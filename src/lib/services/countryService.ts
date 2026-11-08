@@ -29,12 +29,20 @@ export const DEFAULT_COUNTRIES: TCountry[] = [
   { id: 5, country: '+52', country_code: 'México', icon: '/flags/mx.svg' },
 ]
 
+// La API puede traer menos países de los que atendemos (o venir vacía): los países base siempre quedan
+// disponibles y la API solo aporta sus banderas y los países adicionales.
+export const mergeCountries = (api: TCountry[]): TCountry[] => {
+  const porPrefijo = new Map(api.map((c) => [c.country, c]))
+  const extra = api.filter((c) => !DEFAULT_COUNTRIES.some((d) => d.country === c.country))
+  return [...DEFAULT_COUNTRIES.map((d) => porPrefijo.get(d.country) ?? d), ...extra]
+}
+
 export const COUNTRIES_QUERY_KEY = ['countries'] as const
 
 export const useCountries = () => {
   return useQuery({
     queryKey: COUNTRIES_QUERY_KEY,
-    queryFn: fetchCountries,
+    queryFn: async () => mergeCountries(await fetchCountries()),
     initialData: DEFAULT_COUNTRIES,
     initialDataUpdatedAt: 0,
     staleTime: 1000 * 60 * 60, // 1 hora - los países no cambian frecuentemente
