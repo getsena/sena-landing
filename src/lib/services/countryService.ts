@@ -18,12 +18,25 @@ export const fetchCountries = async (): Promise<TCountry[]> => {
   return response.json()
 }
 
+const FLUJOPAY_FLAGS = 'https://flujopay.blob.core.windows.net/flujopay-django-files/flags'
+
+// Lista base: el selector funciona aunque la API no responda; la API la refresca en segundo plano.
+export const DEFAULT_COUNTRIES: TCountry[] = [
+  { id: 1, country: '+51', country_code: 'Perú', icon: `${FLUJOPAY_FLAGS}/peru.png` },
+  { id: 2, country: '+56', country_code: 'Chile', icon: `${FLUJOPAY_FLAGS}/chile_1.png` },
+  { id: 3, country: '+57', country_code: 'Colombia', icon: '/flags/co.svg' },
+  { id: 4, country: '+593', country_code: 'Ecuador', icon: '/flags/ec.svg' },
+  { id: 5, country: '+52', country_code: 'México', icon: '/flags/mx.svg' },
+]
+
 export const COUNTRIES_QUERY_KEY = ['countries'] as const
 
 export const useCountries = () => {
   return useQuery({
     queryKey: COUNTRIES_QUERY_KEY,
     queryFn: fetchCountries,
+    initialData: DEFAULT_COUNTRIES,
+    initialDataUpdatedAt: 0,
     staleTime: 1000 * 60 * 60, // 1 hora - los países no cambian frecuentemente
     gcTime: 1000 * 60 * 60 * 24, // 24 horas en cache
   })
