@@ -7026,6 +7026,208 @@ export const blogPosts: BlogPost[] = [
       },
     ],
   },
+  {
+    id: 39,
+    slug: 'como-cobrar-sin-romper-la-relacion-comercial',
+    title: 'Cómo cobrar sin romper la relación comercial',
+    intro:
+      'Cobrar sin romper la relación comercial depende de cuatro variables: roles, momento, tono y canal. Qué cuidar en cada etapa de una factura B2B.',
+    date: '25 de noviembre 2026',
+    tags: ['Blog', 'Cobranza', 'Relación comercial'],
+    image: AssetImageBlog.blog_32_main.src,
+    lector: 'pyme-que-cobra',
+    faq: [
+      {
+        question: '¿A quién hay que contactar en la empresa cliente para cobrar una factura?',
+        answer:
+          'Depende del estado de la factura. Antes del vencimiento, normalmente a la contraparte comercial. Si el pago no se destraba, se escala hacia quien contabiliza las facturas de proveedores, que define la fecha de pago, y hacia quien administra la caja, que dispone de los fondos.',
+      },
+      {
+        question: '¿Se puede cobrar antes del vencimiento sin dañar la relación?',
+        answer:
+          'Sí. Con la factura recién emitida basta un recordatorio informativo con su fecha de vencimiento, dirigido a la contraparte comercial. Es un mensaje de aviso, no de presión.',
+      },
+      {
+        question: '¿Cuándo conviene escalar el cobro de una factura vencida?',
+        answer:
+          'No hay un plazo legal único. Muchas empresas consideran el rango de 30 a 45 días como referencia, pero cada una lo ajusta según su política de cobranza, los requerimientos de su directorio o las exigencias de su caja. Desde ahí se puede escalar de distintas formas, incluso hacia una etapa judicial.',
+      },
+      {
+        question: '¿Cuál es el mejor canal para cobrar a una empresa?',
+        answer:
+          'El que el cliente realmente usa. WhatsApp no siempre es la mejor opción: algunas empresas restringen su uso para comunicaciones oficiales y algunas personas prefieren no compartir su número personal en lo laboral. Conviene identificar y registrar el canal de cada contacto.',
+      },
+      {
+        question: '¿Una secuencia de cobranza automatizada daña la relación con el cliente?',
+        answer:
+          'En cobranza B2B es poco habitual que los llamados sean bloqueados, pero la secuencia debe ser inteligente: entender los ciclos de cada cliente y usar el canal más apropiado.',
+      },
+    ],
+    content: [
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Para cobrar sin dañar la relación comercial hay que cuidar cuatro variables: los roles dentro del proceso de pago de la empresa cliente, el momento del contacto, el tono del mensaje y el canal que ese cliente realmente usa. Cuando las cuatro están alineadas, cobrar deja de ser una confrontación y pasa a ser parte del servicio.',
+          },
+        ],
+      },
+      { type: 'title', text: '¿Por qué se atrasan los pagos entre empresas?' },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'La cobranza B2B nace de una relación comercial: dos empresas acordaron una transacción, el servicio se entregó y se emitió la factura. El problema aparece al momento del pago. El proceso puede requerir varias firmas, sufrir desórdenes administrativos o incluso formar parte de la forma en que la empresa cliente se financia con sus proveedores. Y no es una excepción: según las distintas ediciones regionales del ',
+          },
+          {
+            type: 'link',
+            text: 'Atradius Payment Practices Barometer',
+            href: 'https://group.atradius.com/multinationals/payment-practices-trends',
+          },
+          {
+            type: 'text',
+            text: ' de 2024 y 2025, entre el 41% y el 53% de las ventas B2B a crédito se pagan con retraso. En Chile, un estudio de la industria con más de 1,35 millones de facturas indica que el 58% se pagó fuera del plazo legal en 2025.',
+          },
+        ],
+      },
+      { type: 'title', text: '¿Por qué las llamadas insistentes no funcionan en cobranza?' },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Esa relación comercial, que da origen a la cobranza, se debe cuidar y equilibrar: el dinero hay que recaudarlo y la relación se busca mantener en el tiempo. No se puede cobrar con llamadas insistentes y esperar que la relación no se resienta. Lo vemos en la cobranza masiva a personas: según Truecaller, en Chile el 70% de las llamadas de números desconocidos corresponde a spam, el segundo nivel más alto del mundo después de Indonesia, y la cobranza es la categoría más frecuente, con un 38% del spam en 2025 frente a un 7% en 2021 (',
+          },
+          {
+            type: 'link',
+            text: 'La Tercera, mayo 2026',
+            href: 'https://www.latercera.com/pulso/noticia/chile-es-el-segundo-pais-en-el-mundo-que-recibe-mas-llamadas-de-spam/',
+          },
+          {
+            type: 'text',
+            text: '). Numerosos usuarios se quejan de servicios de cobranza mal ejecutados que terminan bloqueados, lo que reduce aún más su capacidad de cobro.',
+          },
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'En la cobranza B2B es poco habitual que los llamados sean bloqueados, pero igual debe aplicarse de forma inteligente: con una secuencia automatizada que entienda los ciclos de cada cliente y use el canal más apropiado. Si quieres profundizar en cómo ordenar el proceso completo, lee ',
+          },
+          {
+            type: 'link',
+            text: 'cómo profesionalizar tu cobranza sin perder clientes',
+            href: '/blog/profesionalizar-tu-cobranza-no-significa-ser-agresivo-descubre-como-digitalizar-tu-proceso-y-recuperar-tus-cuentas-vencidas',
+          },
+          { type: 'text', text: '.' },
+        ],
+      },
+      { type: 'title', text: '¿Quiénes participan en el pago dentro de la empresa cliente?' },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Así como en una venta es necesario identificar a quien toma la decisión de compra, en la cobranza hay que identificar los distintos roles que intervienen en el pago. En esa cadena participan, al menos:',
+          },
+        ],
+      },
+      {
+        type: 'list',
+        items: [
+          'Quien usa el producto o servicio: es el principal promotor de tu producto.',
+          'Quien contabiliza las facturas de proveedores: es quien finalmente define la fecha de pago.',
+          'Quien administra la caja de la empresa: es la persona clave que dispone de los fondos para pagar la factura.',
+        ],
+      },
+      { type: 'title', text: '¿A quién y cuándo conviene contactar según el estado de la factura?' },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'A quién se contacta depende del estado de la factura. Antes del vencimiento y en las etapas tempranas, el contacto natural es la contraparte comercial. Si el pago no se destraba, se va escalando hacia quien pueda hacerlo. A esto se le llama el momento de contacto.',
+          },
+        ],
+      },
+      { type: 'title', text: '¿Qué tono usar en cada etapa de la factura?' },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'El tono del mensaje también debe estar alineado con la persona a quien se contacta y con la etapa de la factura. Si la factura recién se emitió, basta un recordatorio informativo con su fecha de vencimiento. Es muy distinto cuando lleva 30 a 45 días vencida. Ese rango no es un plazo legal: es una referencia que cada empresa ajusta según su política de cobranza, los requerimientos de su directorio o las exigencias de su propia caja para decidir cuándo presionar con más intensidad. Desde ahí se puede escalar de distintas formas, incluso hacia procesos más complejos como una etapa judicial. Para el caso de una factura ya vencida, revisa ',
+          },
+          {
+            type: 'link',
+            text: 'cómo recuperar una factura vencida sin perder al cliente',
+            href: '/blog/aprende-como-manejar-facturas-vencidas-recuperar-pagos-y-mantener-buenas-relaciones-con-tus-clientes-mediante-tecnicas-de-cobranza-efectivas',
+          },
+          { type: 'text', text: '.' },
+        ],
+      },
+      {
+        type: 'title',
+        text: '¿Qué canal usar para cobrar y por qué WhatsApp no siempre es la respuesta?',
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Usar el canal adecuado hace una gran diferencia. Es fácil suponer que WhatsApp es el canal ideal para contactar a una persona, pero en las empresas no siempre es así. Algunas tienen políticas que restringen su uso para comunicaciones oficiales; la propia Kaspersky recomienda evitar el intercambio de información confidencial por canales no corporativos y aplicar políticas claras sobre el uso de dispositivos personales (',
+          },
+          {
+            type: 'link',
+            text: 'Kaspersky, octubre 2025',
+            href: 'https://latam.kaspersky.com/about/press-releases/compartir-informacion-confidencial-por-whatsapp-pone-a-los-empleados-en-la-mira-de-ciberataques',
+          },
+          {
+            type: 'text',
+            text: '). En otros casos, son las propias personas las que prefieren no compartir su número personal en el ámbito laboral. Por eso conviene identificar y registrar el canal que cada contacto realmente usa.',
+          },
+        ],
+      },
+      { type: 'title', text: 'Las cuatro variables de una cobranza eficiente' },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Por lo tanto, las cuatro variables a considerar para una cobranza eficiente son:',
+          },
+        ],
+      },
+      {
+        type: 'list',
+        items: [
+          'Los roles dentro del proceso de pago',
+          'El momento del contacto',
+          'El tono del mensaje',
+          'El canal que el cliente usa',
+        ],
+      },
+      {
+        type: 'paragraph',
+        fragments: [
+          {
+            type: 'text',
+            text: 'Cuando la cartera crece, decidir caso a caso el momento, el tono y el canal de cada cliente deja de ser viable. En Sena automatizamos esa secuencia de contacto para mantener el mismo estándar con todos tus clientes. ¿Quieres ver cómo funciona en la práctica? ',
+          },
+          {
+            type: 'link',
+            text: 'Agenda una conversación con nuestro equipo',
+            href: 'https://meetings.hubspot.com/francisco502',
+          },
+          { type: 'text', text: '.' },
+        ],
+      },
+    ],
+  },
 ]
 
 export const getBlogPostsSorted = () => {
