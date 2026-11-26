@@ -2,16 +2,16 @@ import { AssetImage } from '@/lib/utils/assets/image'
 
 export const OurInspiration = () => {
   return (
-    <section className="bg-white pb-12 md:pb-24 max-w-[1280px] mx-auto">
-      <div className="px-4 md:px-8">
+    // Va dentro de "El equipo detrás de Sena" como H3: la historia del nombre baja de prioridad porque
+    // el Río Sena es una de las entidades que le gana a la marca en los motores de respuesta.
+    <div>
+      <div>
         <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-center">
           {/* Text Content */}
           <div className="w-full md:w-1/2 lg:w-1/3 space-y-6">
-            <h2 className="text-brand-primary-dark text-2xl md:text-4xl font-extrabold">
-              Nuestra
-              <br />
-              inspiración
-            </h2>
+            <h3 className="text-brand-primary-dark text-2xl md:text-3xl font-extrabold">
+              De dónde viene el nombre
+            </h3>
 
             <div className="space-y-6 text-brand-primary-dark text-base md:text-lg leading-relaxed">
               <p>
@@ -56,6 +56,6 @@ export const OurInspiration = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
